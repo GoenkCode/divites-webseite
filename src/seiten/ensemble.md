@@ -26,7 +26,7 @@ Das Divites Quartett ist kein festes Quartett mit vier Namen. Es ist ein Kreis v
 <div class="platz platz--portraet">[PORTRÄT FOLGT]</div>
 <h3>Victor aus Butzbach</h3>
 <p class="rolle">Violoncello</p>
-<p>Cellist, Komponist, Arrangeur. ECHO Klassik 2011. Mitgründer von Spark, der klassischen Band, mit siebzig Konzerten im Jahr in Europa, den USA und Asien. Studium in Karlsruhe und Luzern. Über fünfzig eigene Werke. Spielt in der Elbphilharmonie, im Barbican Centre London und überall sonst auch.</p>
+<p>Cellist, Komponist, Arrangeur. ECHO Klassik 2011. Über hundert Konzerte im Jahr, in Europa, den USA und Asien. Studium in Karlsruhe und Luzern. Mehr als fünfzig eigene Werke. Spielt in der Elbphilharmonie, im Barbican Centre London und überall sonst auch.</p>
 </li>
 <li class="mitglied">
 <div class="platz platz--portraet">[PORTRÄT FOLGT]</div>
