@@ -14,6 +14,10 @@ Angaben nach § 5 DDG.
 
 Gruppenfoto: [PLATZHALTER: Name des Fotografen]
 
+Konzertfotos Kurhaus Wiesbaden und Literaturhaus Frankfurt: [PLATZHALTER: Name des Fotografen]
+
+Porträts Attila Hündöl, Carolina Rybka und Namhyun Kim: Ausschnitte aus dem Konzertfoto Kurhaus Wiesbaden, derselbe Urheber
+
 Porträt Larissa Nagel: Philippe Stier
 
 Porträt Victor aus Butzbach: eigenes Foto, Hintergrund digital erstellt
