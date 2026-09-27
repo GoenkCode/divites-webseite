@@ -301,12 +301,12 @@ main > blockquote p { margin: 0; }
 }
 .termin:last-child { border-bottom: 1px solid var(--linie); }
 
+/* Die Datumsmarke wird weiter unten im Abschnitt zur Monatsgliederung
+   gestaltet. Hier stand bis zum 27.09.2026 eine zweite, widersprechende
+   Regel mit dunklem Kasten. Sie war wirkungslos, weil die spaetere
+   gewinnt, aber sie waere beim naechsten Umsortieren zur Falle geworden. */
 .termin__marke {
-  background: var(--tinte);
-  color: var(--auf-dunkel);
   font-family: var(--grotesk);
-  text-align: center;
-  padding: var(--s1) 0 .65rem;
   display: grid;
   line-height: 1;
 }
