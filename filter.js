@@ -16,13 +16,20 @@
   "use strict";
 
   var leiste = document.querySelector("[data-filter]");
-  var liste = document.querySelector("[data-termine]");
-  if (!leiste || !liste) return;
+  // querySelectorAll, nicht querySelector: seit der Monatsgliederung gibt
+  // es eine Liste je Monat. Mit querySelector wuerde nur der erste Monat
+  // gefiltert, die uebrigen blieben stehen.
+  var listen = Array.prototype.slice.call(
+    document.querySelectorAll("[data-termine]"));
+  if (!leiste || !listen.length) return;
 
   var knoepfe = Array.prototype.slice.call(
     leiste.querySelectorAll(".filter__knopf"));
-  var eintraege = Array.prototype.slice.call(
-    liste.querySelectorAll(".termin"));
+  var eintraege = [];
+  listen.forEach(function (l) {
+    eintraege = eintraege.concat(
+      Array.prototype.slice.call(l.querySelectorAll(".termin")));
+  });
   if (!knoepfe.length || !eintraege.length) return;
 
   leiste.hidden = false;

@@ -150,23 +150,6 @@ a:focus-visible, button:focus-visible {
 }
 .auftakt__text { min-width: 0; position: relative; z-index: 2; }
 
-.auftakt h1 {
-  font-family: var(--grotesk);
-  font-weight: 800;
-  font-size: clamp(2.75rem, 9.5vw, 6.5rem);
-  line-height: .88;
-  letter-spacing: -.04em;
-  margin: 0;
-  text-transform: uppercase;
-  color: #f6f4f1;
-}
-.auftakt__unter {
-  font-size: clamp(1rem, 2vw, 1.25rem);
-  max-width: 30rem;
-  margin: var(--s3) 0 0;
-  color: #a8a299;
-}
-
 /* Bild bricht nach rechts aus dem Raster und laeuft aus dem Bild. */
 .auftakt__bild {
   margin: 0;
@@ -202,7 +185,7 @@ a:focus-visible, button:focus-visible {
   font-size: clamp(1.0625rem, 2.4vw, 1.375rem);
   max-width: var(--spalte-text);
   margin: var(--s3) 0 0;
-  color: var(--tinte-matt);
+  color: #a8a299;
 }
 
 /* --- Abschnitte ---------------------------------------------------------- */
@@ -623,17 +606,181 @@ a.termin__ort:hover { color: var(--akzent); }
   border: 1px solid var(--linie);
 }
 
-/* Verweis auf die Google-Bewertungen unter den Stimmen. Bewusst
-   zurueckhaltend: die Zitate tragen, der Link belegt sie nur. */
-.stimmen__mehr {
-  max-width: var(--spalte);
-  margin: 0 auto;
-  padding: 0 var(--s3) var(--s5);
-  text-align: center;
-  font-family: var(--grotesk);
-  font-size: .75rem;
-  letter-spacing: .14em;
-  text-transform: uppercase;
+
+
+/* ===========================================================================
+   Verfeinerung, 27.09.2026
+   =========================================================================== */
+
+/* 5 — Auftakt: kein Verlauf ueber dem Bild, harte Kante auf Schwarz */
+.auftakt__bild::after { content: none; }
+
+/* 1 — Termine: Monate als Kapitel, Stadt als eigene Spalte */
+.monat { max-width: var(--spalte); margin: 0 auto; padding: 0 var(--s3); }
+.monat + .monat { margin-top: var(--s5); }
+.monat__titel {
+  position: sticky; top: 0; z-index: 1;
+  background: var(--papier);
+  font-family: var(--grotesk); font-weight: 800;
+  font-size: clamp(1.5rem, 3.5vw, 2rem); line-height: 1;
+  letter-spacing: -.02em; text-transform: uppercase;
+  margin: 0; padding: var(--s2) 0;
+  border-bottom: 2px solid var(--tinte);
+  display: flex; align-items: baseline; gap: .4em;
 }
-.stimmen__mehr a { color: var(--tinte-matt); text-underline-offset: 4px; }
-.stimmen__mehr a:hover { color: var(--akzent); }
+.monat__jahr { font-weight: 400; color: var(--tinte-matt); }
+.monat .termine { max-width: none; margin: 0; padding: 0; }
+.monat .termin:first-child { border-top: 0; }
+.monat .termin:last-child { border-bottom: 0; }
+.monat:not(:has(.termin:not([hidden]))) { display: none; }
+
+.termin {
+  grid-template-columns: 4.5rem 10rem minmax(0, 1fr);
+  grid-template-areas: "datum stadt inhalt";
+  align-items: baseline;
+}
+.termin__marke {
+  grid-area: datum;
+  background: none; color: var(--tinte);
+  text-align: left; padding: 0;
+}
+.termin__tag {
+  font-size: 2.25rem; letter-spacing: -.03em; line-height: .9;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.termin__monat { color: var(--akzent); font-weight: 700; margin-top: .35rem; }
+.termin__jahr { color: var(--tinte-matt); }
+.monat .termin__monat, .monat .termin__jahr { display: none; }
+.termin__inhalt { grid-area: inhalt; }
+.termin::after {
+  content: attr(data-ort);
+  content: attr(data-ort) / "";
+  grid-area: stadt;
+  font-family: var(--grotesk); font-weight: 700;
+  font-size: .75rem; letter-spacing: .14em; text-transform: uppercase;
+  line-height: 1.35; text-wrap: balance;
+}
+.termin--folge { border-top: 0; padding-top: 0; }
+.termin--folge .termin__marke,
+.termin--folge::after { visibility: hidden; }
+.termine__trenner + .termine .termin__tag { font-size: 1.5rem; color: var(--tinte-matt); }
+.termine__trenner + .termine .termin__programm { font-size: 1.0625rem; }
+
+/* 2 — Musik: Kacheln als Programmeintraege */
+.raster--video { counter-reset: video; gap: var(--s4) var(--s3); }
+.video { counter-increment: video; }
+.video__flaeche {
+  background: var(--papier-tief);
+  border: 0; border-top: 2px solid var(--tinte);
+  padding: var(--s2);
+  text-align: left;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: "label label nr" "pfeil hinweis hinweis";
+  align-content: stretch; justify-items: start;
+  gap: var(--s2) var(--s1);
+}
+.video__flaeche::before {
+  content: counter(video, decimal-leading-zero);
+  grid-area: nr; align-self: start;
+  font-size: .75rem; letter-spacing: .14em;
+  font-variant-numeric: tabular-nums; color: var(--tinte-matt);
+}
+.video__label {
+  grid-area: label; align-self: start;
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(1.25rem, 2vw, 1.5rem); line-height: 1.15;
+  letter-spacing: 0; text-wrap: balance;
+}
+.video__urheber, .video__werk { display: block; }
+.video__urheber {
+  font-family: var(--grotesk); font-weight: 700;
+  font-size: .75rem; letter-spacing: .14em; text-transform: uppercase;
+  line-height: 1.35; margin-bottom: .35rem;
+}
+.video__pfeil {
+  grid-area: pfeil;
+  width: 2.75rem; height: 2.75rem;
+  display: grid; place-items: center;
+  font-size: .875rem; padding-left: 2px;
+  color: var(--tinte); border: 1px solid var(--tinte);
+}
+.video__hinweis { grid-area: hinweis; align-self: center; }
+.video__flaeche:hover .video__pfeil {
+  background: var(--akzent); border-color: var(--akzent); color: var(--papier);
+}
+@media (hover: none) {
+  .video__flaeche:hover { border-color: var(--tinte); }
+  .video__flaeche:hover .video__pfeil { background: none; border-color: var(--tinte); color: var(--tinte); }
+}
+
+/* 3 — Dramaturgie: Musik ist wieder Buehne; Seitentitel mit Auftakt-Setzung */
+.seite--musik {
+  --papier:      #0d0c0b;
+  --papier-tief: #1a1815;
+  --tinte:       #eeebe5;
+  --tinte-matt:  #a8a299;
+  --linie:       #34302a;
+  --akzent:      #e8734d;
+  color-scheme: dark;
+}
+main > h1 {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  line-height: .92; letter-spacing: -.035em;
+  margin-top: var(--s6);
+}
+main > h1::after {
+  content: ""; display: block;
+  height: 2px; margin-top: var(--s3);
+  background: var(--tinte);
+}
+
+/* 4 — Ensemble: Besetzung nach Instrument */
+.besetzung {
+  width: min(calc(var(--spalte) - 2 * var(--s3)), calc(100% - 2 * var(--s3)));
+  margin: var(--s5) auto 0;
+  padding-top: var(--s2);
+  border-top: 2px solid var(--tinte);
+  display: grid;
+  grid-template-columns: 10rem minmax(0, 1fr);
+  gap: var(--s3);
+}
+main > h1 + .besetzung { border-top: 0; margin-top: 0; padding-top: 0; }
+.besetzung__instrument {
+  font-family: var(--grotesk); font-weight: 700;
+  font-size: .8125rem; letter-spacing: .16em; text-transform: uppercase;
+  margin: 0;
+}
+.besetzung__personen {
+  list-style: none; margin: 0; padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s4) var(--s3);
+  align-items: start;
+}
+.besetzung .mitglied h3 { margin-top: var(--s2); }
+.besetzung .mitglied p { font-size: .9375rem; line-height: 1.55; margin: .5rem 0 0; }
+.besetzung .mitglied .rolle { margin-top: .1rem; }
+.platz--portraet { border: 0; place-items: end start; text-align: left; }
+.portraet { filter: grayscale(1); }
+
+@media (max-width: 64rem) {
+  .monat { padding-left: var(--s2); padding-right: var(--s2); }
+  .besetzung { width: calc(100% - 2 * var(--s2)); grid-template-columns: 1fr; gap: var(--s2); }
+  .besetzung__personen { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 34rem) {
+  .termin {
+    grid-template-columns: 3.25rem minmax(0, 1fr);
+    grid-template-areas: "datum stadt" "datum inhalt";
+    column-gap: var(--s2); row-gap: .3rem;
+    align-items: start;
+  }
+  .termin__tag { font-size: 1.75rem; }
+  .besetzung__personen { grid-template-columns: 1fr; }
+  .besetzung .platz--portraet, .besetzung .portraet { max-width: 14rem; }
+}
+
+
+.seite--musik{background:var(--papier);color:var(--tinte);padding-bottom:var(--s5)}
+.beispielseite .monat__titel{top:2.05rem}
