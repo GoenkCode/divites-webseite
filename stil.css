@@ -784,3 +784,36 @@ main > h1 + .besetzung { border-top: 0; margin-top: 0; padding-top: 0; }
 
 .seite--musik{background:var(--papier);color:var(--tinte);padding-bottom:var(--s5)}
 .beispielseite .monat__titel{top:2.05rem}
+
+/* --- Videovorschau -------------------------------------------------------- */
+/* Die Vorschaubilder liegen auf der eigenen Domain, nicht bei Google.
+   Einmal heruntergeladen und lokal ausgeliefert: dadurch sieht man, was
+   einen erwartet, und trotzdem entsteht vor dem Klick keine Verbindung
+   zu YouTube. Das ist der Punkt, an dem die meisten Zwei-Klick-Loesungen
+   scheitern: sie zeigen ein Vorschaubild von i.ytimg.com und haben die
+   Verbindung damit laengst hergestellt. */
+
+.video__flaeche--bild {
+  position: relative;
+  background-image: var(--vorschau);
+  background-size: cover;
+  background-position: center;
+  border-color: transparent;
+}
+/* Abdunklung, damit die Beschriftung auf jedem Standbild lesbar bleibt. */
+.video__flaeche--bild::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 12, 11, .62);
+  z-index: 0;
+}
+.video__flaeche--bild > * { position: relative; z-index: 1; }
+.video__flaeche--bild .video__label,
+.video__flaeche--bild .video__pfeil,
+.video__flaeche--bild .video__hinweis { color: #f6f4f1; }
+.video__flaeche--bild .video__pfeil { color: #ff7a4d; }
+.video__flaeche--bild:hover::after { background: rgba(13, 12, 11, .45); }
+@media (hover: none) {
+  .video__flaeche--bild:hover::after { background: rgba(13, 12, 11, .62); }
+}
