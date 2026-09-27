@@ -196,8 +196,12 @@ def termin_html(t, folge=False):
     if folge:
         klassen += " termin--folge"
     a = []
-    a.append('  <li class="%s" data-ort="%s">'
-             % (klassen, html.escape(stadt_aus_adresse(t["adresse"]), True)))
+    # data-datum traegt das Datum in den Browser. Dort entscheidet
+    # termine.js, was kommend und was vergangen ist -- sonst friert die
+    # Trennung auf dem Stand des letzten Exports ein.
+    a.append('  <li class="%s" data-ort="%s" data-datum="%s">'
+             % (klassen, html.escape(stadt_aus_adresse(t["adresse"]), True),
+                t["datum"].isoformat()))
     a.append('    <div class="termin__marke">')
     a.append('      <span class="termin__tag">%02d</span>' % t["datum"].day)
     a.append('      <span class="termin__monat">%s</span>' % MONATE[t["datum"].month - 1][:3])
@@ -273,7 +277,7 @@ def termine_html(termine, heute, nur_naechste=None):
                         aus.append('</ul>')
                         aus.append('</section>')
                     kennung = "m-%04d-%02d" % mk
-                    aus.append('<section class="monat" aria-labelledby="%s">' % kennung)
+                    aus.append('<section class="monat" data-monat aria-labelledby="%s">' % kennung)
                     aus.append('<h2 class="monat__titel" id="%s">%s <span class="monat__jahr">%d</span></h2>'
                                % (kennung, MONATE[mk[1] - 1], mk[0]))
                     aus.append('<ul class="termine" data-termine>')
@@ -289,35 +293,15 @@ def termine_html(termine, heute, nur_naechste=None):
         aus = []
         if titel:
             aus.append('<h2 class="termine__trenner">%s</h2>' % html.escape(titel))
-        aus.append('<ul class="termine" data-termine>')
+        # Auf der Startseite steht die Zahl der gewuenschten Termine am
+        # Element; welche drei es sind, entscheidet sich im Browser.
+        aus.append('<ul class="termine" data-termine%s>'
+                   % (' data-naechste="3"' if nur_naechste else ''))
         for t in eintraege:
-            klassen = "termin" + (" termin--abgesagt" if t["abgesagt"] else "")
-            aus.append('  <li class="%s" data-ort="%s">'
-                       % (klassen, html.escape(stadt_aus_adresse(t["adresse"]), True)))
-            aus.append('    <div class="termin__marke">')
-            aus.append('      <span class="termin__tag">%02d</span>' % t["datum"].day)
-            aus.append('      <span class="termin__monat">%s</span>'
-                       % MONATE[t["datum"].month - 1][:3])
-            aus.append('      <span class="termin__jahr">%d</span>' % t["datum"].year)
-            aus.append('    </div>')
-            aus.append('    <div class="termin__inhalt">')
-            aus.append('      <h3 class="termin__programm">%s</h3>'
-                       % html.escape(t["programm"]))
-            aus.append('      <p class="termin__wann"><time datetime="%sT%s">%s, %s Uhr</time></p>'
-                       % (t["datum"].isoformat(), t["uhrzeit"],
-                          datum_lang(t["datum"]), t["uhrzeit"]))
-            # Kein leerer href: ohne Ticketlink bleibt der Ort schlichter Text.
-            if t["ticket"]:
-                ort_html = ('<a class="termin__ort" href="%s" rel="noopener">%s</a>'
-                            % (html.escape(t["ticket"], True), html.escape(t["ort"])))
-            else:
-                ort_html = '<span class="termin__ort">%s</span>' % html.escape(t["ort"])
-            aus.append('      <p class="termin__wo">%s<span class="termin__adresse">%s</span></p>'
-                       % (ort_html, html.escape(t["adresse"])))
-            if t["abgesagt"]:
-                aus.append('      <p class="termin__hinweis">Abgesagt</p>')
-            aus.append('    </div>')
-            aus.append('  </li>')
+            # termin_html statt einer zweiten, fast gleichen Fassung an
+            # dieser Stelle. Die Dopplung hatte data-datum nicht bekommen
+            # und haette die Vergangenen stumm vom Abgleich ausgenommen.
+            aus.append(termin_html(t))
         aus.append('</ul>')
         return "\n".join(aus)
 
@@ -325,8 +309,18 @@ def termine_html(termine, heute, nur_naechste=None):
         teile.append(liste(kommend, nach_monaten=not nur_naechste))
     else:
         teile.append('<p class="leer">Zurzeit sind keine Termine angekuendigt.</p>')
-    if vergangen:
-        teile.append(liste(list(reversed(vergangen)), "Vergangene Konzerte"))
+
+    # Der Bereich fuer Vergangenes wird immer angelegt, auch wenn er heute
+    # leer ist: termine.js braucht ein Ziel, in das es Termine schieben
+    # kann, die seit dem letzten Export verstrichen sind.
+    if not nur_naechste:
+        teile.append('<div data-vergangen%s>' % ('' if vergangen else ' hidden'))
+        teile.append('<h2 class="termine__trenner">Vergangene Konzerte</h2>')
+        teile.append('<ul class="termine" data-termine data-vergangen-liste>')
+        for t in reversed(vergangen):
+            teile.append(termin_html(t))
+        teile.append('</ul>')
+        teile.append('</div>')
 
     return "\n".join(teile), len(kommend), len(vergangen)
 
@@ -574,6 +568,12 @@ def seite_bauen(vorlage, name, titel, beschreibung, inhalt, braucht_filter, json
     if not VEROEFFENTLICHEN:
         kopf = '<meta name="robots" content="noindex, nofollow">'
     skripte = []
+    # termine.js vor filter.js: Es haengt verstrichene Termine um, der
+    # Ortsfilter soll schon die nachgefuehrte Liste sehen. Beide tragen
+    # defer und laufen deshalb in dieser Reihenfolge.
+    if name in ("termine", "start"):
+        skripte.append('<script src="termine.js?v=%s" defer></script>'
+                       % fingerabdruck(os.path.join(HIER, "src", "termine.js")))
     if braucht_filter:
         skripte.append('<script src="filter.js?v=%s" defer></script>'
                        % fingerabdruck(os.path.join(HIER, "src", "filter.js")))
@@ -682,7 +682,16 @@ def main():
         os.makedirs(args.ausgabe, exist_ok=True)
 
         liste_voll, anz_kommend, anz_vergangen = termine_html(termine, heute)
-        liste_kurz, _, _ = termine_html(termine, heute, nur_naechste=3)
+        # Alle kommenden ins HTML, nicht nur drei: Welche drei die
+        # Startseite zeigt, entscheidet termine.js im Browser. Jede feste
+        # Obergrenze ist eine Wette darauf, wie viele Termine zwischen zwei
+        # Exporten verstreichen. Mit zwoelf getestet und prompt verloren --
+        # ein Build vom 1. September hatte am 27. nur noch zwei uebrig,
+        # weil zehn der zwoelf vorbei waren.
+        #
+        # Ohne JavaScript stehen dann alle Termine auf der Startseite. Das
+        # ist lang, aber richtig; drei veraltete waeren kurz und falsch.
+        liste_kurz, _, _ = termine_html(termine, heute, nur_naechste=len(termine) or 1)
 
         # Bilder zuerst, damit beim Seitenbau ihr Fingerabdruck vorliegt.
         anz_bilder = bilder_kopieren(BILDER_QUELLE, os.path.join(args.ausgabe, "bilder"))
@@ -729,7 +738,7 @@ def main():
                         io.open(q, encoding="utf-8").read())
                     kopiert += 1
 
-        for name in ("stil.css", "filter.js", "video.js", "stimmen.js"):
+        for name in ("stil.css", "termine.js", "filter.js", "video.js", "stimmen.js"):
             q = os.path.join(HIER, "src", name)
             if os.path.isfile(q):
                 io.open(os.path.join(args.ausgabe, name), "w", encoding="utf-8").write(
