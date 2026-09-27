@@ -600,7 +600,11 @@ def seite_bauen(vorlage, name, titel, beschreibung, inhalt, braucht_filter, json
         .replace("{{JSONLD}}", jsonld)
 
 
-def bilder_kopieren(quelle, ziel, maxbreite=1600):
+def bilder_kopieren(quelle, ziel, maxbreite=2000):
+    # 2000 statt vormals 1600: Der Bildband auf der Ensembleseite wird ueber
+    # die volle Seitenspalte von 1088 px dargestellt. Auf einem Schirm mit
+    # doppelter Punktdichte braucht das 2176 px; mit 1600 war das Bild dort
+    # sichtbar weich. 2000 ist der Kompromiss aus Schaerfe und Ladezeit.
     if not os.path.isdir(quelle):
         return 0
     dateien = [f for f in sorted(os.listdir(quelle))
@@ -612,7 +616,7 @@ def bilder_kopieren(quelle, ziel, maxbreite=1600):
     except ImportError:
         raise Abbruch("Es liegen %d Bilder in %s, aber Pillow ist nicht installiert."
                       % (len(dateien), quelle))
-    from PIL import ImageOps
+    from PIL import ImageOps, ImageFilter
     os.makedirs(ziel, exist_ok=True)
     # Zuerst aufraeumen: Was im Quellordner nicht mehr liegt, muss auch aus
     # dem Generat verschwinden. Der Generator ergaenzte bisher nur, und
@@ -642,7 +646,17 @@ def bilder_kopieren(quelle, ziel, maxbreite=1600):
         # bleibt.
         if f.startswith("portraet_"):
             bild = ImageOps.grayscale(bild).convert("RGB")
-        bild.save(os.path.join(ziel, f), quality=86, optimize=True, progressive=True)
+        # Unschaerfemaske zum Schluss. Jedes Verkleinern kostet Kanten, und
+        # die Quellen sind Handyfotos, die schon vor dem Verkleinern weich
+        # sind. Radius klein und Schwelle 3, damit das Bildrauschen in
+        # Waenden und Himmel nicht mitgeschaerft wird -- ohne Schwelle sieht
+        # eine glatte Flaeche danach griesig aus.
+        #
+        # Das Schaerfen steht hier und nicht in den Vault-Dateien: zweimal
+        # geschaerft gibt Saeume an Kontrastkanten, und welche Datei schon
+        # durch war, sieht man ihr nicht an.
+        bild = bild.filter(ImageFilter.UnsharpMask(radius=1.2, percent=100, threshold=3))
+        bild.save(os.path.join(ziel, f), quality=84, optimize=True, progressive=True)
     return len(dateien)
 
 

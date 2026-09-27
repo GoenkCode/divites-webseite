@@ -144,18 +144,21 @@ a:focus-visible, button:focus-visible {
   margin: 0 auto;
   padding: var(--s6) 0 var(--s6) var(--s3);
   display: grid;
-  grid-template-columns: 1fr 24rem;
+  grid-template-columns: 1fr 30rem;
   align-items: center;
   gap: 0;
 }
 .auftakt__text { min-width: 0; position: relative; z-index: 2; }
 
-/* Bild bricht nach rechts aus dem Raster und laeuft aus dem Bild. */
+/* Bild bricht nach rechts aus dem Raster und laeuft aus dem Bild.
+   Quadratisch war es, solange hier das alte Gruppenfoto stand. Das
+   Kurhausbild ist hochformatig; im Quadrat blieb von den Musikern wenig
+   und vom Saal gar nichts. Jetzt 4:5 und 30rem statt 24rem breit. */
 .auftakt__bild {
   margin: 0;
-  width: 24rem;
+  width: 30rem;
   max-width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 5;
   position: relative;
   z-index: 1;
   justify-self: end;
@@ -863,16 +866,13 @@ main > h1 + .besetzung { border-top: 0; margin-top: 0; padding-top: 0; }
 
 /* Auftakt: das Kurhausfoto hat das quadratische Gewoelbebild abgeloest.
    Jenes hatte 920 Bildpunkte und einen Orangestich, der Hauttoene
-   verschiebt -- kitschiger als das goldene Neue. */
+   verschiebt -- kitschiger als das goldene Neue.
+
+   Format und Breite stehen oben bei .auftakt__bild. Hier stand beides
+   ein zweites Mal und wurde von der frueheren Regel ueberstimmt: das
+   Bild blieb quadratisch, obwohl hier 4:5 steht. Zwei Regeln fuer
+   dieselbe Sache, die staerkere gewinnt -- und es faellt niemandem auf. */
 .auftakt__bild img {
-  display: block;
-  width: 100%;
-  height: auto;
-  /* 4:5 statt der nativen 3:4: in der halben Seitenspalte waere 3:4 auf
-     einem 800 px hohen Laptop unten abgeschnitten. 4:5 kostet nur
-     133 px Kassettendecke. */
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
   /* Unten verankern: Buehnenkante und Fuesse tragen die Komposition,
      die Decke vertraegt den Anschnitt. */
   object-position: 50% 100%;
