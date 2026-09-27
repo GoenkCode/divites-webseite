@@ -1,0 +1,424 @@
+/* ===========================================================================
+   Divites Quartett — Stylesheet
+   Richtung B, geschaerft: hochwertiges Programmheft statt Tourplakat.
+
+   Leitgedanken:
+   - Hochwertigkeit entsteht durch Praezision, nicht durch Ornament.
+     Wenige Farben, wiederkehrende Abstaende, harte Kanten.
+   - Serif fuer alles Gelesene (klassisch), Groteske fuer Namen und
+     Bedienelemente (modern). Diese Mischung traegt den Anspruch,
+     ohne dass Dekoration noetig wird.
+   - Kein Gold, kein Bordeaux, kein Kerzenlicht, keine Verlaeufe,
+     keine Animationen. Genau das macht Musikerseiten kitschig.
+   =========================================================================== */
+
+:root {
+  --papier:      #f6f4f1;
+  --papier-tief: #eceae5;
+  --tinte:       #14130f;
+  --tinte-matt:  #55514a;
+  --linie:       #d8d4cc;
+  --akzent:      #a8341a;   /* nur fuer Interaktion und Datumsmarken */
+  --auf-dunkel:  #f6f4f1;
+
+  --spalte: 68rem;
+  --spalte-text: 38rem;
+
+  /* ein einziger Abstandsrhythmus, ueberall wiederverwendet */
+  --s1: .5rem;  --s2: 1rem;   --s3: 1.5rem;
+  --s4: 2.5rem; --s5: 4rem;   --s6: 6.5rem;
+
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  --grotesk: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --papier:      #100f0d;
+    --papier-tief: #191714;
+    --tinte:       #eeebe5;
+    --tinte-matt:  #a8a299;
+    --linie:       #302c27;
+    --akzent:      #e8734d;
+    --auf-dunkel:  #f6f4f1;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--tinte);
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+}
+
+.sprung {
+  position: absolute; left: -9999px;
+  background: var(--tinte); color: var(--papier);
+  padding: var(--s2); z-index: 10;
+}
+.sprung:focus { left: var(--s2); top: var(--s2); }
+
+a { color: inherit; }
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--akzent);
+  outline-offset: 3px;
+}
+
+/* --- Kopf ---------------------------------------------------------------- */
+
+.kopf {
+  border-bottom: 1px solid var(--linie);
+  background: var(--papier);
+}
+.kopf__innen {
+  max-width: var(--spalte);
+  margin: 0 auto;
+  padding: var(--s3) var(--s3);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2) var(--s4);
+  align-items: baseline;
+  justify-content: space-between;
+}
+.marke {
+  font-family: var(--grotesk);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.marke__zweite { font-weight: 400; margin-left: .5em; color: var(--tinte-matt); }
+
+.nav ul {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: var(--s3);
+}
+.nav a {
+  font-family: var(--grotesk);
+  font-size: .8125rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+}
+.nav a:hover { border-bottom-color: var(--linie); }
+.nav a[aria-current="page"] { border-bottom-color: var(--akzent); }
+
+/* --- Auftakt ------------------------------------------------------------- */
+
+.auftakt {
+  position: relative;
+  min-height: min(78vh, 40rem);
+  display: grid;
+  align-items: end;
+  background: var(--papier-tief);
+  border-bottom: 1px solid var(--linie);
+  overflow: hidden;
+}
+.auftakt__bild {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+      45deg, var(--papier-tief), var(--papier-tief) 12px,
+      var(--linie) 12px, var(--linie) 13px);
+  display: grid; place-items: center;
+  font-family: var(--grotesk); font-size: .8125rem;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--tinte-matt);
+}
+.auftakt__innen {
+  position: relative;
+  max-width: var(--spalte);
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--s6) var(--s3) var(--s4);
+}
+.auftakt h1 {
+  font-family: var(--grotesk);
+  font-weight: 800;
+  font-size: clamp(2.75rem, 11vw, 7rem);
+  line-height: .92;
+  letter-spacing: -.035em;
+  margin: 0;
+  text-transform: uppercase;
+}
+.auftakt__unter {
+  font-size: clamp(1.0625rem, 2.4vw, 1.375rem);
+  max-width: var(--spalte-text);
+  margin: var(--s3) 0 0;
+  color: var(--tinte-matt);
+}
+
+/* --- Abschnitte ---------------------------------------------------------- */
+
+.band { border-bottom: 1px solid var(--linie); }
+.band--tief { background: var(--papier-tief); }
+
+main > h1 {
+  font-family: var(--grotesk);
+  font-weight: 800;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  letter-spacing: -.03em;
+  text-transform: uppercase;
+  line-height: 1;
+  max-width: var(--spalte);
+  margin: var(--s5) auto var(--s3);
+  padding: 0 var(--s3);
+}
+main > h2 {
+  font-family: var(--grotesk);
+  font-weight: 700;
+  font-size: .8125rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--tinte-matt);
+  max-width: var(--spalte);
+  margin: var(--s5) auto var(--s2);
+  padding: 0 var(--s3);
+}
+main > h3 {
+  font-family: var(--grotesk);
+  font-size: 1.125rem;
+  max-width: var(--spalte);
+  margin: var(--s3) auto var(--s1);
+  padding: 0 var(--s3);
+}
+main > p, main > ul, main > blockquote {
+  max-width: var(--spalte-text);
+  margin-left: auto; margin-right: auto;
+  padding: 0 var(--s3);
+}
+main > p { margin-top: 0; margin-bottom: var(--s2); }
+main > ul { margin-bottom: var(--s2); }
+
+main > blockquote {
+  border-left: 3px solid var(--akzent);
+  padding-left: var(--s2);
+  margin-top: var(--s3); margin-bottom: var(--s3);
+  font-size: 1.1875rem;
+}
+main > blockquote p { margin: 0; }
+
+.platzhalter {
+  background: transparent;
+  color: var(--akzent);
+  font-family: var(--grotesk);
+  font-size: .75rem;
+  letter-spacing: .1em;
+  border: 1px solid var(--akzent);
+  padding: .1em .45em;
+  border-radius: 2px;
+}
+
+/* --- Termine ------------------------------------------------------------- */
+
+.filter {
+  max-width: var(--spalte);
+  margin: 0 auto var(--s3);
+  padding: 0 var(--s3);
+  display: flex; flex-wrap: wrap; gap: var(--s2);
+  align-items: center;
+}
+.filter__titel {
+  font-family: var(--grotesk); font-size: .75rem;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--tinte-matt);
+}
+.filter__knoepfe { display: flex; flex-wrap: wrap; gap: var(--s1); }
+.filter__knopf {
+  font-family: var(--grotesk); font-size: .8125rem;
+  letter-spacing: .04em;
+  background: transparent;
+  color: var(--tinte);
+  border: 1px solid var(--linie);
+  padding: .4em .9em;
+  cursor: pointer;
+}
+.filter__knopf:hover { border-color: var(--tinte-matt); }
+.filter__knopf[aria-pressed="true"] {
+  background: var(--tinte); color: var(--papier); border-color: var(--tinte);
+}
+
+.termine {
+  list-style: none;
+  max-width: var(--spalte);
+  margin: 0 auto var(--s4);
+  padding: 0 var(--s3);
+}
+.termine__trenner {
+  font-family: var(--grotesk); font-weight: 700;
+  font-size: .8125rem; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--tinte-matt);
+  max-width: var(--spalte); margin: var(--s5) auto var(--s2); padding: 0 var(--s3);
+}
+
+.termin {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: var(--s3);
+  padding: var(--s3) 0;
+  border-top: 1px solid var(--linie);
+  align-items: start;
+}
+.termin:last-child { border-bottom: 1px solid var(--linie); }
+
+.termin__marke {
+  background: var(--tinte);
+  color: var(--auf-dunkel);
+  font-family: var(--grotesk);
+  text-align: center;
+  padding: var(--s1) 0 .65rem;
+  display: grid;
+  line-height: 1;
+}
+.termin__tag { font-size: 2rem; font-weight: 800; letter-spacing: -.02em; }
+.termin__monat {
+  font-size: .75rem; letter-spacing: .16em; text-transform: uppercase;
+  margin-top: .3rem;
+}
+.termin__jahr { font-size: .6875rem; color: #9b958c; margin-top: .25rem; }
+
+.termin__programm {
+  font-family: var(--grotesk);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -.01em;
+  margin: 0 0 .15rem;
+}
+.termin__wann, .termin__wo { margin: 0; font-size: .9375rem; }
+.termin__wann { color: var(--tinte-matt); }
+.termin__ort { font-weight: 600; }
+a.termin__ort { text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a.termin__ort:hover { color: var(--akzent); }
+.termin__adresse { color: var(--tinte-matt); }
+.termin__adresse::before { content: " · "; }
+.termin__hinweis {
+  font-family: var(--grotesk); font-size: .75rem;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--akzent); margin: var(--s1) 0 0;
+}
+.termin--abgesagt .termin__programm,
+.termin--abgesagt .termin__wann,
+.termin--abgesagt .termin__wo { text-decoration: line-through; opacity: .6; }
+
+.leer {
+  max-width: var(--spalte); margin: 0 auto var(--s4); padding: 0 var(--s3);
+  color: var(--tinte-matt);
+}
+
+/* --- Stimmen ------------------------------------------------------------- */
+
+.stimmen {
+  max-width: var(--spalte);
+  margin: 0 auto;
+  padding: var(--s5) var(--s3);
+  display: grid;
+  gap: var(--s3);
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+.stimme { margin: 0; border-top: 2px solid var(--tinte); padding-top: var(--s2); }
+.stimme p { margin: 0 0 var(--s1); font-size: 1.0625rem; }
+.stimme figcaption {
+  font-family: var(--grotesk); font-size: .75rem;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--tinte-matt);
+}
+
+/* --- Medien und Mitglieder ----------------------------------------------- */
+
+.raster {
+  max-width: var(--spalte);
+  margin: 0 auto var(--s4);
+  padding: 0 var(--s3);
+  display: grid;
+  gap: var(--s3);
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  list-style: none;
+}
+.platz {
+  aspect-ratio: 16 / 9;
+  background: var(--papier-tief);
+  border: 1px dashed var(--linie);
+  display: grid; place-items: center;
+  font-family: var(--grotesk); font-size: .75rem;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--tinte-matt);
+  text-align: center; padding: var(--s2);
+}
+.platz--portraet { aspect-ratio: 3 / 4; }
+
+.mitglied { margin: 0; }
+.mitglied h3 {
+  font-family: var(--grotesk); font-weight: 700; font-size: 1.125rem;
+  margin: var(--s2) 0 0;
+}
+.mitglied p { margin: .15rem 0 0; }
+.mitglied .rolle {
+  font-family: var(--grotesk); font-size: .75rem;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--tinte-matt);
+}
+
+/* --- Fuss ---------------------------------------------------------------- */
+
+.fuss {
+  border-top: 1px solid var(--linie);
+  margin-top: var(--s6);
+  background: var(--papier-tief);
+}
+.fuss__innen {
+  max-width: var(--spalte);
+  margin: 0 auto;
+  padding: var(--s4) var(--s3);
+  display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4);
+  justify-content: space-between; align-items: baseline;
+  font-family: var(--grotesk); font-size: .8125rem;
+}
+.fuss__name { font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin: 0; }
+.fuss__links { list-style: none; display: flex; gap: var(--s3); margin: 0; padding: 0; }
+.fuss__jahr { color: var(--tinte-matt); margin: 0; }
+
+/* --- Schmale Fenster ----------------------------------------------------- */
+
+@media (max-width: 34rem) {
+  .termin { grid-template-columns: 4.25rem 1fr; gap: var(--s2); }
+  .termin__tag { font-size: 1.5rem; }
+  .kopf__innen { flex-direction: column; align-items: flex-start; gap: var(--s2); }
+  .nav ul { gap: var(--s2); }
+  .auftakt__innen { padding-top: var(--s5); }
+}
+
+/* Bewegung respektieren, obwohl die Seite ohnehin keine Animationen hat */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* --- Hinweisboxen -------------------------------------------------------- */
+/* Fuer Callouts aus den Seitentexten. Sichtbar, nicht dezent: sie markieren
+   unfertige Stellen und sollen auffallen, solange die Seite im Aufbau ist. */
+
+.hinweis {
+  max-width: var(--spalte-text);
+  margin: var(--s3) auto;
+  padding: var(--s2);
+  border: 1px solid var(--akzent);
+  border-left-width: 3px;
+  font-size: .9375rem;
+  display: block;
+}
+.hinweis__marke {
+  font-family: var(--grotesk);
+  font-size: .6875rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--akzent);
+  display: block;
+  margin-bottom: .2rem;
+}

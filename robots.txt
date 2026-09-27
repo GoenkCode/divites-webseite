@@ -1,0 +1,4 @@
+# Die Seite ist im Aufbau und soll nicht in Suchmaschinen erscheinen.
+# Zusaetzlich traegt jede Seite ein noindex im Kopf.
+User-agent: *
+Disallow: /
