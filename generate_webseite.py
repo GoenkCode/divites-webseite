@@ -188,6 +188,39 @@ def stadt_aus_adresse(adresse):
     return stadt
 
 
+def termin_html(t, folge=False):
+    """Eine Terminzeile. folge=True bei mehreren Konzerten am selben Tag."""
+    klassen = "termin"
+    if t["abgesagt"]:
+        klassen += " termin--abgesagt"
+    if folge:
+        klassen += " termin--folge"
+    a = []
+    a.append('  <li class="%s" data-ort="%s">'
+             % (klassen, html.escape(stadt_aus_adresse(t["adresse"]), True)))
+    a.append('    <div class="termin__marke">')
+    a.append('      <span class="termin__tag">%02d</span>' % t["datum"].day)
+    a.append('      <span class="termin__monat">%s</span>' % MONATE[t["datum"].month - 1][:3])
+    a.append('      <span class="termin__jahr">%d</span>' % t["datum"].year)
+    a.append('    </div>')
+    a.append('    <div class="termin__inhalt">')
+    a.append('      <h3 class="termin__programm">%s</h3>' % html.escape(t["programm"]))
+    a.append('      <p class="termin__wann"><time datetime="%sT%s">%s, %s Uhr</time></p>'
+             % (t["datum"].isoformat(), t["uhrzeit"], datum_lang(t["datum"]), t["uhrzeit"]))
+    if t["ticket"]:
+        ort = ('<a class="termin__ort" href="%s" rel="noopener">%s</a>'
+               % (html.escape(t["ticket"], True), html.escape(t["ort"])))
+    else:
+        ort = '<span class="termin__ort">%s</span>' % html.escape(t["ort"])
+    a.append('      <p class="termin__wo">%s<span class="termin__adresse">%s</span></p>'
+             % (ort, html.escape(t["adresse"])))
+    if t["abgesagt"]:
+        a.append('      <p class="termin__hinweis">Abgesagt</p>')
+    a.append('    </div>')
+    a.append('  </li>')
+    return "\n".join(a)
+
+
 def termine_html(termine, heute, nur_naechste=None):
     """Baut die Terminliste. Orte werden nur verlinkt, wenn ein Link da ist."""
     kommend = [t for t in termine if t["datum"] >= heute]
@@ -218,7 +251,41 @@ def termine_html(termine, heute, nur_naechste=None):
         teile.append('  </div>')
         teile.append('</div>')
 
-    def liste(eintraege, titel=None):
+    def liste(eintraege, titel=None, nach_monaten=False):
+        """
+        Baut die Terminliste. Mit nach_monaten=True wird nach Monaten
+        gegliedert: vierzig gleichfoermige Zeilen sind sonst nicht zu
+        ueberblicken.
+
+        Mehrere Konzerte am selben Tag bekommen ab dem zweiten die Klasse
+        termin--folge. Die Datumsmarke wird dort zurueckgenommen, damit
+        derselbe Tag nicht dreimal gleich laut dasteht.
+        """
+        if nach_monaten:
+            aus = []
+            monat_jetzt = None
+            offen = False
+            letzter_tag = None
+            for t in eintraege:
+                mk = (t["datum"].year, t["datum"].month)
+                if mk != monat_jetzt:
+                    if offen:
+                        aus.append('</ul>')
+                        aus.append('</section>')
+                    kennung = "m-%04d-%02d" % mk
+                    aus.append('<section class="monat" aria-labelledby="%s">' % kennung)
+                    aus.append('<h2 class="monat__titel" id="%s">%s <span class="monat__jahr">%d</span></h2>'
+                               % (kennung, MONATE[mk[1] - 1], mk[0]))
+                    aus.append('<ul class="termine" data-termine>')
+                    monat_jetzt, offen, letzter_tag = mk, True, None
+                folge = (letzter_tag == t["datum"])
+                aus.append(termin_html(t, folge))
+                letzter_tag = t["datum"]
+            if offen:
+                aus.append('</ul>')
+                aus.append('</section>')
+            return "\n".join(aus)
+
         aus = []
         if titel:
             aus.append('<h2 class="termine__trenner">%s</h2>' % html.escape(titel))
@@ -255,7 +322,7 @@ def termine_html(termine, heute, nur_naechste=None):
         return "\n".join(aus)
 
     if kommend:
-        teile.append(liste(kommend))
+        teile.append(liste(kommend, nach_monaten=not nur_naechste))
     else:
         teile.append('<p class="leer">Zurzeit sind keine Termine angekuendigt.</p>')
     if vergangen:
