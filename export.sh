@@ -24,7 +24,11 @@ echo "== Bauen =="
 python3 generate_webseite.py
 
 # Ein Deploy mit leerer Terminliste waere schlimmer als ein veralteter Stand.
-anzahl="$(grep -c 'class="termin"' build/termine.html || true)"
+# '<li class="termin' statt 'class="termin"': seit der Monatsgliederung
+# tragen Folgetermine am selben Tag die Klasse "termin termin--folge".
+# Die alte Zaehlung traf die nicht und meldete 24 statt 40 - eine
+# Sicherung, die zu niedrig zaehlt, schlaegt irgendwann falsch an.
+anzahl="$(grep -c '<li class="termin' build/termine.html || true)"
 if [ "${anzahl:-0}" -lt 1 ]; then
   echo "ABBRUCH: keine Termine im Generat." >&2
   exit 1
