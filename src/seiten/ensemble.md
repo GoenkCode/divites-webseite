@@ -39,7 +39,3 @@
 <p>Cellistin, Jahrgang 1993. Zwei Master in einem Jahr, einen in Köln, einen in Frankfurt. 2021 erster Preis beim Felix-Mendelssohn-Bartholdy-Hochschulwettbewerb mit ihrem Trio Hannari. Von 2019 bis 2023 im Opern- und Museumsorchester Frankfurt, dazu hr-Sinfonieorchester und Ensemble Modern. In ihrem ensemble in transition trifft neue Musik auf Gebärdenpoesie, gespielt für hörendes und gehörloses Publikum zugleich.</p>
 </li>
 </ul>
-
-## Zu den Texten
-
-Die Angaben stammen aus öffentlich zugänglichen Quellen: Orchesterbiografien, Hochschulseiten, Wettbewerbsarchive, Zeitungskritiken. Nichts davon ist ausgeschmückt.
