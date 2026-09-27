@@ -614,6 +614,16 @@ def bilder_kopieren(quelle, ziel, maxbreite=1600):
                       % (len(dateien), quelle))
     from PIL import ImageOps
     os.makedirs(ziel, exist_ok=True)
+    # Zuerst aufraeumen: Was im Quellordner nicht mehr liegt, muss auch aus
+    # dem Generat verschwinden. Der Generator ergaenzte bisher nur, und
+    # export.sh spiegelt build/ eins zu eins nach gh-pages -- ein geloeschtes
+    # Bild waere also online liegengeblieben. Bei neun ausgetauschten
+    # Videovorschauen ist das Unordnung; bei einem Bild, das aus Rechtegruenden
+    # weg muss, ist es der eigentliche Schaden.
+    bekannt = set(dateien)
+    for f in os.listdir(ziel):
+        if f not in bekannt and os.path.isfile(os.path.join(ziel, f)):
+            os.remove(os.path.join(ziel, f))
     for f in dateien:
         bild = Image.open(os.path.join(quelle, f))
         # EXIF-Drehung anwenden. Viele Kameras speichern Hochformat als
