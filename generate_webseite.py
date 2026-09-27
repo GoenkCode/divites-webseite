@@ -550,6 +550,9 @@ def main():
             for f in sorted(os.listdir(statisch)):
                 q = os.path.join(statisch, f)
                 if os.path.isfile(q):
+                    # .nojekyll verhindert, dass GitHub das fertige HTML noch
+                    # durch Jekyll schickt. Ohne die Datei schlaegt der Build
+                    # fehl oder verschluckt Dateien mit Unterstrich.
                     io.open(os.path.join(args.ausgabe, f), "w", encoding="utf-8").write(
                         io.open(q, encoding="utf-8").read())
                     kopiert += 1
