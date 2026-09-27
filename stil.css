@@ -123,40 +123,71 @@ a:focus-visible, button:focus-visible {
 
 /* --- Auftakt ------------------------------------------------------------- */
 
-/* Zweispaltig statt Bild-als-Hintergrund. Grund: das vorhandene
-   Gruppenfoto ist quadratisch und 920 px breit. Ueber die volle
-   Fensterbreite gezogen waere es auf jedem Desktop hochskaliert und
-   oben wie unten hart beschnitten — die Koepfe zuerst. Nebeneinander
-   bleibt es in seiner echten Aufloesung scharf.
-   Sobald ein breites Pressefoto in hoher Aufloesung vorliegt, kann
-   hier wieder auf einen vollflaechigen Auftakt umgestellt werden. */
+/* Auftakt: dunkle Buehne, Bild randabfallend, Name greift darueber.
+
+   Warum nicht gross und vollflaechig: das Foto hat 920x920 Pixel. Auf
+   einem Retina-Display sind das 460 Pixel scharfe Anzeigebreite. Ueber
+   die halbe Seite gezogen wird es matschig. Also arbeitet das Layout
+   mit Setzung statt Groesse: Schwarz als Buehne, das warme Goldbild
+   als einziger Farbfleck, der Name greift ueber die Kante.
+   
+   Sobald ein Pressefoto in hoher Aufloesung vorliegt, kann die Flaeche
+   wachsen, ohne dass sich sonst etwas aendert. */
 .auftakt {
-  border-bottom: 1px solid var(--linie);
-  background: var(--papier-tief);
+  background: #0d0c0b;
+  color: #f6f4f1;
+  border-bottom: 1px solid #0d0c0b;
+  overflow: hidden;
 }
 .auftakt__innen {
   max-width: var(--spalte);
   margin: 0 auto;
-  padding: var(--s5) var(--s3);
+  padding: var(--s6) 0 var(--s6) var(--s3);
   display: grid;
-  grid-template-columns: 1fr minmax(16rem, 26rem);
-  gap: var(--s4);
+  grid-template-columns: 1fr 24rem;
   align-items: center;
+  gap: 0;
 }
-.auftakt__text { min-width: 0; }
+.auftakt__text { min-width: 0; position: relative; z-index: 2; }
+
+.auftakt h1 {
+  font-family: var(--grotesk);
+  font-weight: 800;
+  font-size: clamp(2.75rem, 9.5vw, 6.5rem);
+  line-height: .88;
+  letter-spacing: -.04em;
+  margin: 0;
+  text-transform: uppercase;
+  color: #f6f4f1;
+}
+.auftakt__unter {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  max-width: 30rem;
+  margin: var(--s3) 0 0;
+  color: #a8a299;
+}
+
+/* Bild bricht nach rechts aus dem Raster und laeuft aus dem Bild. */
 .auftakt__bild {
+  margin: 0;
+  width: 24rem;
+  max-width: 100%;
   aspect-ratio: 1 / 1;
-  background: var(--papier);
-  border: 1px solid var(--linie);
-  display: grid; place-items: center;
-  font-family: var(--grotesk); font-size: .8125rem;
-  letter-spacing: .12em; text-transform: uppercase;
-  color: var(--tinte-matt);
-  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  justify-self: end;
 }
 .auftakt__bild img {
   width: 100%; height: 100%;
   object-fit: cover; display: block;
+}
+/* Weicher Uebergang zur schwarzen Flaeche, damit die Bildkante links
+   nicht als harte Naht neben dem Text steht. */
+.auftakt__bild::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, #0d0c0b 0%, rgba(13,12,11,0) 38%);
+  pointer-events: none;
 }
 .auftakt h1 {
   font-family: var(--grotesk);
@@ -406,7 +437,15 @@ a.termin__ort:hover { color: var(--akzent); }
    wurde dort unnoetig hoch und die Raender zu knapp. */
 
 @media (max-width: 64rem) {
-  .auftakt__innen { grid-template-columns: 1fr; gap: var(--s3); }
+  .auftakt__innen {
+    grid-template-columns: 1fr;
+    gap: var(--s3);
+    padding: var(--s5) var(--s2);
+  }
+  .auftakt__bild { width: 100%; max-width: 26rem; justify-self: start; }
+  /* Auf schmalen Schirmen steht das Bild unter dem Text, ein
+     seitlicher Verlauf ergaebe dort keinen Sinn mehr. */
+  .auftakt__bild::after { background: none; }
   .kopf__innen,
   .auftakt__innen { padding-left: var(--s2); padding-right: var(--s2); }
   main > h1, main > h2, main > h3,
