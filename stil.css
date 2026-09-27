@@ -558,3 +558,46 @@ a.termin__ort:hover { color: var(--akzent); }
 .video__quelle a { color: var(--tinte-matt); }
 
 @media (hover: none) { .video__flaeche:hover { border-color: var(--linie); } }
+
+/* --- Stimmen im Wechsel --------------------------------------------------- */
+/* Ohne JavaScript greift nichts davon: dann stehen alle Zitate
+   untereinander, so wie im Markup. Erst stimmen.js setzt die Klasse
+   stimmen--wechsel und stapelt sie. */
+
+.stimmen--wechsel {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 9rem;
+  align-items: center;
+}
+.stimmen--wechsel .stimme {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1.1s ease-in-out, visibility 0s linear 1.1s;
+  max-width: 44rem;
+  margin: 0 auto;
+  text-align: center;
+  border-top: 0;
+  padding-top: 0;
+}
+.stimmen--wechsel .stimme--sichtbar {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1.1s ease-in-out, visibility 0s linear 0s;
+}
+.stimmen--wechsel .stimme p {
+  font-size: clamp(1.0625rem, 2.2vw, 1.375rem);
+  line-height: 1.5;
+}
+.stimmen--wechsel .stimme figcaption { margin-top: var(--s2); }
+
+/* Wer Bewegung abgestellt hat, bekommt sie auch hier nicht. Das Skript
+   greift dann gar nicht erst; diese Regel ist die zweite Sicherung. */
+@media (prefers-reduced-motion: reduce) {
+  .stimmen--wechsel { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); min-height: 0; }
+  .stimmen--wechsel .stimme {
+    grid-area: auto; opacity: 1; visibility: visible; transition: none;
+    border-top: 2px solid var(--tinte); padding-top: var(--s2); text-align: left;
+  }
+}
