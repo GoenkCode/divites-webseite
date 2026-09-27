@@ -4,7 +4,7 @@
 <h2 class="besetzung__instrument">Violine</h2>
 <ul class="besetzung__personen">
 <li class="mitglied">
-<div class="platz platz--portraet">[PORTRÄT FOLGT]</div>
+<img class="portraet" src="bilder/portraet_marta.jpg" width="520" height="693" alt="Marta Danilkovich, Violinistin, Gruenderin und Leiterin des Divites Quartetts" loading="lazy">
 <h3>Marta Danilkovich</h3>
 <p class="rolle">Gründerin und Leitung</p>
 <p>Violinistin aus Minsk. Geige seit dem sechsten Lebensjahr, Studium an der Belarussischen Staatlichen Musikakademie, seit 2013 in Frankfurt. 2019 erste Plätze in Salzburg, Amsterdam und Belgrad, im selben Jahr ein Auftritt in der Weill Recital Hall der Carnegie Hall. Sie hat das Divites Quartett gegründet und leitet es. Ihre Geige baute M. Deconet um 1750 in Venedig, eine Leihgabe des Mainzer Geigenbaumeisters Peter Körner. Nebenher leitet sie eine Metal-Band. Die wurde 2015 zur besten Band Hessens gewählt.</p>
