@@ -12,13 +12,20 @@
      keine Animationen. Genau das macht Musikerseiten kitschig.
    =========================================================================== */
 
+/* Die Seite ist dunkel, und zwar immer. Bis zum 27.09.2026 folgte sie
+   prefers-color-scheme und hatte zwei Fassungen; auf Victors Wunsch ist
+   die helle entfallen. color-scheme: dark sagt es auch dem Browser, damit
+   Bildlaufleisten und Formularfelder mitziehen statt hell dazwischen zu
+   stehen. */
 :root {
-  --papier:      #f6f4f1;
-  --papier-tief: #eceae5;
-  --tinte:       #14130f;
-  --tinte-matt:  #55514a;
-  --linie:       #d8d4cc;
-  --akzent:      #a8341a;   /* nur fuer Interaktion und Datumsmarken */
+  color-scheme: dark;
+
+  --papier:      #100f0d;
+  --papier-tief: #191714;
+  --tinte:       #eeebe5;
+  --tinte-matt:  #a8a299;
+  --linie:       #302c27;
+  --akzent:      #e8734d;   /* nur fuer Interaktion und Datumsmarken */
   --auf-dunkel:  #f6f4f1;
 
   --spalte: 68rem;
@@ -30,18 +37,6 @@
 
   --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
   --grotesk: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --papier:      #100f0d;
-    --papier-tief: #191714;
-    --tinte:       #eeebe5;
-    --tinte-matt:  #a8a299;
-    --linie:       #302c27;
-    --akzent:      #e8734d;
-    --auf-dunkel:  #f6f4f1;
-  }
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -878,15 +873,6 @@ main > h1 + .besetzung { border-top: 0; margin-top: 0; padding-top: 0; }
   object-position: 50% 100%;
 }
 
-.auftakt__zeile,
-.bildband__zeile {
-  margin-top: var(--s1);
-  font-family: var(--grotesk);
-  font-size: .875rem;
-  /* --tinte-matt auf --papier: 7,19:1 hell, 7,57:1 dunkel. Beide AA. */
-  color: var(--tinte-matt);
-}
-
 /* Bildband: ein Querformat in voller Seitenspalte, nicht in voller
    Fensterbreite. Die Quelle ist 1600 px breit; bei 68rem (1088 px) ergibt
    das 1,47-fache Dichte. Randlos ueber einen 1440-px-Schirm mit doppelter
@@ -910,17 +896,10 @@ main > h1 + .besetzung { border-top: 0; margin-top: 0; padding-top: 0; }
   object-position: 50% 40%;
 }
 
-/* Ausnahme von "kein Rahmen", einzeln begruendet: Die Wand im Treppenhaus
-   misst 244/244/242, --papier liegt bei 246/244/241. Ohne Linie
-   verschwindet im hellen Modus die obere und linke Bildkante, und das Bild
-   wird zum Fleck statt zur Flaeche. Die Linie ist die Kante, kein Schmuck.
-   Im dunklen Modus ist die Kante von selbst da. */
-@media (prefers-color-scheme: light) {
-  .bildband__bild--hell {
-    outline: 1px solid var(--linie);
-    outline-offset: -1px;
-  }
-}
+/* Die Linie am Treppenhausbild ist entfallen. Sie war noetig, solange es
+   einen hellen Modus gab: Die Wand im Bild misst 244/244/242, das helle
+   Papier lag bei 246/244/241, und die obere und linke Bildkante
+   verschwand. Auf dunklem Grund ist die Kante von selbst da. */
 
 /* Nebenbild in Textspaltenbreite: es ordnet sich dem Text unter, statt
    eine zweite Buehne neben dem Auftakt aufzumachen. */
