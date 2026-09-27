@@ -58,6 +58,8 @@ Divites kommt vom lateinischen *dives*: reich. Gemeint ist nicht das Konto. Geme
 
 Vivaldi. Metallica. Hans Zimmer. Queen. Vier Streichinstrumente, eigene Arrangements, kein einziger Verstärker. Was im Original nach Stadion klingt, klingt hier nach Saal. Und funktioniert trotzdem.
 
+Zwischen den Stücken wird geredet. Kurz, trocken, ohne Programmheft-Prosa. Wer Angst vor Musikwissenschaft hat: unbegründet.
+
 Marta Danilkovich hat das Quartett 2020 gegründet. Gespielt wird bei Kerzenlicht, in der Jahrhunderthalle Frankfurt, im Wiesbadener Kurhaus, im Schlosstheater im Neuen Palais in Berlin. Die meisten Konzerte sind ausverkauft.
 
 Das Quartett ist kein festes Quartett. Es ist ein Kreis von Musikerinnen und Musikern, die sich abwechseln, jede und jeder mit eigener Laufbahn: Solocellist eines Staatstheaters, Preisträgerin des Mendelssohn-Wettbewerbs, ECHO-Klassik-Preisträger. Wer an dem Abend spielt, steht im Programm.
