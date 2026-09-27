@@ -523,13 +523,27 @@ def bilder_kopieren(quelle, ziel, maxbreite=1600):
     except ImportError:
         raise Abbruch("Es liegen %d Bilder in %s, aber Pillow ist nicht installiert."
                       % (len(dateien), quelle))
+    from PIL import ImageOps
     os.makedirs(ziel, exist_ok=True)
     for f in dateien:
         bild = Image.open(os.path.join(quelle, f))
+        # EXIF-Drehung anwenden. Viele Kameras speichern Hochformat als
+        # Querformat mit einem Drehvermerk; wer den ignoriert, legt das
+        # Bild auf die Seite.
+        bild = ImageOps.exif_transpose(bild)
+        if bild.mode != "RGB":
+            bild = bild.convert("RGB")
         if bild.width > maxbreite:
             hoehe = int(bild.height * maxbreite / float(bild.width))
             bild = bild.resize((maxbreite, hoehe), Image.LANCZOS)
-        bild.save(os.path.join(ziel, f))
+        # Portraets entfaerben. Die sieben Fotos kommen aus sieben Quellen,
+        # mit verschiedenen Hintergruenden und verschiedenem Licht. In Farbe
+        # nebeneinander wirkt das zusammengewuerfelt; entfaerbt wird daraus
+        # eine Reihe. Erkannt am Dateinamen, damit das Gruppenfoto in Farbe
+        # bleibt.
+        if f.startswith("portraet_"):
+            bild = ImageOps.grayscale(bild).convert("RGB")
+        bild.save(os.path.join(ziel, f), quality=86, optimize=True, progressive=True)
     return len(dateien)
 
 
