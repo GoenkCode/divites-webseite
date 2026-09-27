@@ -812,7 +812,11 @@ main > h1 + .besetzung { border-top: 0; margin-top: 0; padding-top: 0; }
 .video__flaeche--bild .video__label,
 .video__flaeche--bild .video__pfeil,
 .video__flaeche--bild .video__hinweis { color: #f6f4f1; }
-.video__flaeche--bild .video__pfeil { color: #ff7a4d; }
+/* #ffc9b5 statt des kraeftigen Rostorange: auf einem hellen Standbild
+   kam der Pfeil unter der Abdunklung nur auf 2,15 zu 1. WCAG verlangt
+   fuer Bedienelemente 3 zu 1. Dieser Ton schafft 3,78 auf hellen und
+   13,68 auf dunklen Standbildern, bleibt also auf jedem Bild sichtbar. */
+.video__flaeche--bild .video__pfeil { color: #ffc9b5; }
 .video__flaeche--bild:hover::after { background: rgba(13, 12, 11, .45); }
 @media (hover: none) {
   .video__flaeche--bild:hover::after { background: rgba(13, 12, 11, .62); }
