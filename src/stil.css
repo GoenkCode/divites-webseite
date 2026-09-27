@@ -983,6 +983,12 @@ button {
    bereits einen Uebergang von 1,1 s. Eine zweite Regel mit 200 ms wuerde
    ihn verkuerzen, nicht ergaenzen. */
 .termin {
+  /* opacity: 1 steht hier ausdruecklich, obwohl es der Vorgabewert ist.
+     @starting-style liefert nur den Startwert; ohne sichtbaren Zielwert
+     an derselben Stelle liest sich die Regel, als koenne ein Termin auf
+     0 stehenbleiben. Bei etwas, das eine ganze Terminliste unsichtbar
+     machen wuerde, ist die ueberfluessige Zeile die guenstigere Wahl. */
+  opacity: 1;
   transition: opacity 200ms linear;
 }
 @starting-style {
