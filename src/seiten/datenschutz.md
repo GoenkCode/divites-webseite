@@ -16,7 +16,7 @@ Auf der Seite Musik sind Konzertmitschnitte von YouTube verfügbar, einem Dienst
 
 **Solange Sie kein Video anklicken, wird keine Verbindung zu Google hergestellt.** Es wird auch kein Vorschaubild geladen — die Flächen auf der Seite sind reine Gestaltung ohne Inhalte von Google.
 
-Erst wenn Sie ein Video starten, baut Ihr Browser eine Verbindung zu `youtube-nocookie.com` auf. Dabei wird Ihre IP-Adresse an Google übertragen, und Google kann weitere Daten über Ihr Gerät erheben. Wenn Sie währenddessen bei Google angemeldet sind, lässt sich der Abruf Ihrem Konto zuordnen.
+Erst wenn Sie ein Video starten, baut Ihr Browser eine Verbindung zu YouTube auf. Dabei wird Ihre IP-Adresse an Google übertragen, Google kann Cookies setzen und weitere Daten über Ihr Gerät erheben. Wenn Sie währenddessen bei Google angemeldet sind, lässt sich der Abruf Ihrem Konto zuordnen.
 
 Rechtsgrundlage ist Ihre Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO, die Sie mit dem Klick auf ein Video erteilen. Sie können sie jederzeit widerrufen, indem Sie die Seite neu laden und kein Video mehr starten.
 

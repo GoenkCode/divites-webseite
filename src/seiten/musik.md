@@ -1,7 +1,5 @@
 # Musik
 
-Mitschnitte aus Konzerten des Ensembles, aufgenommen bei Candlelight-Konzerten.
-
 <ul class="raster raster--video">
 <li class="video">
 <button type="button" class="video__flaeche" data-video="CAl57yL_zkg" data-titel="Pop Rock Mix">
