@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Divites Quartett</title>
+<style>
+/* ---------------------------------------------------------------
+   Richtung C – typografisch reduziert
+   Eine Spalte, ein Akzentton, keine Flächen, keine Kästen.
+   Alles Gestalterische liegt in Schriftgrad, Laufweite und Abstand.
+   --------------------------------------------------------------- */
+
+:root {
+  /* Papier, Tinte, ein einziger Akzent (warmes Rostrot – Kerzenlicht
+     als Temperatur, nicht als Bild; kein Gold, kein Bordeaux). */
+  --papier:   #fbf9f6;
+  --tinte:    #1c1a17;
+  --gedaempft:#5b554d;
+  --linie:    #ddd6cb;
+  --akzent:   #9a3b16;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --papier:   #14120f;
+    --tinte:    #ece8e1;
+    --gedaempft:#a49d92;
+    --linie:    #35302a;
+    --akzent:   #e2895c;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--tinte);
+  /* Reine System-Serif-Kette: ruhig, gedruckt, kein Zierschnitt. */
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino,
+               "Hoefler Text", "Book Antiqua", Georgia,
+               "Noto Serif", "Liberation Serif", serif;
+  font-size: 17px;
+  line-height: 1.65;
+  text-rendering: optimizeLegibility;
+}
+
+@media (min-width: 40em) {
+  body { font-size: 18px; }
+}
+
+/* Die Spalte: nie breiter als rund 65 Zeichen. */
+.spalte {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem 4rem;
+}
+
+@media (min-width: 40em) {
+  .spalte { padding: 6rem 2rem 5rem; }
+}
+
+/* --- Kopf ------------------------------------------------------ */
+
+h1 {
+  font-size: 1.75rem;
+  font-weight: normal;
+  letter-spacing: 0.015em;
+  line-height: 1.25;
+  margin: 0;
+}
+
+@media (min-width: 40em) {
+  h1 { font-size: 2rem; }
+}
+
+.untertitel {
+  margin: 0.5rem 0 0;
+  color: var(--gedaempft);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Der einzige Ort, an dem der Akzent Fläche wird: ein Haarstrich. */
+.strich {
+  border: 0;
+  border-top: 2px solid var(--akzent);
+  width: 2.5rem;
+  margin: 2rem 0 0;
+}
+
+/* --- Abschnitte ------------------------------------------------ */
+
+section { margin-top: 3.5rem; }
+
+h2 {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+               Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gedaempft);
+  margin: 0 0 1.25rem;
+}
+
+p { margin: 0 0 1.1rem; }
+
+p:last-child { margin-bottom: 0; }
+
+.platzhalter-marke {
+  color: var(--akzent);
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+               "Liberation Mono", monospace;
+  font-size: 0.78em;
+  letter-spacing: 0.04em;
+}
+
+/* --- Foto: klein, beiläufig, links in der Spalte --------------- */
+
+figure {
+  margin: 0;
+  max-width: 14rem;
+}
+
+.bildfeld {
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--linie);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  text-align: center;
+  color: var(--gedaempft);
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+               "Liberation Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+}
+
+figcaption {
+  margin-top: 0.5rem;
+  color: var(--gedaempft);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+/* --- Termine: reine Liste, kein Raster, keine Kästen ----------- */
+
+.termine {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.termine li {
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--linie);
+}
+
+.termine li:last-child { border-bottom: 1px solid var(--linie); }
+
+.termine .wann {
+  display: block;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.86rem;
+  color: var(--gedaempft);
+  letter-spacing: 0.02em;
+}
+
+.termine .was {
+  display: block;
+  margin-top: 0.15rem;
+}
+
+.termine .ort {
+  color: var(--gedaempft);
+}
+
+/* --- Hörproben: drei Flächen 16:9, nur Umriss ------------------ */
+
+.hoerproben {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hoerproben li { margin-bottom: 1rem; }
+
+.hoerproben li:last-child { margin-bottom: 0; }
+
+.tonfeld {
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--linie);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  text-align: center;
+  color: var(--gedaempft);
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+               "Liberation Mono", monospace;
+  font-size: 0.74rem;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+}
+
+/* --- Pressezitat: hervorgehoben allein durch Grad und Strich --- */
+
+blockquote {
+  margin: 0;
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--akzent);
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+blockquote p { margin: 0; }
+
+blockquote cite {
+  display: block;
+  margin-top: 0.75rem;
+  font-style: normal;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gedaempft);
+}
+
+/* --- Fuß ------------------------------------------------------- */
+
+footer {
+  margin-top: 4.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--linie);
+  font-size: 0.85rem;
+  color: var(--gedaempft);
+}
+
+footer p { margin: 0 0 0.4rem; }
+
+footer p:last-child { margin-bottom: 0; }
+
+a {
+  color: var(--akzent);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+a:hover, a:focus-visible { text-decoration-thickness: 2px; }
+
+:focus-visible {
+  outline: 2px solid var(--akzent);
+  outline-offset: 2px;
+}
+</style>
+</head>
+<body>
+<div class="spalte">
+
+  <header>
+    <h1>Divites Quartett</h1>
+    <p class="untertitel">Streichquartett aus Frankfurt, seit 2020 — Klassik,
+      Filmmusik und Rock bei Kerzenschein.</p>
+    <hr class="strich">
+  </header>
+
+  <main>
+
+    <section aria-labelledby="ueber">
+      <h2 id="ueber">Über das Quartett</h2>
+      <p><span class="platzhalter-marke">[PLATZHALTER]</span> Lorem ipsum dolor
+        sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+        invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+        vero eos et accusam et justo duo dolores et ea rebum.</p>
+      <p><span class="platzhalter-marke">[PLATZHALTER]</span> Stet clita kasd
+        gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Duis
+        autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie
+        consequat, vel illum dolore eu feugiat nulla facilisis.</p>
+      <p><span class="platzhalter-marke">[PLATZHALTER]</span> Nam liber tempor
+        cum soluta nobis eleifend option congue nihil imperdiet doming id quod
+        mazim placerat facer possim assum. Typi non habent claritatem insitam,
+        est usus legentis in iis qui facit eorum claritatem.</p>
+
+      <figure>
+        <div class="bildfeld">[Gruppenfoto folgt]</div>
+        <figcaption>Marta Danilkovich und Namhyun Kim, Violine · Eunseon Oh,
+          Viola · Attila Hündöl, Violoncello</figcaption>
+      </figure>
+    </section>
+
+    <section aria-labelledby="termine">
+      <h2 id="termine">Nächste Termine</h2>
+      <ul class="termine">
+        <li>
+          <span class="wann">Fr, 2. Oktober 2026, 18:30 Uhr</span>
+          <span class="was">Coldplay vs. Ed Sheeran<br>
+            <span class="ort">Kurhaus Wiesbaden</span></span>
+        </li>
+        <li>
+          <span class="wann">Fr, 2. Oktober 2026, 20:30 Uhr</span>
+          <span class="was">Queen vs. ABBA<br>
+            <span class="ort">Kurhaus Wiesbaden</span></span>
+        </li>
+        <li>
+          <span class="wann">Sa, 3. Oktober 2026, 18:30 Uhr</span>
+          <span class="was">Sezen Aksu<br>
+            <span class="ort">Kurhaus Wiesbaden</span></span>
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="hoerproben">
+      <h2 id="hoerproben">Hörproben</h2>
+      <ul class="hoerproben">
+        <li><div class="tonfeld">[Hörprobe 1 folgt — Vivaldi, Die vier
+          Jahreszeiten]</div></li>
+        <li><div class="tonfeld">[Hörprobe 2 folgt — Metallica, Nothing Else
+          Matters]</div></li>
+        <li><div class="tonfeld">[Hörprobe 3 folgt — Filmmusik, Star Wars und
+          James Bond]</div></li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="presse">
+      <h2 id="presse">Presse</h2>
+      <blockquote>
+        <p>Mit ihrem Programm »Filmmusik« lieferten Marta Danilkovich und
+          Namhyun Kim (Geige), Eunseon Oh (Bratsche) und Attila Hündöl (Cello)
+          Kunst und Unterhaltung auf höchstem Niveau.</p>
+        <cite>Gießener Anzeiger</cite>
+      </blockquote>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Divites Quartett · Frankfurt am Main</p>
+    <p><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

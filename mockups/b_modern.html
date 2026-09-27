@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Divites Quartett — Streichquartett, bundesweit</title>
+<meta name="description" content="Divites Quartett: Streichquartett aus Frankfurt, gegründet 2020 von Marta Danilkovich. Candlelight-Konzerte von Vivaldi bis Metallica.">
+<style>
+/* ---------------------------------------------------------------
+   Divites Quartett — Mockup B, fotogetrieben ("Tourplakat")
+   Schrift: reine System-Groteske. Farben: Papierweiß / Tiefschwarz,
+   ein warmer Rostton als einziger Akzent. Kein externes Asset.
+   --------------------------------------------------------------- */
+
+:root{
+  --grotesk: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI",
+             Inter, Roboto, Arial, sans-serif;
+
+  --papier:      #f4f1ec;   /* warmes Off-White, kein Reinweiß */
+  --papier-tief: #e6e1d8;   /* abgesetzte Flächen */
+  --tinte:       #16130f;   /* Fließtext, Flächen */
+  --tinte-matt:  #4c453c;   /* Sekundärtext, AA auf Papier */
+  --akzent:      #a83f1a;   /* Rost — warm, aber nicht romantisch */
+  --linie:       #16130f;
+
+  --auf-dunkel:      #f6f3ee; /* Text auf schwarzen Flächen */
+  --auf-dunkel-matt: #e3ddd3; /* AA auch über hellem Foto */
+
+  --scrim: rgba(16,13,10,.68); /* Abdunklung über dem Foto, hält auch ein helles Foto */
+
+  --rand: clamp(1rem, 5vw, 4.5rem);
+  --spalte: 78rem;
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --papier:      #15130f;
+    --papier-tief: #211d18;
+    --tinte:       #f4f1ea;
+    --tinte-matt:  #b5ada0;
+    --akzent:      #f0834b;
+    --linie:       #3b342b;
+    --auf-dunkel:      #f6f3ee;
+    --auf-dunkel-matt: #e3ddd3;
+    --scrim: rgba(8,6,4,.72);
+  }
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--papier);
+  color:var(--tinte);
+  font-family:var(--grotesk);
+  font-size:clamp(1rem,.95rem + .25vw,1.125rem);
+  line-height:1.55;
+  font-synthesis:none;
+}
+img,svg{max-width:100%;display:block}
+a{color:inherit}
+
+h1,h2,h3{
+  font-weight:800;
+  line-height:.95;
+  letter-spacing:-.03em;
+  margin:0;
+  text-wrap:balance;
+}
+
+.bahn{max-width:var(--spalte);margin-inline:auto;padding-inline:var(--rand)}
+
+/* Kapitelmarke: kleine Versalzeile über jeder Sektion */
+.marke{
+  font-size:.78rem;
+  font-weight:700;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--akzent);
+  margin:0 0 .6rem;
+}
+
+/* ============================ HERO ============================ */
+
+.hero{
+  position:relative;
+  isolation:isolate;
+  min-height:min(82vh,40rem);
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:clamp(2rem,7vw,5rem) var(--rand) clamp(1.5rem,4vw,3rem);
+  color:var(--auf-dunkel);
+  overflow:hidden;
+}
+/* Platzhalterfläche statt Foto: neutrale Struktur, damit die Fläche
+   als Bildplatz erkennbar ist. Später ersetzt hier ein <img>. */
+.hero__bild{
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  background-color:#8d8477;
+  background-image:
+    repeating-linear-gradient(45deg,
+      rgba(255,255,255,.10) 0 2px, rgba(255,255,255,0) 2px 14px),
+    repeating-linear-gradient(-45deg,
+      rgba(0,0,0,.10) 0 2px, rgba(0,0,0,0) 2px 14px);
+}
+/* Abdunklungsschicht: einfarbig, deckt auch ein sehr helles Foto ab. */
+.hero__scrim{position:absolute;inset:0;z-index:-1;background:var(--scrim)}
+
+.hero__notiz{
+  position:absolute;
+  top:clamp(1rem,4vw,2rem);
+  left:var(--rand);
+  z-index:1;
+  font-size:.78rem;
+  font-weight:700;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--auf-dunkel);
+  background:rgba(16,13,10,.72);
+  border:1px solid rgba(246,243,238,.45);
+  padding:.45rem .7rem;
+}
+
+.hero h1{
+  font-size:clamp(2.7rem,12.5vw,8.5rem);
+  letter-spacing:-.045em;
+  text-transform:uppercase;
+}
+.hero h1 span{display:block}
+.hero__sub{
+  margin:1rem 0 0;
+  max-width:36ch;
+  font-size:clamp(1.05rem,1rem + .6vw,1.4rem);
+  font-weight:500;
+  color:var(--auf-dunkel);
+}
+.hero__meta{
+  margin:1.6rem 0 0;
+  padding-top:1rem;
+  border-top:2px solid rgba(246,243,238,.4);
+  display:flex;
+  flex-wrap:wrap;
+  gap:.35rem 1.4rem;
+  font-size:.84rem;
+  font-weight:600;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--auf-dunkel-matt);
+  list-style:none;
+}
+
+/* ========================== TERMINE =========================== */
+
+.termine{padding:clamp(2.75rem,7vw,5rem) 0 clamp(2rem,5vw,3.5rem)}
+.termine h2{font-size:clamp(1.7rem,1.3rem + 2.2vw,3rem)}
+
+.karten{
+  list-style:none;
+  margin:clamp(1.5rem,4vw,2.5rem) 0 0;
+  padding:0;
+  display:grid;
+  gap:1rem;
+  grid-template-columns:repeat(auto-fit,minmax(17rem,1fr));
+}
+.karte{
+  display:flex;
+  flex-direction:column;
+  border:2px solid var(--linie);
+  background:var(--papier-tief);
+}
+.karte__datum{
+  display:flex;
+  align-items:baseline;
+  gap:.5rem;
+  background:var(--tinte);
+  color:var(--auf-dunkel);
+  padding:.7rem 1rem;
+}
+@media (prefers-color-scheme: dark){
+  .karte__datum{background:var(--akzent);color:#1a0d06}
+}
+.karte__tag{
+  font-size:2.9rem;
+  font-weight:800;
+  letter-spacing:-.05em;
+  line-height:.85;
+}
+.karte__monat{
+  font-size:.82rem;
+  font-weight:700;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.karte__woche{
+  margin-left:auto;
+  font-size:.82rem;
+  font-weight:600;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.karte__inhalt{padding:1.1rem 1rem 1.3rem;display:flex;flex-direction:column;gap:.45rem;flex:1}
+.karte__zeit{
+  font-size:1.5rem;
+  font-weight:800;
+  letter-spacing:-.02em;
+}
+.karte__programm{
+  font-size:1.12rem;
+  font-weight:700;
+  line-height:1.25;
+  margin:0;
+}
+.karte__ort{margin:0;font-size:.95rem;color:var(--tinte-matt)}
+.karte__reihe{
+  margin-top:auto;
+  padding-top:.7rem;
+  font-size:.76rem;
+  font-weight:700;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--akzent);
+}
+
+/* ========================== ENSEMBLE ========================== */
+
+.ensemble{
+  border-top:3px solid var(--linie);
+  padding:clamp(2.5rem,6vw,4.5rem) 0;
+}
+.ensemble h2{font-size:clamp(1.7rem,1.3rem + 2.2vw,3rem);max-width:24ch}
+.ensemble__text{
+  margin-top:clamp(1.25rem,3vw,2rem);
+  columns:2 21rem;
+  column-gap:clamp(1.5rem,4vw,3.5rem);
+}
+.ensemble__text p{margin:0 0 1.05em;max-width:60ch;break-inside:avoid-column}
+.ph{
+  font-weight:700;
+  font-size:.74em;
+  letter-spacing:.1em;
+  color:var(--akzent);
+  margin-right:.35em;
+}
+
+/* =========================== ZITAT ============================ */
+
+.zitat{
+  background:var(--tinte);
+  color:var(--auf-dunkel);
+  padding:clamp(2.25rem,6vw,4.5rem) 0;
+}
+.zitat blockquote{
+  margin:0;
+  max-width:44ch;
+  font-size:clamp(1.25rem,1.05rem + 1.4vw,2.1rem);
+  font-weight:600;
+  line-height:1.25;
+  letter-spacing:-.02em;
+}
+.zitat .marke{color:#f0a37b}
+.zitat figcaption{
+  margin-top:1.2rem;
+  padding-top:.9rem;
+  border-top:2px solid rgba(246,243,238,.4);
+  font-size:.86rem;
+  font-weight:700;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--auf-dunkel-matt);
+}
+
+/* ========================= HÖRPROBEN ========================== */
+
+.hoerproben{padding:clamp(2.5rem,6vw,4.5rem) 0}
+.hoerproben h2{font-size:clamp(1.7rem,1.3rem + 2.2vw,3rem)}
+.proben{
+  list-style:none;
+  margin:clamp(1.5rem,4vw,2.5rem) 0 0;
+  padding:0;
+  display:grid;
+  gap:1.25rem;
+  grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));
+}
+.probe__flaeche{
+  aspect-ratio:16/9;
+  border:2px solid var(--linie);
+  background-color:var(--papier-tief);
+  background-image:repeating-linear-gradient(135deg,
+    rgba(22,19,15,.10) 0 2px, rgba(22,19,15,0) 2px 12px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:1rem;
+  font-size:.8rem;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--tinte-matt);
+}
+@media (prefers-color-scheme: dark){
+  .probe__flaeche{background-image:repeating-linear-gradient(135deg,
+    rgba(246,243,238,.09) 0 2px, rgba(246,243,238,0) 2px 12px)}
+}
+.probe h3{margin:.7rem 0 .15rem;font-size:1.1rem;font-weight:800}
+.probe p{margin:0;font-size:.93rem;color:var(--tinte-matt)}
+
+/* ========================== FUSSZEILE ========================= */
+
+.fuss{
+  border-top:3px solid var(--linie);
+  padding:clamp(2rem,5vw,3rem) 0 clamp(2.5rem,6vw,3.5rem);
+  font-size:.93rem;
+}
+.fuss__zeile{display:flex;flex-wrap:wrap;gap:.75rem 2rem;align-items:baseline}
+.fuss__name{font-weight:800;letter-spacing:-.02em;font-size:1.1rem}
+.fuss nav ul{list-style:none;display:flex;flex-wrap:wrap;gap:1.25rem;margin:0;padding:0}
+.fuss a{
+  color:var(--tinte);
+  text-decoration:underline;
+  text-decoration-thickness:2px;
+  text-underline-offset:.22em;
+  font-weight:600;
+}
+.fuss a:hover,.fuss a:focus-visible{color:var(--akzent)}
+.fuss__klein{margin:1.5rem 0 0;color:var(--tinte-matt);max-width:60ch}
+
+:where(a,summary):focus-visible{outline:3px solid var(--akzent);outline-offset:3px}
+
+@media (max-width:26rem){
+  .hero{min-height:auto;padding-top:5.5rem}
+  .karte__tag{font-size:2.4rem}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero__bild" role="img" aria-label="Platzhalter für ein Gruppenfoto des Divites Quartetts im Querformat"></div>
+  <div class="hero__scrim"></div>
+  <p class="hero__notiz">[Gruppenfoto folgt]</p>
+
+  <h1><span>Divites</span><span>Quartett</span></h1>
+  <p class="hero__sub">Vier Streicher, ein Repertoire ohne Zaun: Vivaldi, Metallica, Queen — bei Kerzenschein, bundesweit.</p>
+  <ul class="hero__meta">
+    <li>Gegründet 2020</li>
+    <li>Frankfurt am Main</li>
+    <li>Candlelight-Konzerte</li>
+  </ul>
+</header>
+
+<main>
+
+  <section class="termine bahn" aria-labelledby="t-termine">
+    <p class="marke">Nächste Termine</p>
+    <h2 id="t-termine">Drei Konzerte im Kurhaus Wiesbaden</h2>
+
+    <ul class="karten">
+      <li class="karte">
+        <p class="karte__datum">
+          <span class="karte__tag">02</span>
+          <span class="karte__monat">Okt 2026</span>
+          <span class="karte__woche">Fr</span>
+        </p>
+        <div class="karte__inhalt">
+          <p class="karte__zeit"><time datetime="2026-10-02T18:30">18:30 Uhr</time></p>
+          <h3 class="karte__programm">Coldplay vs. Ed Sheeran</h3>
+          <p class="karte__ort">Kurhaus Wiesbaden</p>
+          <p class="karte__reihe">Candlelight</p>
+        </div>
+      </li>
+
+      <li class="karte">
+        <p class="karte__datum">
+          <span class="karte__tag">02</span>
+          <span class="karte__monat">Okt 2026</span>
+          <span class="karte__woche">Fr</span>
+        </p>
+        <div class="karte__inhalt">
+          <p class="karte__zeit"><time datetime="2026-10-02T20:30">20:30 Uhr</time></p>
+          <h3 class="karte__programm">Queen vs. ABBA</h3>
+          <p class="karte__ort">Kurhaus Wiesbaden</p>
+          <p class="karte__reihe">Candlelight</p>
+        </div>
+      </li>
+
+      <li class="karte">
+        <p class="karte__datum">
+          <span class="karte__tag">03</span>
+          <span class="karte__monat">Okt 2026</span>
+          <span class="karte__woche">Sa</span>
+        </p>
+        <div class="karte__inhalt">
+          <p class="karte__zeit"><time datetime="2026-10-03T18:30">18:30 Uhr</time></p>
+          <h3 class="karte__programm">Sezen Aksu</h3>
+          <p class="karte__ort">Kurhaus Wiesbaden</p>
+          <p class="karte__reihe">Candlelight</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="ensemble" aria-labelledby="t-ensemble">
+    <div class="bahn">
+      <p class="marke">Das Ensemble</p>
+      <h2 id="t-ensemble">Reich heißt hier: das Repertoire</h2>
+      <div class="ensemble__text">
+        <p><span class="ph">[PLATZHALTER]</span> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum, stet clita kasd gubergren, no sea takimata sanctus est.</p>
+        <p><span class="ph">[PLATZHALTER]</span> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
+        <p><span class="ph">[PLATZHALTER]</span> Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam, est usus legentis in iis qui facit eorum claritatem, investigationes demonstraverunt lectores legere me lius.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="zitat" aria-labelledby="t-presse">
+    <figure class="bahn">
+      <p class="marke" id="t-presse">Presse</p>
+      <blockquote cite="">
+        Mit ihrem Programm »Filmmusik« lieferten Marta Danilkovich und Namhyun Kim (Geige), Eunseon Oh (Bratsche) und Attila Hündöl (Cello) Kunst und Unterhaltung auf höchstem Niveau.
+      </blockquote>
+      <figcaption>Gießener Anzeiger</figcaption>
+    </figure>
+  </section>
+
+  <section class="hoerproben bahn" aria-labelledby="t-hoer">
+    <p class="marke">Hörproben</p>
+    <h2 id="t-hoer">Drei Mitschnitte</h2>
+    <ul class="proben">
+      <li class="probe">
+        <div class="probe__flaeche">[Audio-Platzhalter 16:9]</div>
+        <h3>Vivaldi — Die vier Jahreszeiten</h3>
+        <p>Ausschnitt, Kurhaus Wiesbaden</p>
+      </li>
+      <li class="probe">
+        <div class="probe__flaeche">[Audio-Platzhalter 16:9]</div>
+        <h3>Metallica — Nothing Else Matters</h3>
+        <p>Arrangement für Streichquartett</p>
+      </li>
+      <li class="probe">
+        <div class="probe__flaeche">[Audio-Platzhalter 16:9]</div>
+        <h3>Filmmusik — Star Wars, James Bond</h3>
+        <p>Querschnitt aus dem Programm</p>
+      </li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="fuss">
+  <div class="bahn">
+    <div class="fuss__zeile">
+      <p class="fuss__name">Divites Quartett</p>
+      <nav aria-label="Rechtliches">
+        <ul>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+    </div>
+    <p class="fuss__klein">Marta Danilkovich und Namhyun Kim (Violine), Eunseon Oh (Viola), Attila Hündöl (Violoncello). Konzerte in Frankfurt, Wiesbaden, Köln, Berlin, Stuttgart, Ludwigsburg, Dortmund, Düsseldorf, Offenbach und Mainz.</p>
+  </div>
+</footer>
+
+</body>
+</html>

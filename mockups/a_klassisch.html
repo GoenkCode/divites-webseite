@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Divites Quartett</title>
+<meta name="description" content="Divites Quartett – Streichquartett aus Frankfurt, gegründet 2020 von Marta Danilkovich. Candlelight-Konzerte bundesweit.">
+<style>
+/* ---------------------------------------------------------------
+   Divites Quartett – Mockup A: klassisch zurückhaltend
+   Haltung: Konzerthausprogramm. Serifenschrift, weiter Zeilenfall,
+   gedeckte warme Neutraltöne, ein ruhiger Satzspiegel.
+   Kein Schmuck, keine Bewegung. Nur Papier, Schrift und Abstand.
+   --------------------------------------------------------------- */
+
+/* Farben: warme Graustufen statt Buntheit. Die Wärme kommt aus dem
+   Papierton, nicht aus einem Akzent. Beide Modi getrennt gesetzt,
+   damit der Kontrast in jedem Fall über WCAG AA liegt. */
+:root {
+  --papier:      #f7f5f1;
+  --papier-tief: #efece6;
+  --tinte:       #221f1c;
+  --tinte-matt:  #57514a;
+  --linie:       #d6d1c8;
+  --linie-fein:  #e4e0d8;
+  --flaeche:     #e8e4dc;
+
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua",
+           "Hoefler Text", Georgia, "Times New Roman", Times, serif;
+
+  --satz: 39rem;          /* Satzspiegel: knapp 70 Zeichen pro Zeile */
+  --satz-breit: 57rem;    /* für Tabelle, Bild und Hörproben */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --papier:      #181614;
+    --papier-tief: #201d1a;
+    --tinte:       #ece7df;
+    --tinte-matt:  #aaa298;
+    --linie:       #3b3631;
+    --linie-fein:  #2c2823;
+    --flaeche:     #262220;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--tinte);
+  font-family: var(--serif);
+  font-size: 1.0625rem;      /* 17px – Lesegröße, nicht Displaygröße */
+  line-height: 1.75;         /* großzügiger Durchschuss */
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+}
+
+@media (min-width: 46em) {
+  body { font-size: 1.125rem; line-height: 1.8; }
+}
+
+/* Seitenrand: ab 375 px schmal, wächst mit der Fläche */
+.bahn {
+  width: 100%;
+  max-width: var(--satz);
+  margin-inline: auto;
+  padding-inline: 1.375rem;
+}
+.bahn--breit { max-width: var(--satz-breit); }
+
+/* Vertikaler Rhythmus: alle Abschnitte auf demselben Raster,
+   getrennt durch eine Haarlinie statt durch Farbflächen. */
+.abschnitt {
+  padding-block: 3.25rem;
+  border-top: 1px solid var(--linie-fein);
+}
+@media (min-width: 46em) {
+  .abschnitt { padding-block: 4.75rem; }
+}
+
+/* Typografie ----------------------------------------------------- */
+
+h1, h2, h3 {
+  font-weight: 400;          /* keine Fettung; Hierarchie über Größe und Raum */
+  line-height: 1.2;
+  margin: 0;
+  letter-spacing: 0.005em;
+}
+
+h1 {
+  font-size: clamp(2.375rem, 9vw, 3.75rem);
+  letter-spacing: 0.01em;
+}
+
+h2 {
+  font-size: clamp(1.375rem, 4vw, 1.625rem);
+  margin-bottom: 1.75rem;
+}
+
+h3 { font-size: 1.0625rem; }
+
+p { margin: 0 0 1.5rem; }
+p:last-child { margin-bottom: 0; }
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: from-font;
+  text-decoration-color: var(--linie);
+}
+a:hover, a:focus-visible { text-decoration-color: currentColor; }
+
+:focus-visible {
+  outline: 2px solid var(--tinte-matt);
+  outline-offset: 3px;
+}
+
+/* Kopf ----------------------------------------------------------- */
+
+.kopf {
+  padding-block: 4rem 2.75rem;
+  text-align: center;
+}
+@media (min-width: 46em) {
+  .kopf { padding-block: 6.5rem 4rem; }
+}
+
+.kopf__unterzeile {
+  margin: 1.5rem auto 0;
+  max-width: 30rem;
+  color: var(--tinte-matt);
+  font-size: 1.0625rem;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.kopf__besetzung {
+  margin: 2.25rem auto 0;
+  max-width: 30rem;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tinte-matt);
+}
+
+/* Platzhalterflächen -------------------------------------------- */
+/* Gestrichelte Linie und Flächenton machen sichtbar, dass hier
+   Material fehlt – ohne den ruhigen Gesamteindruck zu stören. */
+
+.platz {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--flaeche);
+  border: 1px dashed var(--linie);
+  color: var(--tinte-matt);
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 1rem;
+}
+
+.platz--foto { aspect-ratio: 16 / 9; }
+.platz--hoerprobe { aspect-ratio: 16 / 9; }
+
+figure { margin: 0; }
+
+figcaption {
+  margin-top: 0.875rem;
+  color: var(--tinte-matt);
+  font-size: 0.9375rem;
+  font-style: italic;
+}
+
+/* Termine: schlichte Tabelle, keine Kacheln, keine Rahmen ------- */
+
+.termine {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.termine caption {
+  text-align: left;
+  color: var(--tinte-matt);
+  font-size: 0.9375rem;
+  font-style: italic;
+  padding-bottom: 1rem;
+}
+
+.termine th, .termine td {
+  padding: 1rem 0.75rem;
+  border-bottom: 1px solid var(--linie-fein);
+  vertical-align: baseline;
+}
+.termine th:first-child, .termine td:first-child { padding-left: 0; }
+.termine th:last-child,  .termine td:last-child  { padding-right: 0; }
+
+.termine thead th {
+  font-weight: 400;
+  font-size: 0.75rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--tinte-matt);
+  border-bottom: 1px solid var(--linie);
+  padding-top: 0;
+}
+
+.termine tbody th {
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.termine .uhrzeit { white-space: nowrap; color: var(--tinte-matt); }
+.termine .programm { font-style: italic; }
+
+/* Unter 640 px klappt jede Zeile zu einem Block auf.
+   Die Spaltenüberschriften liefern die Beschriftung nach. */
+@media (max-width: 40em) {
+  .termine thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .termine tbody tr {
+    display: block;
+    padding-block: 1.25rem;
+    border-bottom: 1px solid var(--linie-fein);
+  }
+  .termine tbody th, .termine tbody td {
+    display: block;
+    padding: 0;
+    border: 0;
+    white-space: normal;
+  }
+  .termine tbody th { font-size: 1.0625rem; }
+  .termine tbody td::before {
+    content: attr(data-feld) " ";
+    color: var(--tinte-matt);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .termine tbody td { margin-top: 0.25rem; }
+}
+
+/* Über das Ensemble --------------------------------------------- */
+
+.marke {
+  display: inline;
+  font-size: 0.75rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--tinte-matt);
+  margin-right: 0.5em;
+}
+
+/* Hörproben: drei gleich schwere Felder, keine Hervorhebung ---- */
+
+.hoerproben {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 46em) {
+  .hoerproben { grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
+}
+
+.hoerprobe__titel {
+  margin-top: 0.875rem;
+  font-size: 1rem;
+}
+.hoerprobe__zusatz {
+  margin: 0.125rem 0 0;
+  color: var(--tinte-matt);
+  font-size: 0.9375rem;
+  font-style: italic;
+}
+
+/* Pressezitat: Einzug und Haarlinie, keine Fläche, keine Anführungsgrafik */
+
+.zitat {
+  margin: 0;
+  border-left: 1px solid var(--linie);
+  padding-left: clamp(1.25rem, 5vw, 2.5rem);
+}
+
+.zitat blockquote {
+  margin: 0;
+  font-size: clamp(1.1875rem, 3.6vw, 1.5rem);
+  line-height: 1.5;
+  font-style: italic;
+  text-wrap: pretty;
+}
+
+.zitat figcaption {
+  margin-top: 1.25rem;
+  font-style: normal;
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Fuß ------------------------------------------------------------ */
+
+.fuss {
+  border-top: 1px solid var(--linie-fein);
+  padding-block: 2.5rem 3.5rem;
+  color: var(--tinte-matt);
+  font-size: 0.9375rem;
+}
+
+.fuss__zeile {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.fuss__rechtliches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+</style>
+</head>
+<body>
+
+<header class="kopf bahn">
+  <h1>Divites Quartett</h1>
+  <p class="kopf__unterzeile">Streichquartett, 2020 in Frankfurt gegründet — von Vivaldi bis Metallica, gespielt bei Kerzenschein.</p>
+  <p class="kopf__besetzung">
+    Marta Danilkovich &middot; Namhyun Kim, Violine<br>
+    Eunseon Oh, Viola &middot; Attila Hündöl, Violoncello
+  </p>
+</header>
+
+<main>
+
+  <!-- Gruppenfoto: Querformat, als beschriftete Fläche vorgehalten -->
+  <section class="abschnitt bahn bahn--breit" aria-label="Ensemblefoto">
+    <figure>
+      <div class="platz platz--foto" role="img" aria-label="Platzhalter für das Gruppenfoto im Querformat">[Gruppenfoto folgt]</div>
+      <figcaption>Das Divites Quartett, Querformat, Platzhalter</figcaption>
+    </figure>
+  </section>
+
+  <section class="abschnitt bahn bahn--breit" aria-labelledby="t-termine">
+    <h2 id="t-termine">Nächste Konzerte</h2>
+    <table class="termine">
+      <caption>Kurhaus Wiesbaden, Candlelight-Reihe. Weitere Termine bundesweit.</caption>
+      <thead>
+        <tr>
+          <th scope="col">Datum</th>
+          <th scope="col">Zeit</th>
+          <th scope="col">Ort</th>
+          <th scope="col">Programm</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row"><time datetime="2026-10-02">2. Oktober 2026</time></th>
+          <td class="uhrzeit" data-feld="Zeit">18:30 Uhr</td>
+          <td data-feld="Ort">Kurhaus Wiesbaden</td>
+          <td class="programm" data-feld="Programm">Coldplay vs. Ed Sheeran</td>
+        </tr>
+        <tr>
+          <th scope="row"><time datetime="2026-10-02">2. Oktober 2026</time></th>
+          <td class="uhrzeit" data-feld="Zeit">20:30 Uhr</td>
+          <td data-feld="Ort">Kurhaus Wiesbaden</td>
+          <td class="programm" data-feld="Programm">Queen vs. ABBA</td>
+        </tr>
+        <tr>
+          <th scope="row"><time datetime="2026-10-03">3. Oktober 2026</time></th>
+          <td class="uhrzeit" data-feld="Zeit">18:30 Uhr</td>
+          <td data-feld="Ort">Kurhaus Wiesbaden</td>
+          <td class="programm" data-feld="Programm">Sezen Aksu</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="abschnitt bahn" aria-labelledby="t-ensemble">
+    <h2 id="t-ensemble">Über das Ensemble</h2>
+    <p><span class="marke">[Platzhalter]</span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p>
+    <p><span class="marke">[Platzhalter]</span>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+    <p><span class="marke">[Platzhalter]</span>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.</p>
+  </section>
+
+  <section class="abschnitt bahn bahn--breit" aria-labelledby="t-hoerproben">
+    <h2 id="t-hoerproben">Hörproben</h2>
+    <ul class="hoerproben">
+      <li>
+        <div class="platz platz--hoerprobe" role="img" aria-label="Platzhalter für Hörprobe eins, Seitenverhältnis 16 zu 9">[Hörprobe 1 folgt]</div>
+        <h3 class="hoerprobe__titel">Vivaldi, Die vier Jahreszeiten</h3>
+        <p class="hoerprobe__zusatz">Ausschnitt, Platzhalter</p>
+      </li>
+      <li>
+        <div class="platz platz--hoerprobe" role="img" aria-label="Platzhalter für Hörprobe zwei, Seitenverhältnis 16 zu 9">[Hörprobe 2 folgt]</div>
+        <h3 class="hoerprobe__titel">Queen vs. ABBA</h3>
+        <p class="hoerprobe__zusatz">Ausschnitt, Platzhalter</p>
+      </li>
+      <li>
+        <div class="platz platz--hoerprobe" role="img" aria-label="Platzhalter für Hörprobe drei, Seitenverhältnis 16 zu 9">[Hörprobe 3 folgt]</div>
+        <h3 class="hoerprobe__titel">Filmmusik</h3>
+        <p class="hoerprobe__zusatz">Ausschnitt, Platzhalter</p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="abschnitt bahn" aria-labelledby="t-presse">
+    <h2 id="t-presse">Presse</h2>
+    <figure class="zitat">
+      <blockquote cite="">
+        <p>Mit ihrem Programm »Filmmusik« lieferten Marta Danilkovich und Namhyun Kim (Geige), Eunseon Oh (Bratsche) und Attila Hündöl (Cello) Kunst und Unterhaltung auf höchstem Niveau.</p>
+      </blockquote>
+      <figcaption>Gießener Anzeiger</figcaption>
+    </figure>
+  </section>
+
+</main>
+
+<footer class="fuss">
+  <div class="bahn bahn--breit fuss__zeile">
+    <p>Divites Quartett, Frankfurt am Main</p>
+    <ul class="fuss__rechtliches">
+      <li><a href="impressum.html">Impressum</a></li>
+      <li><a href="datenschutz.html">Datenschutz</a></li>
+    </ul>
+  </div>
+</footer>
+
+</body>
+</html>
