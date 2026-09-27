@@ -135,6 +135,40 @@ def datum_lang(tag):
                               MONATE[tag.month - 1], tag.year)
 
 
+def letzter_sonntag(jahr, monat):
+    """Letzter Sonntag eines Monats — Angelpunkt der EU-Sommerzeitregel."""
+    if monat == 12:
+        tag = datetime.date(jahr + 1, 1, 1) - datetime.timedelta(days=1)
+    else:
+        tag = datetime.date(jahr, monat + 1, 1) - datetime.timedelta(days=1)
+    return tag - datetime.timedelta(days=(tag.weekday() + 1) % 7)
+
+
+def zeitzone(tag, uhrzeit):
+    """
+    Liefert '+02:00' oder '+01:00' fuer Europe/Berlin.
+
+    Selbst gerechnet statt ueber zoneinfo, damit der Generator keine
+    System-Zeitzonendaten braucht. Die Regel: Sommerzeit vom letzten
+    Sonntag im Maerz, 01:00 UTC, bis zum letzten Sonntag im Oktober,
+    01:00 UTC.
+
+    Fest verdrahtetes '+02:00' waere der naheliegende Fehler: ab dem
+    25.10.2026 waere dann jeder Termin eine Stunde falsch, und das
+    faellt in strukturierten Daten niemandem auf.
+    """
+    beginn = letzter_sonntag(tag.year, 3)
+    ende = letzter_sonntag(tag.year, 10)
+    stunde = int(uhrzeit.split(":")[0])
+    if tag < beginn or tag > ende:
+        return "+01:00"
+    if tag == beginn:
+        return "+02:00" if stunde >= 3 else "+01:00"
+    if tag == ende:
+        return "+01:00" if stunde >= 3 else "+02:00"
+    return "+02:00"
+
+
 def termine_html(termine, heute, nur_naechste=None):
     """Baut die Terminliste. Orte werden nur verlinkt, wenn ein Link da ist."""
     kommend = [t for t in termine if t["datum"] >= heute]
@@ -326,6 +360,89 @@ def markdown_zu_html(text, quelle):
 # Seitenbau
 # ---------------------------------------------------------------------------
 
+def json_ensemble():
+    """JSON-LD fuer das Ensemble. Nur belegte Angaben."""
+    mitglieder = ",\n".join(
+        '    {"@type": "Person", "name": %s}' % json_text(n)
+        for n in ["Marta Danilkovich", "Namhyun Kim", "Eunseon Oh",
+                  "Attila Hündöl", "Victor aus Butzbach"])
+    return (
+        '<script type="application/ld+json">\n'
+        '{\n'
+        '  "@context": "https://schema.org",\n'
+        '  "@type": "MusicGroup",\n'
+        '  "name": %s,\n'
+        '  "foundingDate": "2020",\n'
+        '  "genre": ["Klassik", "Filmmusik", "Rock", "Pop"],\n'
+        '  "url": %s,\n'
+        '  "member": [\n%s\n  ]\n'
+        '}\n'
+        '</script>' % (json_text(ENSEMBLE), json_text(DOMAIN), mitglieder))
+
+
+def json_text(s):
+    """Minimaler JSON-String-Encoder, damit kein Modul noetig ist."""
+    aus = s.replace("\\", "\\\\").replace('"', '\\"')
+    aus = aus.replace("\n", "\\n").replace("\r", "").replace("\t", "\\t")
+    return '"%s"' % aus
+
+
+def json_termine(termine, heute):
+    """
+    Ein Event je Termin, aus derselben Quelle wie die sichtbare Liste.
+    Doppelte Pflege waere der sichere Weg zu Widerspruechen zwischen dem,
+    was Besucher sehen, und dem, was Google liest.
+    """
+    kommend = [t for t in termine if t["datum"] >= heute]
+    if not kommend:
+        return ""
+    bloecke = []
+    for t in kommend:
+        felder = [
+            '    "@context": "https://schema.org"',
+            '    "@type": "Event"',
+            '    "name": %s' % json_text("%s – %s" % (ENSEMBLE, t["programm"])),
+            '    "startDate": "%sT%s:00%s"' % (t["datum"].isoformat(), t["uhrzeit"],
+                                               zeitzone(t["datum"], t["uhrzeit"])),
+            '    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode"',
+            '    "eventStatus": "https://schema.org/%s"'
+            % ("EventCancelled" if t["abgesagt"] else "EventScheduled"),
+            '    "performer": {"@type": "MusicGroup", "name": %s}' % json_text(ENSEMBLE),
+            '    "organizer": {"@type": "Organization", "name": "Fever"}',
+            '    "location": {"@type": "Place", "name": %s, "address": '
+            '{"@type": "PostalAddress", "streetAddress": %s}}'
+            % (json_text(t["ort"]), json_text(t["adresse"])),
+        ]
+        if t["ticket"]:
+            felder.append('    "offers": {"@type": "Offer", "url": %s, '
+                          '"availability": "https://schema.org/InStock"}'
+                          % json_text(t["ticket"]))
+        bloecke.append('<script type="application/ld+json">\n{\n%s\n}\n</script>'
+                       % ",\n".join(felder))
+    return "\n".join(bloecke)
+
+
+def sitemap(heute):
+    zeilen = ['<?xml version="1.0" encoding="UTF-8"?>',
+              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for name, _, _, _ in SEITEN:
+        ziel = "" if name == "start" else "%s.html" % name
+        zeilen.append("  <url><loc>%s/%s</loc><lastmod>%s</lastmod></url>"
+                      % (DOMAIN, ziel, heute.isoformat()))
+    zeilen.append("</urlset>")
+    return "\n".join(zeilen) + "\n"
+
+
+def robots():
+    if VEROEFFENTLICHEN:
+        return ("User-agent: *\nAllow: /\n\nSitemap: %s/sitemap.xml\n" % DOMAIN)
+    # Disallow UND noindex im Kopf jeder Seite. Disallow allein verhindert nur
+    # das Crawlen; die URL kann trotzdem im Index auftauchen.
+    return ("# Die Seite ist im Aufbau und soll nicht in Suchmaschinen erscheinen.\n"
+            "# Zusaetzlich traegt jede Seite ein noindex im Kopf.\n"
+            "User-agent: *\nDisallow: /\n")
+
+
 def navigation(aktuell):
     teile = ['<nav class="nav" aria-label="Hauptnavigation"><ul>']
     for name, titel, _, _ in SEITEN:
@@ -340,7 +457,7 @@ def navigation(aktuell):
     return "\n".join(teile)
 
 
-def seite_bauen(vorlage, name, titel, beschreibung, inhalt, braucht_filter):
+def seite_bauen(vorlage, name, titel, beschreibung, inhalt, braucht_filter, jsonld=""):
     ziel = "index.html" if name == "start" else "%s.html" % name
     kopf = ""
     if not VEROEFFENTLICHEN:
@@ -355,7 +472,8 @@ def seite_bauen(vorlage, name, titel, beschreibung, inhalt, braucht_filter):
         .replace("{{NAV}}", navigation(name)) \
         .replace("{{INHALT}}", inhalt) \
         .replace("{{JAHR}}", str(datetime.date.today().year)) \
-        .replace("{{SKRIPT}}", skript)
+        .replace("{{SKRIPT}}", skript) \
+        .replace("{{JSONLD}}", jsonld)
 
 
 def bilder_kopieren(quelle, ziel, maxbreite=1600):
@@ -414,9 +532,15 @@ def main():
             inhalt = inhalt.replace("<p>{{TERMINE}}</p>", liste_voll)
             inhalt = inhalt.replace("<p>{{TERMINE_KURZ}}</p>", liste_kurz)
             ziel = "index.html" if name == "start" else "%s.html" % name
+            if name == "start":
+                jsonld = json_ensemble()
+            elif name == "termine":
+                jsonld = json_termine(termine, heute)
+            else:
+                jsonld = ""
             io.open(os.path.join(args.ausgabe, ziel), "w", encoding="utf-8").write(
                 seite_bauen(vorlage, name, titel, beschreibung, inhalt,
-                            braucht_filter=("{{TERMINE}}" in roh)))
+                            braucht_filter=("{{TERMINE}}" in roh), jsonld=jsonld))
             gebaut += 1
 
         # statische Dateien unveraendert uebernehmen
@@ -435,6 +559,13 @@ def main():
             if os.path.isfile(q):
                 io.open(os.path.join(args.ausgabe, name), "w", encoding="utf-8").write(
                     io.open(q, encoding="utf-8").read())
+
+        # Sitemap und robots.txt entstehen auch im noindex-Zustand. Sie schaden
+        # nicht, und so ist beim Umlegen des Schalters nichts nachzuziehen.
+        io.open(os.path.join(args.ausgabe, "sitemap.xml"), "w",
+                encoding="utf-8").write(sitemap(heute))
+        io.open(os.path.join(args.ausgabe, "robots.txt"), "w",
+                encoding="utf-8").write(robots())
 
         anz_bilder = bilder_kopieren(BILDER_QUELLE, os.path.join(args.ausgabe, "bilder"))
         abgesagt = len([t for t in termine if t["abgesagt"]])
