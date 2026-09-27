@@ -606,3 +606,15 @@ a.termin__ort:hover { color: var(--akzent); }
 .raster--mitglieder { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
 .raster--mitglieder .mitglied p { font-size: .9375rem; line-height: 1.55; margin: .5rem 0 0; }
 .raster--mitglieder .mitglied .rolle { margin-top: .1rem; }
+
+/* Portraetfotos im Mitgliederraster. Gleiches Seitenverhaeltnis wie die
+   Platzhalter, damit die Zeilen nicht springen, sobald weitere Fotos
+   dazukommen. */
+.portraet {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+  border: 1px solid var(--linie);
+}
