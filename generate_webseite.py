@@ -196,12 +196,16 @@ def termin_html(t, folge=False):
     if folge:
         klassen += " termin--folge"
     a = []
-    # data-datum traegt das Datum in den Browser. Dort entscheidet
-    # termine.js, was kommend und was vergangen ist -- sonst friert die
-    # Trennung auf dem Stand des letzten Exports ein.
-    a.append('  <li class="%s" data-ort="%s" data-datum="%s">'
+    # data-datum traegt Datum und Anfangszeit in den Browser. Dort
+    # entscheidet termine.js, was kommend und was vergangen ist -- sonst
+    # friert die Trennung auf dem Stand des letzten Exports ein.
+    #
+    # Mit Uhrzeit, nicht nur mit Datum: Drei Konzerte an einem Abend sind
+    # um 22 Uhr alle drei vorbei, standen mit reiner Tagesgenauigkeit aber
+    # bis Mitternacht unter "die naechsten Konzerte".
+    a.append('  <li class="%s" data-ort="%s" data-datum="%sT%s">'
              % (klassen, html.escape(stadt_aus_adresse(t["adresse"]), True),
-                t["datum"].isoformat()))
+                t["datum"].isoformat(), t["uhrzeit"]))
     a.append('    <div class="termin__marke">')
     a.append('      <span class="termin__tag">%02d</span>' % t["datum"].day)
     a.append('      <span class="termin__monat">%s</span>' % MONATE[t["datum"].month - 1][:3])
