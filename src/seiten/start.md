@@ -62,4 +62,4 @@ Zwischen den Stücken wird geredet. Kurz, mit Humor, ohne Programmheft-Prosa. Ma
 
 Marta Danilkovich hat das Quartett 2020 gegründet. Gespielt wird bei Kerzenlicht, in der Jahrhunderthalle Frankfurt, im Wiesbadener Kurhaus, im Schlosstheater im Neuen Palais in Berlin. Die meisten Konzerte sind ausverkauft.
 
-Das Quartett besteht aus einem Kreis von Musikerinnen und Musikern, die sich abwechseln, jede und jeder mit eigener Laufbahn: Solocellist eines Staatstheaters, Preisträgerin des Mendelssohn-Wettbewerbs und ECHO-Klassik-Preisträger. Wer an dem Abend spielt, steht im Programm.
+Das Quartett besteht aus einem Kreis von Musikerinnen und Musikern, die sich abwechseln, jede und jeder mit eigener Laufbahn: Solocellist eines Staatstheaters, Preisträgerin des Mendelssohn-Wettbewerbs und ECHO-Klassik-Preisträger.
