@@ -821,3 +821,15 @@ main > h1 + .besetzung { border-top: 0; margin-top: 0; padding-top: 0; }
 @media (hover: none) {
   .video__flaeche--bild:hover::after { background: rgba(13, 12, 11, .62); }
 }
+
+/* Bildnachweis unter einem Portraet. Klein, aber vorhanden: die Nennung
+   des Fotografen ist bei lizenzierten Bildern Bedingung der Nutzung,
+   nicht Hoeflichkeit. */
+.portraet__nachweis {
+  font-family: var(--grotesk);
+  font-size: .625rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--tinte-matt);
+  margin: .35rem 0 0;
+}
