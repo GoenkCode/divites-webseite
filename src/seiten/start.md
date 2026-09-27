@@ -41,8 +41,8 @@
 
 ## Über das Ensemble
 
-[PLATZHALTER] Hier steht der Ensembletext. Er wird neu geschrieben und nicht von der bestehenden Seite übernommen, damit beide Seiten sich bei Suchmaschinen nicht gegenseitig schwächen.
+Divites heißt auf Lateinisch die Reichen. Gemeint ist nicht das Konto. Gemeint ist das Repertoire.
 
-[PLATZHALTER] Der zweite Absatz nimmt den Namen auf: *divites* ist lateinisch für „reich" und meint die Spannweite des Repertoires.
+Marta Danilkovich hat das Quartett 2020 gegründet. Seitdem spielt es die Candlelight-Konzerte von Fever, bei Kerzenlicht, an Orten wie der Frankfurter Jahrhunderthalle, dem Wiesbadener Kurhaus, dem Schlosstheater im Neuen Palais in Berlin. Auf dem Programm steht Vivaldi. Auf dem Programm steht auch Metallica. Beides mit vier Streichinstrumenten, in eigenen Arrangements, ohne Verstärkung.
 
-[PLATZHALTER] Der dritte Absatz führt zu den Spielstätten und zur Arbeitsweise des Ensembles.
+Das Quartett ist kein festes Quartett. Es ist ein Kreis von Musikerinnen und Musikern, die sich abwechseln, alle mit eigener Laufbahn: Solocellist eines Staatstheaters, Preisträgerin des Mendelssohn-Wettbewerbs, ECHO-Klassik-Preisträger. Wer an einem Abend spielt, steht im Programm.

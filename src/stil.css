@@ -601,3 +601,8 @@ a.termin__ort:hover { color: var(--akzent); }
     border-top: 2px solid var(--tinte); padding-top: var(--s2); text-align: left;
   }
 }
+
+/* --- Mitglieder ----------------------------------------------------------- */
+.raster--mitglieder { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+.raster--mitglieder .mitglied p { font-size: .9375rem; line-height: 1.55; margin: .5rem 0 0; }
+.raster--mitglieder .mitglied .rolle { margin-top: .1rem; }
