@@ -822,9 +822,14 @@ main > h1 + .besetzung { border-top: 0; margin-top: 0; padding-top: 0; }
   .video__flaeche--bild:hover::after { background: rgba(13, 12, 11, .62); }
 }
 
-/* Bildnachweis unter einem Portraet. Klein, aber vorhanden: die Nennung
-   des Fotografen ist bei lizenzierten Bildern Bedingung der Nutzung,
-   nicht Hoeflichkeit. */
+/* Bildnachweis unter einem Portraet.
+
+   Zurzeit ungenutzt: die Nennung steht im Impressum, das genuegt. Paragraf
+   13 UrhG schreibt die Nennung vor, nicht aber den Ort; ein zugeordneter
+   Bildnachweis im Impressum ist anerkannte Praxis.
+
+   Die Regel bleibt stehen, weil einzelne Fotografen die Nennung direkt am
+   Bild zur Bedingung machen. Dann genuegt eine Zeile im Markup. */
 .portraet__nachweis {
   font-family: var(--grotesk);
   font-size: .625rem;
