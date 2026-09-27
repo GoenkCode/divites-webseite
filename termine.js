@@ -20,20 +20,26 @@
 (function () {
   "use strict";
 
-  // Datum ohne Uhrzeit: Ein Konzert gilt den ganzen Tag ueber als
-  // kommend, auch abends um elf. Wer um 20:30 spielt, soll um 20:31
-  // nicht aus der Liste fallen.
-  var heute = new Date();
-  heute = new Date(heute.getFullYear(), heute.getMonth(), heute.getDate());
+  /* Verglichen wird mit der Anfangszeit, nicht nur mit dem Tag. Drei
+     Konzerte an einem Abend sind um 22 Uhr alle drei vorbei; tagesgenau
+     gerechnet stuenden sie bis Mitternacht unter "die naechsten Konzerte".
 
+     Ein Konzert gilt ab seinem Beginn als vergangen. Wer um 20:31 auf die
+     Seite kommt, kann zum 20:30-Konzert nicht mehr hin -- es als naechsten
+     Termin anzubieten waere eine Einladung ins Leere. Ein Zuschlag fuer
+     die Spieldauer wuerde daran nichts verbessern.
+
+     Ohne Zeitzone im Wert liest der Browser die Zeit als seine eigene.
+     Fuer ein Publikum, das zum Konzert faehrt, ist das richtig: Wer davor
+     steht, hat dieselbe Uhr wie der Saal. */
   function istVergangen(li) {
     var roh = li.getAttribute("data-datum");
     if (!roh) return false;
-    var teile = roh.split("-");
-    if (teile.length !== 3) return false;
-    var d = new Date(+teile[0], +teile[1] - 1, +teile[2]);
-    if (isNaN(d.getTime())) return false;   // unlesbares Datum: stehen lassen
-    return d < heute;
+    var m = roh.match(/^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}))?$/);
+    if (!m) return false;                   // unlesbares Datum: stehen lassen
+    var d = new Date(+m[1], +m[2] - 1, +m[3], +(m[4] || 0), +(m[5] || 0));
+    if (isNaN(d.getTime())) return false;
+    return d < new Date();
   }
 
   /* --- Startseite: die naechsten drei ------------------------------------ */
