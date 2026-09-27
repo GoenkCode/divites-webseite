@@ -612,6 +612,10 @@ a.termin__ort:hover { color: var(--akzent); }
    dazukommen. */
 .portraet {
   width: 100%;
+  height: auto;          /* zwingend, sonst gewinnt das height-Attribut
+                            des img-Tags und aspect-ratio wird ignoriert.
+                            Genau daran hing das Bild am 27.09.2026 mit
+                            1200 px Hoehe in einer 400-px-Kachel. */
   aspect-ratio: 3 / 4;
   object-fit: cover;
   object-position: center 20%;
