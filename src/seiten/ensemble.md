@@ -1,6 +1,6 @@
 # Das Ensemble
 
-Das Divites Quartett ist kein festes Quartett mit vier Namen. Es ist ein Kreis von Musikerinnen und Musikern, und wer an einem Abend spielt, wechselt. Alle treten unter Künstlernamen auf.
+Das Divites Quartett ist kein festes Quartett mit vier Namen. Es ist ein Kreis von Musikerinnen und Musikern, und wer an einem Abend spielt, wechselt.
 
 <ul class="raster raster--mitglieder">
 <li class="mitglied">
