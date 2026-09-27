@@ -1,8 +1,12 @@
 <section class="auftakt">
-<div class="auftakt__bild" role="img" aria-label="Platzhalter fuer das Gruppenfoto">[Gruppenfoto folgt]</div>
 <div class="auftakt__innen">
+<div class="auftakt__text">
 <h1>Divites<br>Quartett</h1>
 <p class="auftakt__unter">[PLATZHALTER] Ein Satz, der sagt, was dieses Ensemble tut und warum man hingehen sollte. Kommt, wenn der Ensembletext steht.</p>
+</div>
+<figure class="auftakt__bild">
+<img src="bilder/divites_quartett_gruppe.jpg" width="920" height="920" alt="Das Divites Quartett mit Streichinstrumenten in einem Gewoelbe, umgeben von hunderten Kerzen">
+</figure>
 </div>
 </section>
 

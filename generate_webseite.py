@@ -281,7 +281,10 @@ def markdown_zu_html(text, quelle):
         (re.compile(r"^```"), "Codebloecke"),
         (re.compile(r"^\s{0,3}\|"), "Tabellen"),
         (re.compile(r"^\s*\d+\.\s"), "nummerierte Listen"),
-        (re.compile(r"!\["), "Bild-Syntax"),
+        # Markdown-Bildsyntax wird nicht unterstuetzt. Echtes <img> in
+        # einem HTML-Block schon - deshalb nur auf "![" ausserhalb von
+        # HTML-Zeilen pruefen.
+        (re.compile(r"(?<!\S)!\["), "Markdown-Bildsyntax"),
     ]
     # Callout-Marken ausserhalb einer Zitatzeile wuerden woertlich im HTML
     # landen. Genau das ist beim ersten Lauf passiert.

@@ -12,7 +12,9 @@ Angaben nach § 5 DDG.
 
 ## Bildnachweise
 
-[PLATZHALTER: Fotografennennung]
+Gruppenfoto: [PLATZHALTER: Name des Fotografen]
+
+> [!ACHTUNG] Dieser Nachweis fehlt und muss vor der Veroeffentlichung eingetragen werden. Ein Pressefoto ohne Urhebernennung ist der haeufigste Abmahngrund auf Musikerseiten, und angeschrieben wird der Betreiber der Seite.
 
 ## Haftung für Links
 

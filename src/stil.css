@@ -123,31 +123,40 @@ a:focus-visible, button:focus-visible {
 
 /* --- Auftakt ------------------------------------------------------------- */
 
+/* Zweispaltig statt Bild-als-Hintergrund. Grund: das vorhandene
+   Gruppenfoto ist quadratisch und 920 px breit. Ueber die volle
+   Fensterbreite gezogen waere es auf jedem Desktop hochskaliert und
+   oben wie unten hart beschnitten — die Koepfe zuerst. Nebeneinander
+   bleibt es in seiner echten Aufloesung scharf.
+   Sobald ein breites Pressefoto in hoher Aufloesung vorliegt, kann
+   hier wieder auf einen vollflaechigen Auftakt umgestellt werden. */
 .auftakt {
-  position: relative;
-  min-height: min(78vh, 40rem);
-  display: grid;
-  align-items: end;
-  background: var(--papier-tief);
   border-bottom: 1px solid var(--linie);
-  overflow: hidden;
+  background: var(--papier-tief);
 }
+.auftakt__innen {
+  max-width: var(--spalte);
+  margin: 0 auto;
+  padding: var(--s5) var(--s3);
+  display: grid;
+  grid-template-columns: 1fr minmax(16rem, 26rem);
+  gap: var(--s4);
+  align-items: center;
+}
+.auftakt__text { min-width: 0; }
 .auftakt__bild {
-  position: absolute; inset: 0;
-  background: repeating-linear-gradient(
-      45deg, var(--papier-tief), var(--papier-tief) 12px,
-      var(--linie) 12px, var(--linie) 13px);
+  aspect-ratio: 1 / 1;
+  background: var(--papier);
+  border: 1px solid var(--linie);
   display: grid; place-items: center;
   font-family: var(--grotesk); font-size: .8125rem;
   letter-spacing: .12em; text-transform: uppercase;
   color: var(--tinte-matt);
+  overflow: hidden;
 }
-.auftakt__innen {
-  position: relative;
-  max-width: var(--spalte);
-  width: 100%;
-  margin: 0 auto;
-  padding: var(--s6) var(--s3) var(--s4);
+.auftakt__bild img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
 }
 .auftakt h1 {
   font-family: var(--grotesk);
@@ -397,7 +406,7 @@ a.termin__ort:hover { color: var(--akzent); }
    wurde dort unnoetig hoch und die Raender zu knapp. */
 
 @media (max-width: 64rem) {
-  .auftakt { min-height: min(62vh, 32rem); }
+  .auftakt__innen { grid-template-columns: 1fr; gap: var(--s3); }
   .kopf__innen,
   .auftakt__innen { padding-left: var(--s2); padding-right: var(--s2); }
   main > h1, main > h2, main > h3,
@@ -430,8 +439,7 @@ a.termin__ort:hover { color: var(--akzent); }
   .nav ul { gap: var(--s2); flex-wrap: nowrap; padding-bottom: 2px; }
   .nav a { white-space: nowrap; }
 
-  .auftakt { min-height: min(56vh, 26rem); }
-  .auftakt__innen { padding-top: var(--s4); padding-bottom: var(--s3); }
+  .auftakt__innen { padding-top: var(--s4); padding-bottom: var(--s4); }
   .auftakt h1 { letter-spacing: -.025em; }
 
   .stimmen { padding-top: var(--s4); padding-bottom: var(--s4); gap: var(--s4); }
