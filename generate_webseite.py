@@ -592,6 +592,7 @@ def seite_bauen(vorlage, name, titel, beschreibung, inhalt, braucht_filter, json
         .replace("{{BESCHREIBUNG}}", html.escape(beschreibung)) \
         .replace("{{ROBOTS}}", kopf) \
         .replace("{{CANONICAL}}", "%s/%s" % (DOMAIN, "" if name == "start" else ziel)) \
+        .replace("{{SEITE}}", "seite--%s" % name) \
         .replace("{{NAV}}", navigation(name)) \
         .replace("{{INHALT}}", inhalt) \
         .replace("{{JAHR}}", str(datetime.date.today().year)) \
