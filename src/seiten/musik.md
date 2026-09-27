@@ -74,11 +74,3 @@
 <p class="video__quelle"><a href="https://www.youtube.com/watch?v=sFG5DwR3qck" rel="noopener">Direkt bei YouTube ansehen</a></p>
 </li>
 </ul>
-
-## Warum erst ein Klick
-
-Ein eingebettetes Video nimmt beim Laden der Seite Verbindung zu Google auf und uebertraegt dabei die IP-Adresse der Besucherin — auch dann, wenn das Video nie abgespielt wird. Selbst das Vorschaubild kaeme von dort.
-
-Deshalb wird hier vor dem Klick **nichts** von Google geladen. Erst wer ein Video anklickt, stellt die Verbindung her, und dann ueber `youtube-nocookie.com`.
-
-> [!HINWEIS] Ein zehntes Video fehlt. Auf Martas Seite ist eine Aufnahme von „Marche“ aus Tschaikowskys Nussknacker gelistet, die sich nicht auffinden liess. Link nachreichen.
