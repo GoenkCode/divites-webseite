@@ -622,3 +622,18 @@ a.termin__ort:hover { color: var(--akzent); }
   display: block;
   border: 1px solid var(--linie);
 }
+
+/* Verweis auf die Google-Bewertungen unter den Stimmen. Bewusst
+   zurueckhaltend: die Zitate tragen, der Link belegt sie nur. */
+.stimmen__mehr {
+  max-width: var(--spalte);
+  margin: 0 auto;
+  padding: 0 var(--s3) var(--s5);
+  text-align: center;
+  font-family: var(--grotesk);
+  font-size: .75rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.stimmen__mehr a { color: var(--tinte-matt); text-underline-offset: 4px; }
+.stimmen__mehr a:hover { color: var(--akzent); }

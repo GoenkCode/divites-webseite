@@ -29,6 +29,7 @@
 <figcaption>Markt Sulzbach am Main</figcaption>
 </figure>
 </div>
+<p class="stimmen__mehr"><a href="https://www.google.com/search?kgmid=/g/11yz6cqhv7&amp;hl=de" rel="noopener">Bewertungen bei Google</a></p>
 </section>
 
 ## Die nächsten Konzerte
