@@ -385,14 +385,61 @@ a.termin__ort:hover { color: var(--akzent); }
 .fuss__links { list-style: none; display: flex; gap: var(--s3); margin: 0; padding: 0; }
 .fuss__jahr { color: var(--tinte-matt); margin: 0; }
 
+/* --- Tablet -------------------------------------------------------------- */
+/* Zwischen Handy und Desktop passierte urspruenglich nichts. Der Auftakt
+   wurde dort unnoetig hoch und die Raender zu knapp. */
+
+@media (max-width: 64rem) {
+  .auftakt { min-height: min(62vh, 32rem); }
+  .kopf__innen,
+  .auftakt__innen { padding-left: var(--s2); padding-right: var(--s2); }
+  main > h1, main > h2, main > h3,
+  main > p, main > ul, main > blockquote,
+  .termine, .filter, .raster, .stimmen, .termine__trenner {
+    padding-left: var(--s2); padding-right: var(--s2);
+  }
+}
+
 /* --- Schmale Fenster ----------------------------------------------------- */
 
 @media (max-width: 34rem) {
-  .termin { grid-template-columns: 4.25rem 1fr; gap: var(--s2); }
+  .termin { grid-template-columns: 3.75rem 1fr; gap: var(--s2); }
   .termin__tag { font-size: 1.5rem; }
-  .kopf__innen { flex-direction: column; align-items: flex-start; gap: var(--s2); }
-  .nav ul { gap: var(--s2); }
-  .auftakt__innen { padding-top: var(--s5); }
+  .termin__jahr { display: none; }   /* Jahr steht schon im Datum darunter */
+  .termin__programm { font-size: 1.0625rem; }
+
+  /* Adresse auf eine eigene Zeile. Mit Mittelpunkt getrennt bricht
+     "Kaiserstrasse 37, 60329 Frankfurt am Main" sonst mitten in die
+     Zeile und die Ortsangabe wird unlesbar. */
+  .termin__adresse { display: block; }
+  .termin__adresse::before { content: none; }
+
+  .kopf__innen { flex-direction: column; align-items: flex-start; gap: var(--s1); }
+  .marke { font-size: .9375rem; }
+
+  /* Navigation als ruhige Zeile statt zweizeiligem Umbruch: sie darf
+     seitlich scrollen, statt in die Hoehe zu wachsen. */
+  .nav { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .nav ul { gap: var(--s2); flex-wrap: nowrap; padding-bottom: 2px; }
+  .nav a { white-space: nowrap; }
+
+  .auftakt { min-height: min(56vh, 26rem); }
+  .auftakt__innen { padding-top: var(--s4); padding-bottom: var(--s3); }
+  .auftakt h1 { letter-spacing: -.025em; }
+
+  .stimmen { padding-top: var(--s4); padding-bottom: var(--s4); gap: var(--s4); }
+  .fuss__innen { flex-direction: column; gap: var(--s1); }
+
+  /* Filterknoepfe gross genug zum Antippen: Apple empfiehlt 44 px. */
+  .filter__knopf { padding: .55em 1em; min-height: 2.75rem; }
+}
+
+/* Auf Touchgeraeten gibt es kein hover. Die Zustandsanzeige muss ueber
+   aria-pressed laufen, nicht ueber Mauszeigereffekte. */
+@media (hover: none) {
+  .filter__knopf:hover { border-color: var(--linie); }
+  .nav a:hover { border-bottom-color: transparent; }
+  .nav a[aria-current="page"] { border-bottom-color: var(--akzent); }
 }
 
 /* Bewegung respektieren, obwohl die Seite ohnehin keine Animationen hat */
