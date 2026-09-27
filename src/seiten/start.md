@@ -6,7 +6,6 @@
 </div>
 <figure class="auftakt__bild">
 <img src="bilder/quartett_kurhaus_frontal.jpg" width="1600" height="2133" fetchpriority="high" alt="Die vier Musikerinnen und Musiker des Divites Quartetts stehen mit Violoncello, Bratsche und zwei Violinen auf der Buehne des leeren Friedrich-von-Thiersch-Saals im Kurhaus Wiesbaden">
-<figcaption class="auftakt__zeile">Kurhaus Wiesbaden, Friedrich-von-Thiersch-Saal</figcaption>
 </figure>
 </div>
 </section>

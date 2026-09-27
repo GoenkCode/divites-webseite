@@ -1,8 +1,7 @@
 # Das Ensemble
 
 <figure class="bildband">
-<img class="bildband__bild bildband__bild--hell" src="bilder/quartett_literaturhaus_treppe.jpg" width="1600" height="1242" loading="lazy" alt="Vier Mitglieder des Quartetts, alle in Schwarz, steigen im Gaensemarsch die Marmortreppe des Literaturhauses Frankfurt hinauf, jeweils eine Faust erhoben">
-<figcaption class="bildband__zeile">Literaturhaus Frankfurt</figcaption>
+<img class="bildband__bild" src="bilder/quartett_literaturhaus_treppe.jpg" width="1600" height="1242" loading="lazy" alt="Vier Mitglieder des Quartetts, alle in Schwarz, steigen im Gaensemarsch die Marmortreppe des Literaturhauses Frankfurt hinauf, jeweils eine Faust erhoben">
 </figure>
 
 <section class="besetzung">
