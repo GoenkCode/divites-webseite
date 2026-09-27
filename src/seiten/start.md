@@ -2,7 +2,7 @@
 <div class="auftakt__innen">
 <div class="auftakt__text">
 <h1>Divites<br>Quartett</h1>
-<p class="auftakt__unter">[PLATZHALTER] Ein Satz, der sagt, was dieses Ensemble tut und warum man hingehen sollte. Kommt, wenn der Ensembletext steht.</p>
+<p class="auftakt__unter">Vivaldi und Metallica. Vier Streichinstrumente, keine Verstärker.</p>
 </div>
 <figure class="auftakt__bild">
 <img src="bilder/divites_quartett_gruppe.jpg" width="920" height="920" alt="Das Divites Quartett mit Streichinstrumenten in einem Gewoelbe, umgeben von hunderten Kerzen">
@@ -41,8 +41,10 @@
 
 ## Über das Ensemble
 
-Divites heißt auf Lateinisch die Reichen. Gemeint ist nicht das Konto. Gemeint ist das Repertoire.
+Divites kommt vom lateinischen *dives*: reich. Gemeint ist nicht das Konto. Gemeint ist das Repertoire.
 
-Marta Danilkovich hat das Quartett 2020 gegründet. Seitdem spielt es die Candlelight-Konzerte von Fever, bei Kerzenlicht, an Orten wie der Frankfurter Jahrhunderthalle, dem Wiesbadener Kurhaus, dem Schlosstheater im Neuen Palais in Berlin. Auf dem Programm steht Vivaldi. Auf dem Programm steht auch Metallica. Beides mit vier Streichinstrumenten, in eigenen Arrangements, ohne Verstärkung.
+Vivaldi. Metallica. Hans Zimmer. Queen. Vier Streichinstrumente, eigene Arrangements, kein einziger Verstärker. Was im Original nach Stadion klingt, klingt hier nach Saal. Und funktioniert trotzdem.
 
-Das Quartett ist kein festes Quartett. Es ist ein Kreis von Musikerinnen und Musikern, die sich abwechseln, alle mit eigener Laufbahn: Solocellist eines Staatstheaters, Preisträgerin des Mendelssohn-Wettbewerbs, ECHO-Klassik-Preisträger. Wer an einem Abend spielt, steht im Programm.
+Marta Danilkovich hat das Quartett 2020 gegründet. Gespielt wird bei Kerzenlicht, in der Jahrhunderthalle Frankfurt, im Wiesbadener Kurhaus, im Schlosstheater im Neuen Palais in Berlin. Die meisten Konzerte sind ausverkauft.
+
+Das Quartett ist kein festes Quartett. Es ist ein Kreis von Musikerinnen und Musikern, die sich abwechseln, jede und jeder mit eigener Laufbahn: Solocellist eines Staatstheaters, Preisträgerin des Mendelssohn-Wettbewerbs, ECHO-Klassik-Preisträger. Wer an dem Abend spielt, steht im Programm.
