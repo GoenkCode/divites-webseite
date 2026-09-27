@@ -4,7 +4,14 @@
 # Warum kein GitHub-Actions-Workflow: Der Build braucht die Termindatei aus
 # dem lokalen Obsidian-Vault. Den gibt es auf GitHub nicht. Ein Workflow
 # muesste aus einer mitgepushten Kopie bauen — doppelte Datenhaltung fuer
-# nichts. Also wird lokal gebaut und nur das Ergebnis ausgeliefert.
+# nichts, und er verlangt einen workflow-Scope, den die CLI-Anmeldung nicht
+# hat. Also wird lokal gebaut und nur das Ergebnis ausgeliefert.
+#
+# Der Branch gh-pages wird ueber ein separates git-worktree befuellt.
+# Die naheliegende Variante — im Arbeitsverzeichnis den Branch wechseln und
+# aufraeumen — haette rm -rf auf den Quellbaum losgelassen. Bricht das mitten
+# drin ab, steht man vor einem halb geloeschten Repo. Ein worktree fasst das
+# Arbeitsverzeichnis nicht an.
 #
 #   ./export.sh            baut und veroeffentlicht
 #   ./export.sh --nur-bau  baut nur, veroeffentlicht nicht
@@ -17,7 +24,7 @@ echo "== Bauen =="
 python3 generate_webseite.py
 
 # Ein Deploy mit leerer Terminliste waere schlimmer als ein veralteter Stand.
-anzahl=$(grep -c 'class="termin"' build/termine.html || true)
+anzahl="$(grep -c 'class="termin"' build/termine.html || true)"
 if [ "${anzahl:-0}" -lt 1 ]; then
   echo "ABBRUCH: keine Termine im Generat." >&2
   exit 1
@@ -37,20 +44,32 @@ if [ "${1:-}" = "--nur-bau" ]; then
 fi
 
 echo "== Veroeffentlichen =="
-# Das Generat als eigener Branch. --force ist hier richtig: gh-pages ist
-# reines Ergebnis, keine Historie, die jemand braucht.
-git add -A build -f 2>/dev/null || true
-TMP="$(mktemp -d)"
-cp -R build/. "$TMP/"
-git checkout -q --orphan gh-pages-neu
-git rm -rq --cached . >/dev/null 2>&1 || true
-find . -maxdepth 1 ! -name . ! -name .git ! -name build -exec rm -rf {} + 2>/dev/null || true
-cp -R "$TMP"/. .
-rm -rf "$TMP" build
-git add -A
-git commit -q -m "Stand $(date +%Y-%m-%d\ %H:%M)"
-git branch -M gh-pages-neu gh-pages
-git push -q --force origin gh-pages
-git checkout -q main
-git checkout -q -- . 2>/dev/null || true
-echo "Veroeffentlicht. GitHub Pages aktualisiert in ein bis zwei Minuten."
+
+WT="$(mktemp -d)"
+aufraeumen() {
+  git worktree remove --force "$WT" >/dev/null 2>&1 || true
+  rm -rf "$WT"
+}
+trap aufraeumen EXIT
+
+if git show-ref --verify --quiet refs/heads/gh-pages; then
+  git worktree add -q "$WT" gh-pages
+else
+  git worktree add -q --detach "$WT"
+  git -C "$WT" checkout -q --orphan gh-pages
+  git -C "$WT" rm -rq --cached . >/dev/null 2>&1 || true
+fi
+
+# Nur innerhalb des worktree loeschen, nie im Quellbaum.
+find "$WT" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+cp -R build/. "$WT"/
+
+git -C "$WT" add -A
+if git -C "$WT" diff --cached --quiet; then
+  echo "   Keine Aenderung gegenueber dem veroeffentlichten Stand."
+  exit 0
+fi
+
+git -C "$WT" commit -q -m "Stand $(date '+%Y-%m-%d %H:%M')"
+git -C "$WT" push -q --force origin gh-pages
+echo "   Veroeffentlicht. GitHub Pages aktualisiert in ein bis zwei Minuten."
