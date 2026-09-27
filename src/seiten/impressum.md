@@ -14,6 +14,10 @@ Angaben nach § 5 DDG.
 
 Gruppenfoto: [PLATZHALTER: Name des Fotografen]
 
+Porträt Larissa Nagel: Philippe Stier
+
+Porträt Victor aus Butzbach: eigenes Foto, Hintergrund digital erstellt
+
 > [!ACHTUNG] Dieser Nachweis fehlt und muss vor der Veroeffentlichung eingetragen werden. Ein Pressefoto ohne Urhebernennung ist der haeufigste Abmahngrund auf Musikerseiten, und angeschrieben wird der Betreiber der Seite.
 
 ## Haftung für Links
