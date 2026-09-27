@@ -169,6 +169,25 @@ def zeitzone(tag, uhrzeit):
     return "+02:00"
 
 
+def stadt_aus_adresse(adresse):
+    """
+    Zieht die Stadt aus der Adresse: alles nach der Postleitzahl.
+
+    Gefiltert wird nach Stadt, nicht nach Spielstaette. Vier Spielstaetten
+    ergaeben vier Knoepfe, die Staedte nur zwei — und die Frage des
+    Besuchers lautet "spielt ihr in meiner Stadt", nicht "in welchem Haus".
+    Die Spielstaette steht ohnehin in jeder Zeile.
+    """
+    import re as _re
+    m = _re.search(r"\b\d{5}\s+(.+)$", adresse.strip())
+    if not m:
+        return adresse.strip() or "Ohne Ortsangabe"
+    stadt = m.group(1).strip()
+    # "Frankfurt am Main" bleibt so — Abkuerzen waere eine Behauptung
+    # ueber den Sprachgebrauch, die niemand verlangt hat.
+    return stadt
+
+
 def termine_html(termine, heute, nur_naechste=None):
     """Baut die Terminliste. Orte werden nur verlinkt, wenn ein Link da ist."""
     kommend = [t for t in termine if t["datum"] >= heute]
@@ -178,15 +197,17 @@ def termine_html(termine, heute, nur_naechste=None):
 
     orte = []
     for t in kommend:
-        if t["ort"] not in orte:
-            orte.append(t["ort"])
+        st = stadt_aus_adresse(t["adresse"])
+        if st not in orte:
+            orte.append(st)
+    orte.sort()
 
     teile = []
 
     # Filter nur anbieten, wenn es ueberhaupt etwas zu filtern gibt.
     if not nur_naechste and len(orte) > 1:
         teile.append('<div class="filter" data-filter hidden>')
-        teile.append('  <span class="filter__titel" id="filter-titel">Ort:</span>')
+        teile.append('  <span class="filter__titel" id="filter-titel">Stadt:</span>')
         teile.append('  <div class="filter__knoepfe" role="group" aria-labelledby="filter-titel">')
         teile.append('    <button type="button" class="filter__knopf" '
                      'data-ort="*" aria-pressed="true">Alle</button>')
@@ -205,7 +226,7 @@ def termine_html(termine, heute, nur_naechste=None):
         for t in eintraege:
             klassen = "termin" + (" termin--abgesagt" if t["abgesagt"] else "")
             aus.append('  <li class="%s" data-ort="%s">'
-                       % (klassen, html.escape(t["ort"], True)))
+                       % (klassen, html.escape(stadt_aus_adresse(t["adresse"]), True)))
             aus.append('    <div class="termin__marke">')
             aus.append('      <span class="termin__tag">%02d</span>' % t["datum"].day)
             aus.append('      <span class="termin__monat">%s</span>'

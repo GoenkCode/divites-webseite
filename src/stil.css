@@ -46,6 +46,13 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+/* Das hidden-Attribut muss staerker sein als jede Layoutregel.
+   Ohne diese Zeile gewinnt .termin { display: grid } gegen das
+   display:none des Browser-Stylesheets — der Ortsfilter setzt dann
+   zwar hidden, aber es passiert sichtbar nichts. Genau so war es
+   am 27.09.2026 gemeldet worden. */
+[hidden] { display: none !important; }
+
 html { -webkit-text-size-adjust: 100%; }
 
 body {
