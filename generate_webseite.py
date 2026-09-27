@@ -471,6 +471,22 @@ def robots():
             "User-agent: *\nDisallow: /\n")
 
 
+def fingerabdruck(pfad):
+    """
+    Kurzer Hash des Dateiinhalts, wird als ?v=... an Verweise gehaengt.
+
+    Ohne das haelt der Browser eine geaenderte Datei unter gleichem Namen
+    fuer dieselbe und zeigt weiter die alte. Genau das ist am 27.09.2026
+    passiert: das Portraetfoto wurde dreimal ersetzt, im Browser blieb die
+    erste Fassung stehen, und es sah nach einem Fehler in der Seite aus.
+    """
+    import hashlib
+    if not os.path.isfile(pfad):
+        return ""
+    with open(pfad, "rb") as f:
+        return hashlib.sha1(f.read()).hexdigest()[:8]
+
+
 def navigation(aktuell):
     teile = ['<nav class="nav" aria-label="Hauptnavigation"><ul>']
     for name, titel, _, _ in SEITEN:
@@ -492,14 +508,19 @@ def seite_bauen(vorlage, name, titel, beschreibung, inhalt, braucht_filter, json
         kopf = '<meta name="robots" content="noindex, nofollow">'
     skripte = []
     if braucht_filter:
-        skripte.append('<script src="filter.js" defer></script>')
+        skripte.append('<script src="filter.js?v=%s" defer></script>'
+                       % fingerabdruck(os.path.join(HIER, "src", "filter.js")))
     if name == "musik":
-        skripte.append('<script src="video.js" defer></script>')
+        skripte.append('<script src="video.js?v=%s" defer></script>'
+                       % fingerabdruck(os.path.join(HIER, "src", "video.js")))
     if name == "start":
-        skripte.append('<script src="stimmen.js" defer></script>')
+        skripte.append('<script src="stimmen.js?v=%s" defer></script>'
+                       % fingerabdruck(os.path.join(HIER, "src", "stimmen.js")))
     skript = "\n".join(skripte)
     voller_titel = titel if name == "start" else "%s – %s" % (titel, ENSEMBLE)
+    css_v = fingerabdruck(os.path.join(HIER, "src", "stil.css"))
     return vorlage \
+        .replace("stil.css\"", "stil.css?v=%s\"" % css_v) \
         .replace("{{TITEL}}", html.escape(voller_titel)) \
         .replace("{{BESCHREIBUNG}}", html.escape(beschreibung)) \
         .replace("{{ROBOTS}}", kopf) \
@@ -571,6 +592,9 @@ def main():
         liste_voll, anz_kommend, anz_vergangen = termine_html(termine, heute)
         liste_kurz, _, _ = termine_html(termine, heute, nur_naechste=3)
 
+        # Bilder zuerst, damit beim Seitenbau ihr Fingerabdruck vorliegt.
+        anz_bilder = bilder_kopieren(BILDER_QUELLE, os.path.join(args.ausgabe, "bilder"))
+
         gebaut = 0
         for name, _, titel, beschreibung in SEITEN:
             quelle = os.path.join(HIER, "src", "seiten", "%s.md" % name)
@@ -578,6 +602,13 @@ def main():
                 raise Abbruch("Seiteninhalt fehlt: %s" % quelle)
             roh = io.open(quelle, encoding="utf-8").read()
             inhalt = markdown_zu_html(roh, "%s.md" % name)
+            # Bildverweise mit Fingerabdruck versehen, damit ein ersetztes
+            # Bild im Browser auch wirklich neu geladen wird.
+            def _bild_v(m):
+                datei = m.group(1)
+                v = fingerabdruck(os.path.join(args.ausgabe, "bilder", os.path.basename(datei)))
+                return 'src="%s?v=%s"' % (datei, v) if v else m.group(0)
+            inhalt = re.sub(r'src="(bilder/[^"?]+)"', _bild_v, inhalt)
             inhalt = inhalt.replace("<p>{{TERMINE}}</p>", liste_voll)
             inhalt = inhalt.replace("<p>{{TERMINE_KURZ}}</p>", liste_kurz)
             ziel = "index.html" if name == "start" else "%s.html" % name
@@ -619,7 +650,6 @@ def main():
         io.open(os.path.join(args.ausgabe, "robots.txt"), "w",
                 encoding="utf-8").write(robots())
 
-        anz_bilder = bilder_kopieren(BILDER_QUELLE, os.path.join(args.ausgabe, "bilder"))
         abgesagt = len([t for t in termine if t["abgesagt"]])
 
     except Abbruch as fehler:
