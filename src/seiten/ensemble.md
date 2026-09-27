@@ -47,7 +47,6 @@
 </li>
 <li class="mitglied">
 <img class="portraet" src="bilder/portraet_larissa.jpg" width="900" height="1200" alt="Larissa Nagel, Cellistin des Divites Quartetts" loading="lazy">
-<p class="portraet__nachweis">Foto: Philippe Stier</p>
 <h3>Larissa Nagel</h3>
 <p>Die Cellistin Larissa Nagel liebt und lebt die Vielseitigkeit ihres Berufes. Solistisch und mit Ensembles unterschiedlichster Größen und Formen arbeitet sie stetig an neuen Konzertformaten und Konzepten, die spartenübergreifend aufgeführt werden und Musik von Barock über Jazz und zeitgenössischer Musik enthalten.</p>
 </li>
