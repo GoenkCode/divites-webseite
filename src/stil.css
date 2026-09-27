@@ -433,7 +433,8 @@ a.termin__ort:hover { color: var(--akzent); }
   .auftakt__innen { padding-left: var(--s2); padding-right: var(--s2); }
   main > h1, main > h2, main > h3,
   main > p, main > ul, main > blockquote,
-  .termine, .filter, .raster, .stimmen, .termine__trenner {
+  .termine, .filter, .raster, .stimmen, .termine__trenner,
+  .bildband, .textbild, .bildpaar {
     padding-left: var(--s2); padding-right: var(--s2);
   }
 }
@@ -848,4 +849,148 @@ main > h1 + .besetzung { border-top: 0; margin-top: 0; padding-top: 0; }
   text-transform: uppercase;
   color: var(--tinte-matt);
   margin: .35rem 0 0;
+}
+
+/* --- Bilder aus Konzertsaelen --------------------------------------------- */
+/* Regel: Portraets grau, Orte farbig. Das Entgrauen gleicht Portraets aus
+   verschiedenen Quellen einander an. Ein Saalfoto hat keine Geschwister,
+   denen es gleichen muesste, und sein Gold sagt, wo gespielt wird.
+
+   Ein einziges goldenes Bild auf der ganzen Seite, nicht eins pro Seite.
+   Gold wirkt nur, solange es selten ist; ein zweites Kurhausbild zwei
+   Klicks weiter macht aus der Ausnahme ein Motiv. Deshalb steht der
+   zweite Kurhaussaal auf der Kontaktseite in Grau. */
+
+/* Auftakt: das Kurhausfoto hat das quadratische Gewoelbebild abgeloest.
+   Jenes hatte 920 Bildpunkte und einen Orangestich, der Hauttoene
+   verschiebt -- kitschiger als das goldene Neue. */
+.auftakt__bild img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* 4:5 statt der nativen 3:4: in der halben Seitenspalte waere 3:4 auf
+     einem 800 px hohen Laptop unten abgeschnitten. 4:5 kostet nur
+     133 px Kassettendecke. */
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  /* Unten verankern: Buehnenkante und Fuesse tragen die Komposition,
+     die Decke vertraegt den Anschnitt. */
+  object-position: 50% 100%;
+}
+
+.auftakt__zeile,
+.bildband__zeile {
+  margin-top: var(--s1);
+  font-family: var(--grotesk);
+  font-size: .875rem;
+  /* --tinte-matt auf --papier: 7,19:1 hell, 7,57:1 dunkel. Beide AA. */
+  color: var(--tinte-matt);
+}
+
+/* Bildband: ein Querformat in voller Seitenspalte, nicht in voller
+   Fensterbreite. Die Quelle ist 1600 px breit; bei 68rem (1088 px) ergibt
+   das 1,47-fache Dichte. Randlos ueber einen 1440-px-Schirm mit doppelter
+   Dichte braeuchte 2880 px und braeche das 38/68-Raster. */
+.bildband {
+  max-width: var(--spalte);
+  margin: var(--s5) auto;
+  /* Derselbe Seitenabstand wie bei Ueberschriften, Terminliste und Raster.
+     Ohne ihn liegt das Bild am Fensterrand, die Ueberschrift darueber aber
+     nicht -- die Kante verraet den Nachbau. */
+  padding: 0 var(--s3);
+}
+.bildband__bild {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* 3:2 schneidet das Schild der Stiftung Buchkunst unten ab. Fremde
+     Schrift im Bild konkurriert mit unserer. */
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  object-position: 50% 40%;
+}
+
+/* Ausnahme von "kein Rahmen", einzeln begruendet: Die Wand im Treppenhaus
+   misst 244/244/242, --papier liegt bei 246/244/241. Ohne Linie
+   verschwindet im hellen Modus die obere und linke Bildkante, und das Bild
+   wird zum Fleck statt zur Flaeche. Die Linie ist die Kante, kein Schmuck.
+   Im dunklen Modus ist die Kante von selbst da. */
+@media (prefers-color-scheme: light) {
+  .bildband__bild--hell {
+    outline: 1px solid var(--linie);
+    outline-offset: -1px;
+  }
+}
+
+/* Nebenbild in Textspaltenbreite: es ordnet sich dem Text unter, statt
+   eine zweite Buehne neben dem Auftakt aufzumachen. */
+/* Die aeussere Breite ist die Seitenspalte, damit das Bild an Ueberschrift
+   und Terminliste anschliesst; die innere ist die Textspalte, damit es sich
+   dem Inhalt unterordnet. Nur die Textbreite zu nehmen haette das Bild
+   mittig ueber eine linksbuendige Liste gesetzt. */
+.textbild {
+  max-width: var(--spalte);
+  margin: var(--s4) auto;
+  padding: 0 var(--s3);
+}
+.textbild__bild {
+  display: block;
+  width: 100%;
+  max-width: var(--spalte-text);
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+/* Bildpaar Kontakt: Spalten 16:9 heisst 4:3 neben 3:4 bei gleicher Hoehe,
+   beide ohne Beschnitt. Entgraut, weil das eine farbige Goldbild der
+   Startseite gehoert; hier zaehlen Saal und Garderobe, nicht das Gold. */
+.bildpaar {
+  max-width: var(--spalte);
+  margin: var(--s5) auto;
+  padding: 0 var(--s3);
+  display: grid;
+  grid-template-columns: 16fr 9fr;
+  gap: var(--s2);
+}
+.bildpaar__bild {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: grayscale(1);
+}
+@media (max-width: 40rem) {
+  .bildpaar { grid-template-columns: 1fr; }
+}
+
+/* --- Uebergaenge ---------------------------------------------------------- */
+/* Ausnahme vom Leitsatz "keine Animationen". Sie war ohnehin nie absolut:
+   das Zitat-Karussell blendet seit jeher in 1,1 s. Erlaubt ist nur, was
+   einen Zustandswechsel weicher macht, den jemand selbst ausgeloest hat.
+   Nichts bewegt sich von allein, nichts erscheint beim Scrollen. Linear,
+   weil Beschleunigungskurven auf 120 ms nicht wahrnehmbar sind. */
+a,
+button {
+  transition: color 120ms linear, background-color 120ms linear, border-color 120ms linear;
+}
+
+/* Der Ortsfilter blendet ein, statt zu springen. @starting-style greift
+   beim Wechsel von display:none, also auch beim hidden-Attribut, das
+   filter.js setzt -- das Skript bleibt unveraendert. Aeltere Browser
+   schalten wie bisher hart um.
+
+   Die Zitate stehen hier bewusst nicht: sie haben in .stimmen--wechsel
+   bereits einen Uebergang von 1,1 s. Eine zweite Regel mit 200 ms wuerde
+   ihn verkuerzen, nicht ergaenzen. */
+.termin {
+  transition: opacity 200ms linear;
+}
+@starting-style {
+  .termin { opacity: 0; }
+}
+
+/* Wer reduzierte Bewegung eingestellt hat, bekommt die Seite ohne jeden
+   Uebergang. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
 }

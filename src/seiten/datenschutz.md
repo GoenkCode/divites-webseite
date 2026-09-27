@@ -26,6 +26,6 @@ Sie können jedes Video auch direkt bei YouTube ansehen — unter jeder Fläche 
 
 Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung sowie ein Beschwerderecht bei einer Aufsichtsbehörde.
 
-**Kontakt:** [PLATZHALTER: E-Mail]
+**Kontakt:** info@danilkovich.com
 
 > [!ACHTUNG] Dieser Text ist ein Entwurf und keine Rechtsberatung. Vor der Veröffentlichung prüfen lassen, besonders wenn Videos eingebettet werden.

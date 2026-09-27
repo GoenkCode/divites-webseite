@@ -17,8 +17,6 @@ Angaben nach § 5 DDG.
 
 ## Bildnachweise
 
-Gruppenfoto: [PLATZHALTER: Name des Fotografen]
-
 Konzertfotos Kurhaus Wiesbaden und Literaturhaus Frankfurt: [PLATZHALTER: Name des Fotografen]
 
 Porträts Marta Danilkovich, Attila Hündöl, Carolina Rybka und Namhyun Kim: Ausschnitte aus dem Konzertfoto Kurhaus Wiesbaden, derselbe Urheber
