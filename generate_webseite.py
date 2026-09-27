@@ -491,6 +491,8 @@ def seite_bauen(vorlage, name, titel, beschreibung, inhalt, braucht_filter, json
         skripte.append('<script src="filter.js" defer></script>')
     if name == "musik":
         skripte.append('<script src="video.js" defer></script>')
+    if name == "start":
+        skripte.append('<script src="stimmen.js" defer></script>')
     skript = "\n".join(skripte)
     voller_titel = titel if name == "start" else "%s – %s" % (titel, ENSEMBLE)
     return vorlage \
@@ -586,7 +588,7 @@ def main():
                         io.open(q, encoding="utf-8").read())
                     kopiert += 1
 
-        for name in ("stil.css", "filter.js", "video.js"):
+        for name in ("stil.css", "filter.js", "video.js", "stimmen.js"):
             q = os.path.join(HIER, "src", name)
             if os.path.isfile(q):
                 io.open(os.path.join(args.ausgabe, name), "w", encoding="utf-8").write(

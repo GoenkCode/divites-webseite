@@ -11,14 +11,22 @@
 </section>
 
 <section class="band band--tief">
-<div class="stimmen">
+<div class="stimmen" data-stimmen>
 <figure class="stimme">
-<p>[ZITAT FOLGT]</p>
-<figcaption>Publikum</figcaption>
+<p>Insgesamt war ein niveauvolles und emotional packendes Konzert auf Topniveau zu erleben: eine reine Freude.</p>
+<figcaption>Gießener Anzeiger</figcaption>
 </figure>
 <figure class="stimme">
-<p>[ZITAT FOLGT]</p>
-<figcaption>Publikum</figcaption>
+<p>Das Quartett musizierte außerordentlich präzise, vor allem jedoch mit enormer Hingabe. Und das Publikum applaudierte sofort kräftig.</p>
+<figcaption>Gießener Anzeiger</figcaption>
+</figure>
+<figure class="stimme">
+<p>Die Songs waren gefühlvoll gespielt und der klassische Touch sorgte für noch mehr Emotionen als die originalen Versionen.</p>
+<figcaption>was-da-los.de, Darmstadt</figcaption>
+</figure>
+<figure class="stimme">
+<p>Mit großer Spielfreude und technischer Präzision verband das Divites Quartett klassische Klangkultur mit der Energie moderner Musik.</p>
+<figcaption>Markt Sulzbach am Main</figcaption>
 </figure>
 <figure class="stimme">
 <p>Mit ihrem Programm »Filmmusik« lieferten Marta Danilkovich und Namhyun Kim (Geige), Eunseon Oh (Bratsche) und Attila Hündöl (Cello) Kunst und Unterhaltung auf höchstem Niveau.</p>
