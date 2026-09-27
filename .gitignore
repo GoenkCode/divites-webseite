@@ -1,0 +1,6 @@
+# Generat. Wird ueber einen eigenen Deploy-Schritt auf gh-pages
+# ausgeliefert, nicht im Quellbaum mitversioniert.
+build/
+
+# macOS
+.DS_Store
