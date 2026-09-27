@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITEL}}</title>
+<meta name="description" content="{{BESCHREIBUNG}}">
+<link rel="canonical" href="{{CANONICAL}}">
+{{ROBOTS}}
+<link rel="stylesheet" href="stil.css">
+</head>
+<body>
+<a class="sprung" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="kopf">
+  <div class="kopf__innen">
+    <a class="marke" href="index.html">Divites<span class="marke__zweite">Quartett</span></a>
+    {{NAV}}
+  </div>
+</header>
+
+<main id="inhalt">
+{{INHALT}}
+</main>
+
+<footer class="fuss">
+  <div class="fuss__innen">
+    <p class="fuss__name">Divites Quartett</p>
+    <ul class="fuss__links">
+      <li><a href="impressum.html">Impressum</a></li>
+      <li><a href="datenschutz.html">Datenschutz</a></li>
+    </ul>
+    <p class="fuss__jahr">&copy; {{JAHR}}</p>
+  </div>
+</footer>
+{{SKRIPT}}
+</body>
+</html>
