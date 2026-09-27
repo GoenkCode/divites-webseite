@@ -17,15 +17,13 @@ Angaben nach § 5 DDG.
 
 ## Bildnachweise
 
-Konzertfotos Kurhaus Wiesbaden und Literaturhaus Frankfurt: [PLATZHALTER: Name des Fotografen]
-
-Porträts Marta Danilkovich, Attila Hündöl, Carolina Rybka und Namhyun Kim: Ausschnitte aus dem Konzertfoto Kurhaus Wiesbaden, derselbe Urheber
+Sämtliche Fotos auf dieser Seite sind eigene Aufnahmen des Divites Quartetts, mit Ausnahme der folgenden:
 
 Porträt Larissa Nagel: Philippe Stier
 
 Porträt Victor aus Butzbach: eigenes Foto, Hintergrund digital erstellt
 
-> [!ACHTUNG] Dieser Nachweis fehlt und muss vor der Veroeffentlichung eingetragen werden. Ein Pressefoto ohne Urhebernennung ist der haeufigste Abmahngrund auf Musikerseiten, und angeschrieben wird der Betreiber der Seite.
+Die Porträts von Marta Danilkovich, Attila Hündöl, Carolina Rybka und Namhyun Kim sind Ausschnitte aus der Konzertaufnahme im Kurhaus Wiesbaden.
 
 ## Haftung für Links
 

@@ -51,7 +51,7 @@
 <p>Cellist. Er hat spät angefangen, mit dreizehn. Aufgehalten hat ihn das nicht: Studium in Freiburg bei Adriana Contino, seit 1999 im Philharmonischen Orchester der Stadt Gießen, seit 2014 dort Solocellist. Gastspiele in Koblenz, Freiburg und Siegen, Konzertreisen nach Frankreich, Mexiko und Brasilien. CD-Aufnahmen mit den Heidelberger Sinfonikern und dem Mannheimer Mozartorchester.</p>
 </li>
 <li class="mitglied">
-<img class="portraet" src="bilder/portraet_larissa.jpg" width="900" height="1200" alt="Larissa Nagel, Cellistin des Divites Quartetts" loading="lazy">
+<img class="portraet" src="bilder/portraet_larissa.jpg" width="704" height="939" alt="Larissa Nagel, Cellistin des Divites Quartetts" loading="lazy">
 <h3>Larissa Nagel</h3>
 <p>Die Cellistin Larissa Nagel liebt und lebt die Vielseitigkeit ihres Berufes. Solistisch und mit Ensembles unterschiedlichster Größen und Formen arbeitet sie stetig an neuen Konzertformaten und Konzepten, die spartenübergreifend aufgeführt werden und Musik von Barock über Jazz und zeitgenössischer Musik enthalten.</p>
 </li>
