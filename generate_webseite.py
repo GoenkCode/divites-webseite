@@ -399,6 +399,10 @@ def json_ensemble():
         '  "foundingDate": "2020",\n'
         '  "genre": ["Klassik", "Filmmusik", "Rock", "Pop"],\n'
         '  "url": %s,\n'
+        '  "sameAs": [\n'
+        '    "https://www.instagram.com/divites.quartett/",\n'
+        '    "https://www.facebook.com/966775389852634/"\n'
+        '  ],\n'
         '  "member": [\n%s\n  ]\n'
         '}\n'
         '</script>' % (json_text(ENSEMBLE), json_text(DOMAIN), mitglieder))
