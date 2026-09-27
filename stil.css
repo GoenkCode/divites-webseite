@@ -469,3 +469,38 @@ a.termin__ort:hover { color: var(--akzent); }
   display: block;
   margin-bottom: .2rem;
 }
+
+/* --- Videos --------------------------------------------------------------- */
+/* Vor dem Klick wird nichts von Google geladen, auch kein Vorschaubild.
+   Die Flaeche traegt deshalb nur Typografie. */
+
+.raster--video { grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); }
+
+.video { margin: 0; }
+.video__flaeche {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--papier-tief);
+  border: 1px solid var(--linie);
+  color: var(--tinte);
+  cursor: pointer;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: var(--s1);
+  padding: var(--s2);
+  text-align: center;
+  font-family: var(--grotesk);
+}
+.video__flaeche:hover { border-color: var(--akzent); }
+.video__pfeil { font-size: 1.75rem; color: var(--akzent); line-height: 1; }
+.video__label { font-size: 1rem; font-weight: 700; letter-spacing: -.01em; }
+.video__hinweis {
+  font-size: .6875rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--tinte-matt);
+}
+.video__rahmen { width: 100%; aspect-ratio: 16 / 9; border: 0; display: block; }
+.video__quelle { margin: var(--s1) 0 0; font-size: .8125rem; }
+.video__quelle a { color: var(--tinte-matt); }
+
+@media (hover: none) { .video__flaeche:hover { border-color: var(--linie); } }
