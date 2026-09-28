@@ -1,14 +1,14 @@
 # Das Ensemble
 
 <figure class="bildband">
-<img class="bildband__bild" src="bilder/quartett_literaturhaus_treppe.jpg" width="1600" height="1242" loading="lazy" alt="Vier Mitglieder des Quartetts, alle in Schwarz, steigen im Gaensemarsch die Marmortreppe des Literaturhauses Frankfurt hinauf, jeweils eine Faust erhoben">
+<img class="bildband__bild" src="bilder/quartett_literaturhaus_treppe.jpg" width="1600" height="1242" loading="lazy" alt="Vier Mitglieder des Quartetts, alle in Schwarz, steigen im Gänsemarsch die Marmortreppe des Literaturhauses Frankfurt hinauf, jeweils eine Faust erhoben">
 </figure>
 
 <section class="besetzung">
 <h2 class="besetzung__instrument">Violine</h2>
 <ul class="besetzung__personen">
 <li class="mitglied">
-<img class="portraet" src="bilder/portraet_marta.jpg" width="380" height="507" alt="Marta Danilkovich, Violinistin, Gruenderin und Leiterin des Divites Quartetts" loading="lazy">
+<img class="portraet" src="bilder/portraet_marta.jpg" width="380" height="507" alt="Marta Danilkovich, Violinistin, Gründerin und Leiterin des Divites Quartetts" loading="lazy">
 <h3>Marta Danilkovich</h3>
 <p class="rolle">Gründerin und Leitung</p>
 <p>Violinistin aus Minsk. Geige seit dem sechsten Lebensjahr, Studium an der Belarussischen Staatlichen Musikakademie, seit 2013 in Frankfurt. 2019 erste Plätze in Salzburg, Amsterdam und Belgrad, im selben Jahr ein Auftritt in der Weill Recital Hall der Carnegie Hall. Sie hat das Divites Quartett gegründet und leitet es. Ihre Geige baute M. Deconet um 1750 in Venedig, eine Leihgabe des Mainzer Geigenbaumeisters Peter Körner. Nebenher leitet sie eine Metal-Band. Die wurde 2015 zur besten Band Hessens gewählt.</p>

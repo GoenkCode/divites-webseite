@@ -35,28 +35,64 @@ VEROEFFENTLICHEN = False
 DOMAIN = "https://divites-quartett.com"
 ENSEMBLE = "Divites Quartett"
 
+# Vorschaubild fuer geteilte Links (Open Graph). Ohne das erscheint jeder
+# Link, den jemand per WhatsApp oder Mail weitergibt, als grauer Kasten
+# ohne Bild und ohne Titel -- und die Seite verbreitet sich nun einmal
+# durch Weitergeben, nicht durch Ranking.
+#
+# Quelle ist ein Querformat: 1.91:1 laesst sich daraus beschneiden, ohne
+# dass Koepfe fehlen. Aus dem hochformatigen Auftaktfoto wuerde derselbe
+# Schnitt einen Streifen machen.
+OG_QUELLE = "quartett_kurhaus_profil.jpg"
+OG_DATEI = "vorschau.jpg"
+OG_BREITE, OG_HOEHE = 1200, 630
+# Wo der Schnitt sitzt, senkrecht: 0.5 waere die Bildmitte. Etwas tiefer,
+# weil die vier auf dem Foto in der unteren Haelfte stehen.
+OG_SCHNITT = 0.58
+OG_ALT = ("Das Divites Quartett mit Violine, Bratsche und Violoncello auf der "
+          "Bühne des Friedrich-von-Thiersch-Saals im Kurhaus Wiesbaden")
+
 HIER = os.path.dirname(os.path.abspath(__file__))
 VAULT = os.path.expanduser("~/Desktop/Second_Brain/Musik_Brain")
 TERMINE_STANDARD = os.path.join(VAULT, "03_projekte/divites/termine.md")
 BILDER_QUELLE = os.path.join(VAULT, "03_projekte/divites/bilder")
 
+# Die Beschreibung landet im Google-Snippet und in der Social-Vorschau.
+# Sie wird also gelesen, und zwar bevor jemand die Seite gesehen hat.
+# Deshalb hier echte Umlaute: "2020 gegruendet" im Suchergebnis sieht aus
+# wie ein Tippfehler, den niemand korrigiert hat.
+#
+# Der Suchtitel ist nicht der Seitentitel. Wer "Divites Quartett" sucht,
+# kennt den Namen schon; gefunden werden muss das Ensemble von Leuten,
+# die "Streichquartett Frankfurt" eingeben. Steht der Zusatz leer, wird
+# der Seitentitel genommen.
 SEITEN = [
-    # (Dateiname ohne Endung, Navigationstitel, Seitentitel, Beschreibung)
+    # (Dateiname, Navigationstitel, Seitentitel, Beschreibung, Suchtitel)
     ("start",       "Start",      ENSEMBLE,
-     "Streichquartett, 2020 gegruendet. Klassik, Filmmusik und Rock in eigenen Arrangements."),
+     "Streichquartett aus Frankfurt, 2020 gegründet. Klassik, Filmmusik und "
+     "Rock in eigenen Arrangements, ohne Verstärker.",
+     "%s – Streichquartett Frankfurt" % ENSEMBLE),
     ("termine",     "Termine",    "Termine",
-     "Alle kommenden Konzerte des Divites Quartetts, nach Ort filterbar."),
+     "Alle kommenden Konzerte des Divites Quartetts, nach Ort filterbar.",
+     "Konzerttermine"),
     ("ensemble",    "Ensemble",   "Das Ensemble",
-     "Die Musikerinnen und Musiker des Divites Quartetts."),
+     "Die Musikerinnen und Musiker des Divites Quartetts.",
+     "Das Ensemble"),
     ("musik",       "Musik",      "Musik",
-     "Hoerproben und Videomitschnitte des Divites Quartetts."),
+     "Videomitschnitte des Divites Quartetts: Vivaldi, Queen, AC/DC und "
+     "Coldplay in eigenen Arrangements für Streichquartett.",
+     "Videos und Repertoire"),
     ("kontakt",     "Kontakt",    "Kontakt",
-     "Anfragen und Buchungen fuer das Divites Quartett."),
-    ("impressum",   "Impressum",  "Impressum", "Impressum und Anbieterkennzeichnung."),
-    ("datenschutz", "Datenschutz","Datenschutz", "Datenschutzerklaerung."),
+     "Ein Streichquartett für Konzerte und Veranstaltungen buchen. "
+     "Anfragen an das Divites Quartett.",
+     "Streichquartett buchen"),
+    ("impressum",   "Impressum",  "Impressum",
+     "Impressum und Anbieterkennzeichnung.", ""),
+    ("datenschutz", "Datenschutz","Datenschutz",
+     "Datenschutzerklärung.", ""),
 ]
 
-MONATE = ["Januar", "Februar", "Maerz", "April", "Mai", "Juni",
+MONATE = ["Januar", "Februar", "März", "April", "Mai", "Juni",
           "Juli", "August", "September", "Oktober", "November", "Dezember"]
 WOCHENTAGE = ["Montag", "Dienstag", "Mittwoch", "Donnerstag",
               "Freitag", "Samstag", "Sonntag"]
@@ -493,23 +529,33 @@ def json_termine(termine, heute):
     for t in kommend:
         felder = [
             '    "@context": "https://schema.org"',
-            '    "@type": "Event"',
+            # MusicEvent statt Event: Nur der spezielle Typ kommt in Googles
+            # Veranstaltungssuche. Der generische wird gelesen und ignoriert.
+            '    "@type": "MusicEvent"',
             '    "name": %s' % json_text("%s – %s" % (ENSEMBLE, t["programm"])),
             '    "startDate": "%sT%s:00%s"' % (t["datum"].isoformat(), t["uhrzeit"],
                                                zeitzone(t["datum"], t["uhrzeit"])),
             '    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode"',
             '    "eventStatus": "https://schema.org/%s"'
             % ("EventCancelled" if t["abgesagt"] else "EventScheduled"),
-            '    "performer": {"@type": "MusicGroup", "name": %s}' % json_text(ENSEMBLE),
+            '    "performer": {"@type": "MusicGroup", "name": %s, "url": %s}'
+            % (json_text(ENSEMBLE), json_text(DOMAIN)),
+            '    "image": %s' % json_text("%s/bilder/%s" % (DOMAIN, OG_DATEI)),
+            '    "description": %s'
+            % json_text("%s spielt %s. Streichquartett in eigenen Arrangements."
+                        % (ENSEMBLE, t["programm"])),
             '    "organizer": {"@type": "Organization", "name": "Fever"}',
             '    "location": {"@type": "Place", "name": %s, "address": '
             '{"@type": "PostalAddress", "streetAddress": %s}}'
             % (json_text(t["ort"]), json_text(t["adresse"])),
         ]
         if t["ticket"]:
+            # Bei einem abgesagten Konzert waere "InStock" eine falsche
+            # Auskunft an Google -- und Google zeigt sie dem Publikum an.
+            verf = "SoldOut" if t["abgesagt"] else "InStock"
             felder.append('    "offers": {"@type": "Offer", "url": %s, '
-                          '"availability": "https://schema.org/InStock"}'
-                          % json_text(t["ticket"]))
+                          '"availability": "https://schema.org/%s"}'
+                          % (json_text(t["ticket"]), verf))
         bloecke.append('<script type="application/ld+json">\n{\n%s\n}\n</script>'
                        % ",\n".join(felder))
     return "\n".join(bloecke)
@@ -518,7 +564,7 @@ def json_termine(termine, heute):
 def sitemap(heute):
     zeilen = ['<?xml version="1.0" encoding="UTF-8"?>',
               '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for name, _, _, _ in SEITEN:
+    for name, _, _, _, _ in SEITEN:
         ziel = "" if name == "start" else "%s.html" % name
         zeilen.append("  <url><loc>%s/%s</loc><lastmod>%s</lastmod></url>"
                       % (DOMAIN, ziel, heute.isoformat()))
@@ -554,7 +600,7 @@ def fingerabdruck(pfad):
 
 def navigation(aktuell):
     teile = ['<nav class="nav" aria-label="Hauptnavigation"><ul>']
-    for name, titel, _, _ in SEITEN:
+    for name, titel, _, _, _ in SEITEN:
         if name in ("impressum", "datenschutz"):
             continue
         ziel = "index.html" if name == "start" else "%s.html" % name
@@ -566,7 +612,67 @@ def navigation(aktuell):
     return "\n".join(teile)
 
 
-def seite_bauen(vorlage, name, titel, beschreibung, inhalt, braucht_filter, jsonld=""):
+def social_kopf(titel, beschreibung, url):
+    """
+    Open Graph und Twitter Cards. Beides zusammen, weil die Dienste sich
+    nicht einig sind: WhatsApp, Facebook, LinkedIn und Signal lesen og:*,
+    X liest twitter:*. Wer nur eines setzt, hat in der Haelfte der Faelle
+    wieder den grauen Kasten.
+    """
+    bild = "%s/bilder/%s" % (DOMAIN, OG_DATEI)
+    m = [
+        ('meta', 'property', 'og:type', 'website'),
+        ('meta', 'property', 'og:site_name', ENSEMBLE),
+        ('meta', 'property', 'og:locale', 'de_DE'),
+        ('meta', 'property', 'og:title', titel),
+        ('meta', 'property', 'og:description', beschreibung),
+        ('meta', 'property', 'og:url', url),
+        ('meta', 'property', 'og:image', bild),
+        ('meta', 'property', 'og:image:width', str(OG_BREITE)),
+        ('meta', 'property', 'og:image:height', str(OG_HOEHE)),
+        ('meta', 'property', 'og:image:alt', OG_ALT),
+        ('meta', 'name', 'twitter:card', 'summary_large_image'),
+        ('meta', 'name', 'twitter:title', titel),
+        ('meta', 'name', 'twitter:description', beschreibung),
+        ('meta', 'name', 'twitter:image', bild),
+        ('meta', 'name', 'twitter:image:alt', OG_ALT),
+    ]
+    return "\n".join('<%s %s="%s" content="%s">' % (t, a, k, html.escape(v, quote=True))
+                     for t, a, k, v in m)
+
+
+def og_bild_bauen(bilderordner):
+    """
+    Schneidet das Vorschaubild auf 1.91:1, das Format, das die Dienste
+    erwarten. Wird es nicht geliefert, schneiden sie selbst -- und zwar
+    mittig, was bei diesem Foto die Fuesse behaelt und die Koepfe verliert.
+    """
+    quelle = os.path.join(bilderordner, OG_QUELLE)
+    if not os.path.isfile(quelle):
+        raise Abbruch("Vorschaubild fehlt: %s. Erwartet wird %s im Bilderordner."
+                      % (quelle, OG_QUELLE))
+    from PIL import Image, ImageFilter
+    bild = Image.open(quelle)
+    ziel_verh = OG_BREITE / float(OG_HOEHE)
+    if bild.width / float(bild.height) > ziel_verh:
+        # zu breit: seitlich beschneiden, mittig
+        neu_b = int(round(bild.height * ziel_verh))
+        links = (bild.width - neu_b) // 2
+        bild = bild.crop((links, 0, links + neu_b, bild.height))
+    else:
+        # zu hoch: oben und unten beschneiden, Schnittmitte nach OG_SCHNITT
+        neu_h = int(round(bild.width / ziel_verh))
+        mitte = bild.height * OG_SCHNITT
+        oben = int(round(mitte - neu_h / 2.0))
+        oben = max(0, min(oben, bild.height - neu_h))
+        bild = bild.crop((0, oben, bild.width, oben + neu_h))
+    bild = bild.resize((OG_BREITE, OG_HOEHE), Image.LANCZOS)
+    bild = bild.filter(ImageFilter.UnsharpMask(radius=1.2, percent=100, threshold=3))
+    bild.save(os.path.join(bilderordner, OG_DATEI), quality=84, optimize=True)
+
+
+def seite_bauen(vorlage, name, titel, beschreibung, inhalt, braucht_filter,
+                jsonld="", suchtitel=""):
     ziel = "index.html" if name == "start" else "%s.html" % name
     kopf = ""
     if not VEROEFFENTLICHEN:
@@ -588,14 +694,21 @@ def seite_bauen(vorlage, name, titel, beschreibung, inhalt, braucht_filter, json
         skripte.append('<script src="stimmen.js?v=%s" defer></script>'
                        % fingerabdruck(os.path.join(HIER, "src", "stimmen.js")))
     skript = "\n".join(skripte)
-    voller_titel = titel if name == "start" else "%s – %s" % (titel, ENSEMBLE)
+    # Im Suchergebnis steht der Suchtitel, auf der Seite die Ueberschrift.
+    # "Kontakt" sagt einem Veranstalter, der googelt, nichts; "Streichquartett
+    # buchen" schon. Ist kein Suchtitel gesetzt, bleibt es beim Seitentitel.
+    basis = suchtitel or titel
+    voller_titel = basis if name == "start" else "%s – %s" % (basis, ENSEMBLE)
     css_v = fingerabdruck(os.path.join(HIER, "src", "stil.css"))
+    seiten_url = "%s/%s" % (DOMAIN, "" if name == "start" else ziel)
+    social = social_kopf(voller_titel, beschreibung, seiten_url)
     return vorlage \
         .replace("stil.css\"", "stil.css?v=%s\"" % css_v) \
         .replace("{{TITEL}}", html.escape(voller_titel)) \
         .replace("{{BESCHREIBUNG}}", html.escape(beschreibung)) \
         .replace("{{ROBOTS}}", kopf) \
-        .replace("{{CANONICAL}}", "%s/%s" % (DOMAIN, "" if name == "start" else ziel)) \
+        .replace("{{CANONICAL}}", seiten_url) \
+        .replace("{{SOCIAL}}", social) \
         .replace("{{SEITE}}", "seite--%s" % name) \
         .replace("{{NAV}}", navigation(name)) \
         .replace("{{INHALT}}", inhalt) \
@@ -628,7 +741,9 @@ def bilder_kopieren(quelle, ziel, maxbreite=2000):
     # Bild waere also online liegengeblieben. Bei neun ausgetauschten
     # Videovorschauen ist das Unordnung; bei einem Bild, das aus Rechtegruenden
     # weg muss, ist es der eigentliche Schaden.
-    bekannt = set(dateien)
+    # Das Vorschaubild wird erzeugt und liegt deshalb nicht in der Quelle.
+    # Ohne diese Ausnahme wuerde es hier jedes Mal geloescht.
+    bekannt = set(dateien) | {OG_DATEI}
     for f in os.listdir(ziel):
         if f not in bekannt and os.path.isfile(os.path.join(ziel, f)):
             os.remove(os.path.join(ziel, f))
@@ -698,10 +813,12 @@ def main():
         liste_kurz, _, _ = termine_html(termine, heute, nur_naechste=len(termine) or 1)
 
         # Bilder zuerst, damit beim Seitenbau ihr Fingerabdruck vorliegt.
-        anz_bilder = bilder_kopieren(BILDER_QUELLE, os.path.join(args.ausgabe, "bilder"))
+        bilder_ziel = os.path.join(args.ausgabe, "bilder")
+        anz_bilder = bilder_kopieren(BILDER_QUELLE, bilder_ziel)
+        og_bild_bauen(bilder_ziel)
 
         gebaut = 0
-        for name, _, titel, beschreibung in SEITEN:
+        for name, _, titel, beschreibung, suchtitel in SEITEN:
             quelle = os.path.join(HIER, "src", "seiten", "%s.md" % name)
             if not os.path.isfile(quelle):
                 raise Abbruch("Seiteninhalt fehlt: %s" % quelle)
@@ -725,7 +842,8 @@ def main():
                 jsonld = ""
             io.open(os.path.join(args.ausgabe, ziel), "w", encoding="utf-8").write(
                 seite_bauen(vorlage, name, titel, beschreibung, inhalt,
-                            braucht_filter=("{{TERMINE}}" in roh), jsonld=jsonld))
+                            braucht_filter=("{{TERMINE}}" in roh), jsonld=jsonld,
+                            suchtitel=suchtitel))
             gebaut += 1
 
         # statische Dateien unveraendert uebernehmen

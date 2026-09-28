@@ -5,7 +5,7 @@
 <p class="auftakt__unter">Vivaldi und Metallica. Vier Streichinstrumente, keine Verstärker.</p>
 </div>
 <figure class="auftakt__bild">
-<img src="bilder/quartett_kurhaus_frontal.jpg" width="1600" height="2133" fetchpriority="high" alt="Die vier Musikerinnen und Musiker des Divites Quartetts stehen mit Violoncello, Bratsche und zwei Violinen auf der Buehne des leeren Friedrich-von-Thiersch-Saals im Kurhaus Wiesbaden">
+<img src="bilder/quartett_kurhaus_frontal.jpg" width="1600" height="2133" fetchpriority="high" alt="Die vier Musikerinnen und Musiker des Divites Quartetts stehen mit Violoncello, Bratsche und zwei Violinen auf der Bühne des leeren Friedrich-von-Thiersch-Saals im Kurhaus Wiesbaden">
 </figure>
 </div>
 </section>

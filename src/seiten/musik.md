@@ -1,5 +1,9 @@
 # Musik
 
+Vivaldi und Metallica auf einem Programm. Das ist keine Pose, sondern die Arbeitsgrundlage: vier Streichinstrumente, eigene Arrangements, kein Verstärker. Was im Original nach Stadion klingt, klingt hier nach Saal.
+
+Ob das trägt, hört man besser, als man es liest.
+
 <ul class="raster raster--video">
 <li class="video">
 <button type="button" class="video__flaeche video__flaeche--bild" data-video="sJXVwUaVAYg" style="--vorschau:url(bilder/video_thunderstruck.jpg)" data-titel="Thunderstruck, AC/DC">
