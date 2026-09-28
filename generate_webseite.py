@@ -612,6 +612,45 @@ def navigation(aktuell):
     return "\n".join(teile)
 
 
+def sicherheits_kopf():
+    """
+    Die zwei Sicherheitsregeln, die sich ohne Server setzen lassen.
+
+    GitHub Pages liefert keine eigenen Kopfzeilen aus. Damit fallen
+    Strict-Transport-Security und X-Frame-Options weg: die gibt es nur als
+    echten HTTP-Header, nicht als Meta-Element. Was bleibt, ist die CSP und
+    die Referrer-Regel -- beide wirken als Meta genauso, mit Ausnahme
+    einzelner Direktiven (siehe frame-ancestors unten).
+
+    script-src 'self' ist scharf: Die Seite laedt nur eigene Dateien, und
+    Blockbausteine vom Typ application/ld+json zaehlen nicht als Skript.
+    style-src braucht 'unsafe-inline', weil die Videovorschauen ihr Bild
+    ueber ein style-Attribut setzen. frame-src laesst YouTube zu, aber erst
+    nach dem Klick entsteht dort ueberhaupt ein Rahmen.
+    """
+    regeln = [
+        "default-src 'self'",
+        "script-src 'self'",
+        "style-src 'self' 'unsafe-inline'",
+        "img-src 'self' data:",
+        "font-src 'self'",
+        "frame-src https://www.youtube.com",
+        "form-action 'self'",
+        "base-uri 'none'",
+        "object-src 'none'",
+        # frame-ancestors steht bewusst NICHT hier: Der Browser ignoriert die
+        # Direktive in einem Meta-Element und schreibt eine Warnung in die
+        # Konsole. Eine Regel, die nichts tut, aber nach Schutz aussieht, ist
+        # schlimmer als ihr Fehlen. Gegen Einbettung in fremde Rahmen hilft
+        # nur X-Frame-Options oder frame-ancestors als echter HTTP-Header,
+        # und Kopfzeilen kann GitHub Pages nicht setzen.
+        "upgrade-insecure-requests",
+    ]
+    return ('<meta http-equiv="Content-Security-Policy" content="%s">\n'
+            '<meta name="referrer" content="strict-origin-when-cross-origin">'
+            % "; ".join(regeln))
+
+
 def social_kopf(titel, beschreibung, url):
     """
     Open Graph und Twitter Cards. Beides zusammen, weil die Dienste sich
@@ -693,6 +732,9 @@ def seite_bauen(vorlage, name, titel, beschreibung, inhalt, braucht_filter,
     if name == "start":
         skripte.append('<script src="stimmen.js?v=%s" defer></script>'
                        % fingerabdruck(os.path.join(HIER, "src", "stimmen.js")))
+    if name == "kontakt":
+        skripte.append('<script src="formular.js?v=%s" defer></script>'
+                       % fingerabdruck(os.path.join(HIER, "src", "formular.js")))
     skript = "\n".join(skripte)
     # Im Suchergebnis steht der Suchtitel, auf der Seite die Ueberschrift.
     # "Kontakt" sagt einem Veranstalter, der googelt, nichts; "Streichquartett
@@ -702,6 +744,7 @@ def seite_bauen(vorlage, name, titel, beschreibung, inhalt, braucht_filter,
     css_v = fingerabdruck(os.path.join(HIER, "src", "stil.css"))
     seiten_url = "%s/%s" % (DOMAIN, "" if name == "start" else ziel)
     social = social_kopf(voller_titel, beschreibung, seiten_url)
+    sicherheit = sicherheits_kopf()
     return vorlage \
         .replace("stil.css\"", "stil.css?v=%s\"" % css_v) \
         .replace("{{TITEL}}", html.escape(voller_titel)) \
@@ -709,6 +752,7 @@ def seite_bauen(vorlage, name, titel, beschreibung, inhalt, braucht_filter,
         .replace("{{ROBOTS}}", kopf) \
         .replace("{{CANONICAL}}", seiten_url) \
         .replace("{{SOCIAL}}", social) \
+        .replace("{{SICHERHEIT}}", sicherheit) \
         .replace("{{SEITE}}", "seite--%s" % name) \
         .replace("{{NAV}}", navigation(name)) \
         .replace("{{INHALT}}", inhalt) \
@@ -860,7 +904,8 @@ def main():
                         io.open(q, encoding="utf-8").read())
                     kopiert += 1
 
-        for name in ("stil.css", "termine.js", "filter.js", "video.js", "stimmen.js"):
+        for name in ("stil.css", "termine.js", "filter.js", "video.js",
+                     "stimmen.js", "formular.js"):
             q = os.path.join(HIER, "src", name)
             if os.path.isfile(q):
                 io.open(os.path.join(args.ausgabe, name), "w", encoding="utf-8").write(
