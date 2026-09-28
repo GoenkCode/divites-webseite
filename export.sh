@@ -70,10 +70,24 @@ cp -R build/. "$WT"/
 
 git -C "$WT" add -A
 if git -C "$WT" diff --cached --quiet; then
-  echo "   Keine Aenderung gegenueber dem veroeffentlichten Stand."
+  echo "   Generat unveraendert gegenueber dem letzten Commit."
+else
+  git -C "$WT" commit -q -m "Stand $(date '+%Y-%m-%d %H:%M')"
+fi
+
+# Verglichen wird mit origin, nicht mit dem letzten lokalen Commit.
+# Scheitert ein Push -- etwa weil das falsche GitHub-Konto angemeldet ist --,
+# bleibt der Commit lokal stehen. Der naechste Lauf faende dann "keine
+# Aenderung", meldete Erfolg und pushte nie. Genau das ist am 28.09.2026
+# passiert: auf gh-pages lag das neue Generat, online stand der Vortag, und
+# das Skript sagte zweimal, es sei alles in Ordnung. Eine Sicherung, die
+# Erfolg meldet, ohne ihn zu pruefen, ist schlimmer als keine.
+git -C "$WT" fetch -q origin gh-pages 2>/dev/null || true
+fern="$(git -C "$WT" rev-parse origin/gh-pages 2>/dev/null || echo keiner)"
+if [ "$(git -C "$WT" rev-parse HEAD)" = "$fern" ]; then
+  echo "   Steht bereits veroeffentlicht online, nichts zu tun."
   exit 0
 fi
 
-git -C "$WT" commit -q -m "Stand $(date '+%Y-%m-%d %H:%M')"
 git -C "$WT" push -q --force origin gh-pages
 echo "   Veroeffentlicht. GitHub Pages aktualisiert in ein bis zwei Minuten."
