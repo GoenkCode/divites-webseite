@@ -1,13 +1,5 @@
 # Musik
 
-<figure class="textbild">
-<img class="textbild__bild textbild__bild--quadrat" src="bilder/quartett_marmorrund.jpg" width="1200" height="1200" loading="lazy" alt="Das Quartett in farbiger Konzertgarderobe in einem Rundgang aus rotbraunem Marmor, drei Streicherinnen und ein Cellist">
-</figure>
-
-Vivaldi und Metallica auf einem Programm. Das ist keine Pose, sondern die Arbeitsgrundlage: vier Streichinstrumente, eigene Arrangements, kein Verstärker. Was im Original nach Stadion klingt, klingt hier nach Saal.
-
-Ob das trägt, hört man besser, als man es liest.
-
 <ul class="raster raster--video">
 <li class="video">
 <button type="button" class="video__flaeche video__flaeche--bild" data-video="sJXVwUaVAYg" style="--vorschau:url(bilder/video_thunderstruck.jpg)" data-titel="Thunderstruck, AC/DC">
