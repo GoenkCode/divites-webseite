@@ -629,8 +629,6 @@ a.termin__ort:hover { color: var(--akzent); }
   border: 1px solid var(--linie);
 }
 
-
-
 /* ===========================================================================
    Verfeinerung, 27.09.2026
    =========================================================================== */
@@ -804,7 +802,6 @@ main > h1 + .besetzung { border-top: 0; margin-top: 0; padding-top: 0; }
   .besetzung__personen { grid-template-columns: 1fr; }
   .besetzung .platz--portraet, .besetzung .portraet { max-width: 14rem; }
 }
-
 
 .seite--musik{background:var(--papier);color:var(--tinte);padding-bottom:var(--s5)}
 .beispielseite .monat__titel{top:2.05rem}
@@ -994,51 +991,3 @@ button {
   *, *::before, *::after { transition: none !important; }
 }
 
-/* --- Anfrageformular ----------------------------------------------------- */
-/* Steht nur mit JavaScript; ohne bleibt es ausgeblendet, weil ein Formular,
-   das beim Absenden nichts tut, schlimmer ist als keines. Die Mailadresse
-   darueber ist der Weg, der immer funktioniert. */
-.anfrage { margin-top: var(--s3); max-width: 34rem; }
-.anfrage[hidden] { display: none; }
-.anfrage__vorab {
-  color: var(--tinte-matt); font-size: .9375rem;
-  border-left: 2px solid var(--akzent);
-  padding-left: var(--s2); margin-bottom: var(--s3);
-}
-.anfrage__feld { margin-bottom: var(--s2); }
-.anfrage__feld label {
-  display: block; margin-bottom: .35em;
-  font-family: var(--grotesk); font-size: .8125rem; letter-spacing: .04em;
-  color: var(--tinte-matt);
-}
-.anfrage input, .anfrage textarea {
-  width: 100%; box-sizing: border-box;
-  background: var(--papier-tief);
-  color: var(--tinte);
-  /* Rahmen kontrastreich genug, um als Eingabefeld erkennbar zu sein.
-     WCAG 1.4.11 verlangt 3:1 fuer Bedienelemente; --tinte-matt liefert 7.06:1. */
-  border: 1px solid var(--tinte-matt);
-  font: inherit; font-size: 1rem;   /* nicht kleiner: unter 16px zoomt iOS beim Tippen hinein */
-  padding: .55em .7em;
-}
-.anfrage input:focus-visible, .anfrage textarea:focus-visible {
-  outline: 2px solid var(--akzent); outline-offset: 2px;
-}
-.anfrage textarea { resize: vertical; }
-.anfrage__knopf {
-  font-family: var(--grotesk); font-size: .875rem; letter-spacing: .04em;
-  background: var(--tinte); color: var(--papier);
-  border: 1px solid var(--tinte);
-  padding: .65em 1.4em; min-height: 2.75rem;   /* antippbar */
-  cursor: pointer;
-}
-.anfrage__knopf:hover { background: var(--auf-dunkel); }
-.anfrage__hinweis {
-  margin-top: var(--s2); color: var(--tinte-matt); font-size: .9375rem;
-}
-.anfrage__hinweis[hidden] { display: none; }
-/* Platzhalter sichtbar halten. Die Browservorgabe ist auf dunklem Grund
-   deutlich zu blass; --tinte-matt liefert 7.06:1 und bleibt trotzdem
-   erkennbar schwaecher als eine echte Eingabe. */
-.anfrage ::placeholder { color: var(--tinte-matt); opacity: 1; }
-.anfrage__hinweis[data-zulang] { color: var(--akzent); }
