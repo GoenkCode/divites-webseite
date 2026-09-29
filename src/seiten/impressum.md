@@ -23,7 +23,9 @@ Porträt Larissa Nagel: Philippe Stier
 
 Porträt Victor aus Butzbach: eigenes Foto, Hintergrund digital erstellt
 
-Die Porträts von Marta Danilkovich, Attila Hündöl, Carolina Rybka und Namhyun Kim sind Ausschnitte aus der Konzertaufnahme im Kurhaus Wiesbaden.
+Porträt Marta Danilkovich: Hans Lechner Photography
+
+Die Porträts von Attila Hündöl, Carolina Rybka und Namhyun Kim sind Ausschnitte aus der Konzertaufnahme im Kurhaus Wiesbaden.
 
 ## Haftung für Links
 

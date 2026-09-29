@@ -12,6 +12,7 @@
 <h3>Marta Danilkovich</h3>
 <p class="rolle">Gründerin und Leitung</p>
 <p>Violinistin aus Minsk. Geige seit dem sechsten Lebensjahr, Studium an der Belarussischen Staatlichen Musikakademie, seit 2013 in Frankfurt. 2019 erste Plätze in Salzburg, Amsterdam und Belgrad, im selben Jahr ein Auftritt in der Weill Recital Hall der Carnegie Hall. Sie hat das Divites Quartett gegründet und leitet es. Ihre Geige baute M. Deconet um 1750 in Venedig, eine Leihgabe des Mainzer Geigenbaumeisters Peter Körner. Nebenher leitet sie eine Metal-Band. Die wurde 2015 zur besten Band Hessens gewählt.</p>
+<p class="mitglied__mehr"><a href="https://drive.google.com/file/d/1jjNA6OIDN4h7lkSAZuf8Jxp_3PZL6wZJ/view" rel="noopener">Ausführliche Biografie (PDF)</a></p>
 </li>
 <li class="mitglied">
 <img class="portraet" src="bilder/portraet_namhyun.jpg" width="380" height="507" alt="Namhyun Kim, Violinistin des Divites Quartetts" loading="lazy">
