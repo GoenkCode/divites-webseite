@@ -22,9 +22,9 @@ Der Filter auf der Terminseite läuft vollständig in Ihrem Browser. Es werden k
 
 ## Anfragen
 
-Wenn Sie uns über das Formular auf der Kontaktseite schreiben, öffnet sich Ihr eigenes E-Mail-Programm mit einer vorbereiteten Nachricht. Die Eingaben verlassen Ihren Rechner dabei nicht; es gibt keinen Server, der sie entgegennimmt, und keinen Dienstleister, der sie verarbeitet. Erst wenn Sie die Nachricht selbst absenden, erreicht sie uns als gewöhnliche E-Mail.
+Diese Seite hat kein Kontaktformular. Sie erreichen uns per E-Mail an die Adresse auf der Kontaktseite; es gibt keinen Server, der Eingaben entgegennimmt, und keinen Dienstleister, der sie verarbeitet.
 
-Diese E-Mail verarbeiten wir zur Beantwortung Ihrer Anfrage. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO, soweit es um die Anbahnung eines Vertrags geht, sonst Art. 6 Abs. 1 lit. f DSGVO. Wir löschen Anfragen, sobald sie erledigt sind und keine gesetzliche Aufbewahrungspflicht entgegensteht.
+Ihre E-Mail verarbeiten wir zur Beantwortung Ihrer Anfrage. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO, soweit es um die Anbahnung eines Vertrags geht, sonst Art. 6 Abs. 1 lit. f DSGVO. Wir löschen Anfragen, sobald sie erledigt sind und keine gesetzliche Aufbewahrungspflicht entgegensteht.
 
 ## Videos
 

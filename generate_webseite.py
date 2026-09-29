@@ -635,7 +635,9 @@ def sicherheits_kopf():
         "img-src 'self' data:",
         "font-src 'self'",
         "frame-src https://www.youtube.com",
-        "form-action 'self'",
+        # Seit dem 29.09.2026 hat die Seite kein Formular mehr. 'none' statt
+        # 'self' heisst: Auch ein eingeschleustes Formular findet kein Ziel.
+        "form-action 'none'",
         "base-uri 'none'",
         "object-src 'none'",
         # frame-ancestors steht bewusst NICHT hier: Der Browser ignoriert die
@@ -732,9 +734,6 @@ def seite_bauen(vorlage, name, titel, beschreibung, inhalt, braucht_filter,
     if name == "start":
         skripte.append('<script src="stimmen.js?v=%s" defer></script>'
                        % fingerabdruck(os.path.join(HIER, "src", "stimmen.js")))
-    if name == "kontakt":
-        skripte.append('<script src="formular.js?v=%s" defer></script>'
-                       % fingerabdruck(os.path.join(HIER, "src", "formular.js")))
     skript = "\n".join(skripte)
     # Im Suchergebnis steht der Suchtitel, auf der Seite die Ueberschrift.
     # "Kontakt" sagt einem Veranstalter, der googelt, nichts; "Streichquartett
@@ -861,6 +860,10 @@ def main():
         anz_bilder = bilder_kopieren(BILDER_QUELLE, bilder_ziel)
         og_bild_bauen(bilder_ziel)
 
+        # Was am Ende im Ausgabeordner liegen darf. Alles andere fliegt raus,
+        # siehe die Aufraeumschleife weiter unten.
+        erwartet = {"bilder", "sitemap.xml", "robots.txt"}
+
         gebaut = 0
         for name, _, titel, beschreibung, suchtitel in SEITEN:
             quelle = os.path.join(HIER, "src", "seiten", "%s.md" % name)
@@ -878,6 +881,7 @@ def main():
             inhalt = inhalt.replace("<p>{{TERMINE}}</p>", liste_voll)
             inhalt = inhalt.replace("<p>{{TERMINE_KURZ}}</p>", liste_kurz)
             ziel = "index.html" if name == "start" else "%s.html" % name
+            erwartet.add(ziel)
             if name == "start":
                 jsonld = json_ensemble()
             elif name == "termine":
@@ -902,14 +906,16 @@ def main():
                     # fehl oder verschluckt Dateien mit Unterstrich.
                     io.open(os.path.join(args.ausgabe, f), "w", encoding="utf-8").write(
                         io.open(q, encoding="utf-8").read())
+                    erwartet.add(f)
                     kopiert += 1
 
         for name in ("stil.css", "termine.js", "filter.js", "video.js",
-                     "stimmen.js", "formular.js"):
+                     "stimmen.js"):
             q = os.path.join(HIER, "src", name)
             if os.path.isfile(q):
                 io.open(os.path.join(args.ausgabe, name), "w", encoding="utf-8").write(
                     io.open(q, encoding="utf-8").read())
+                erwartet.add(name)
 
         # Sitemap und robots.txt entstehen auch im noindex-Zustand. Sie schaden
         # nicht, und so ist beim Umlegen des Schalters nichts nachzuziehen.
@@ -917,6 +923,21 @@ def main():
                 encoding="utf-8").write(sitemap(heute))
         io.open(os.path.join(args.ausgabe, "robots.txt"), "w",
                 encoding="utf-8").write(robots())
+
+        # Aufraeumen. Der Generator ergaenzte bisher nur, und export.sh spiegelt
+        # build/ eins zu eins nach gh-pages -- eine geloeschte Seite oder ein
+        # abgehaengtes Skript blieb damit online. Fuer Bilder wird das seit dem
+        # 28.09.2026 abgefangen, fuer alles andere nicht: Beim Entfernen des
+        # Anfrageformulars am 29.09. waere formular.js liegengeblieben, samt
+        # der Formularlogik, die es auf keiner Seite mehr gibt.
+        entfernt = 0
+        for f in sorted(os.listdir(args.ausgabe)):
+            if f in erwartet or f.startswith("."):
+                continue
+            pfad = os.path.join(args.ausgabe, f)
+            if os.path.isfile(pfad):
+                os.remove(pfad)
+                entfernt += 1
 
         abgesagt = len([t for t in termine if t["abgesagt"]])
 
@@ -930,6 +951,8 @@ def main():
     print("  davon abgesagt:  %d" % abgesagt)
     print("Seiten gebaut:     %d" % gebaut)
     print("Statische Dateien: %d" % kopiert)
+    if entfernt:
+        print("Verwaiste entfernt: %d" % entfernt)
     print("Bilder:            %d" % anz_bilder)
     print("Sichtbarkeit:      %s" % ("oeffentlich, indexierbar" if VEROEFFENTLICHEN
                                      else "noindex (nicht in Suchmaschinen)"))
