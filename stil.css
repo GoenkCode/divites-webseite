@@ -778,6 +778,7 @@ main > h1 + .besetzung { border-top: 0; margin-top: 0; padding-top: 0; }
 .besetzung .mitglied .rolle { margin-top: .1rem; }
 .platz--portraet { border: 0; place-items: end start; text-align: left; }
 .portraet { filter: grayscale(1); }
+.besetzung .mitglied .mitglied__mehr { margin-top: .6rem; font-size: .875rem; }
 
 @media (max-width: 64rem) {
   .monat { padding-left: var(--s2); padding-right: var(--s2); }
@@ -925,6 +926,12 @@ main > h1 + .besetzung { border-top: 0; margin-top: 0; padding-top: 0; }
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
+
+/* Das Marmorrund-Foto ist quadratisch komponiert: Der Raum ueber den Koepfen
+   und die Schleppe am Boden gehoeren zum Bild. Ein 4:3-Beschnitt haette das
+   eine oder das andere gekostet, also bekommt es sein eigenes Verhaeltnis.
+   Eine Zeile ist billiger als ein schlechterer Ausschnitt. */
+.textbild__bild--quadrat { aspect-ratio: 1 / 1; }
 
 /* Bildpaar Kontakt: Spalten 16:9 heisst 4:3 neben 3:4 bei gleicher Hoehe,
    beide ohne Beschnitt. Entgraut, weil das eine farbige Goldbild der
