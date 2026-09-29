@@ -415,7 +415,11 @@ a.termin__ort:hover { color: var(--akzent); }
   font-family: var(--grotesk); font-size: .8125rem;
 }
 .fuss__name { font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin: 0; }
-.fuss__links { list-style: none; display: flex; gap: var(--s3); margin: 0; padding: 0; }
+.fuss__links { list-style: none; display: flex; flex-wrap: wrap; gap: var(--s3); margin: 0; padding: 0; }
+/* Ein Eintrag bricht als Ganzes um, nicht mitten im Namen. Ohne das steht
+   auf dem Handy "Biografie Marta" in der einen und "Danilkovich" in der
+   naechsten Zeile, und die Reihe sieht aus wie ein Satzfehler. */
+.fuss__links li { white-space: nowrap; }
 .fuss__jahr { color: var(--tinte-matt); margin: 0; }
 
 /* --- Tablet -------------------------------------------------------------- */
@@ -480,7 +484,11 @@ a.termin__ort:hover { color: var(--akzent); }
   .auftakt h1 { letter-spacing: -.025em; }
 
   .stimmen { padding-top: var(--s4); padding-bottom: var(--s4); gap: var(--s4); }
-  .fuss__innen { flex-direction: column; gap: var(--s1); }
+  /* In der Spalte erbt die Linkliste das baseline-Ausrichten und schrumpft
+     damit auf ihre Inhaltsbreite -- sie laeuft dann ueber den Rand hinaus,
+     statt umzubrechen. Auf dem Handy stand "Impressum" deshalb halb
+     ausserhalb des Bildschirms. */
+  .fuss__innen { flex-direction: column; gap: var(--s1); align-items: stretch; }
 
   /* Filterknoepfe gross genug zum Antippen: Apple empfiehlt 44 px. */
   .filter__knopf { padding: .55em 1em; min-height: 2.75rem; }
@@ -926,12 +934,6 @@ main > h1 + .besetzung { border-top: 0; margin-top: 0; padding-top: 0; }
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
-
-/* Das Marmorrund-Foto ist quadratisch komponiert: Der Raum ueber den Koepfen
-   und die Schleppe am Boden gehoeren zum Bild. Ein 4:3-Beschnitt haette das
-   eine oder das andere gekostet, also bekommt es sein eigenes Verhaeltnis.
-   Eine Zeile ist billiger als ein schlechterer Ausschnitt. */
-.textbild__bild--quadrat { aspect-ratio: 1 / 1; }
 
 /* Bildpaar Kontakt: Spalten 16:9 heisst 4:3 neben 3:4 bei gleicher Hoehe,
    beide ohne Beschnitt. Entgraut, weil das eine farbige Goldbild der
