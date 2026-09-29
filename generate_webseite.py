@@ -224,6 +224,28 @@ def stadt_aus_adresse(adresse):
     return stadt
 
 
+def adresse_zerlegen(adresse):
+    """
+    Trennt "Kurhausplatz 1, 65189 Wiesbaden" in Strasse, Postleitzahl und Ort.
+
+    Bis zum 29.09.2026 stand die vollstaendige Adresse als ein einziges
+    streetAddress im Markup. Google liest sie dann als Strassenangabe und hat
+    zu Ort und Postleitzahl nichts -- genau die beiden Felder, auf die eine
+    Suche nach "Streichquartett Wiesbaden" trifft.
+
+    Passt das Muster nicht, bleibt alles im streetAddress. Lieber eine
+    unaufgeteilte Adresse als eine falsch aufgeteilte.
+    """
+    import re as _re
+    m = _re.match(r"^(.*?),\s*(\d{5})\s+(.+)$", adresse.strip())
+    if not m:
+        return {"streetAddress": adresse.strip()}
+    return {"streetAddress": m.group(1).strip(),
+            "postalCode": m.group(2),
+            "addressLocality": m.group(3).strip(),
+            "addressCountry": "DE"}
+
+
 def termin_html(t, folge=False):
     """Eine Terminzeile. folge=True bei mehreren Konzerten am selben Tag."""
     klassen = "termin"
@@ -263,6 +285,29 @@ def termin_html(t, folge=False):
     a.append('    </div>')
     a.append('  </li>')
     return "\n".join(a)
+
+
+def programme_html(termine):
+    """
+    Die Programmliste der Musikseite, gebaut aus denselben Terminen wie die
+    Terminliste. Sie von Hand zu pflegen hiesse, sie zweimal zu pflegen -- und
+    nach dem zweiten vergessenen Nachtrag stuende dort ein Repertoire, das es
+    nicht mehr gibt. Sortiert nach Haeufigkeit: was oft gespielt wird, steht
+    oben, weil es das Programm ist, nach dem gefragt wird.
+    """
+    zaehler = {}
+    for t in termine:
+        name = (t.get("programm") or "").strip()
+        if name:
+            zaehler[name] = zaehler.get(name, 0) + 1
+    if not zaehler:
+        return ""
+    sortiert = sorted(zaehler.items(), key=lambda kv: (-kv[1], kv[0]))
+    zeilen = ['<ul class="programme">']
+    for name, _ in sortiert:
+        zeilen.append("<li>%s</li>" % html.escape(name))
+    zeilen.append("</ul>")
+    return "\n".join(zeilen)
 
 
 def termine_html(termine, heute, nur_naechste=None):
@@ -486,27 +531,66 @@ def markdown_zu_html(text, quelle):
 # ---------------------------------------------------------------------------
 
 def json_ensemble():
-    """JSON-LD fuer das Ensemble. Nur belegte Angaben."""
-    mitglieder = ",\n".join(
-        '    {"@type": "Person", "name": %s}' % json_text(n)
-        for n in ["Marta Danilkovich", "Namhyun Kim", "Eunseon Oh",
-                  "Attila Hündöl", "Victor aus Butzbach"])
+    """
+    JSON-LD fuer das Ensemble. Nur belegte Angaben.
+
+    Die Mitgliederliste war bis zum 29.09.2026 bei fuenf Namen stehengeblieben,
+    waehrend die Ensembleseite sieben zeigte -- Carolina Rybka und Larissa
+    Nagel fehlten. Zwei Quellen fuer dieselbe Besetzung sind eine zu viel;
+    deshalb steht sie jetzt an einer Stelle und wird von hier ausgegeben.
+
+    Die `sameAs` je Person nur dort, wo eine eigene Seite belegt ist. Eine
+    geratene URL waere schlimmer als keine: Sie verknuepft die Person mit einer
+    fremden Entitaet, und das laesst sich nachtraeglich schwer aufloesen.
+    """
+    besetzung = [
+        ("Marta Danilkovich", "https://marta.danilkovich.com/"),
+        ("Namhyun Kim", None),
+        ("Eunseon Oh", None),
+        ("Carolina Rybka", None),
+        ("Victor aus Butzbach", None),
+        ("Attila Hündöl", None),
+        ("Larissa Nagel", "https://larissanagel.com/"),
+    ]
+    zeilen = []
+    for name, seite in besetzung:
+        if seite:
+            zeilen.append('    {"@type": "Person", "name": %s, "sameAs": %s}'
+                          % (json_text(name), json_text(seite)))
+        else:
+            zeilen.append('    {"@type": "Person", "name": %s}' % json_text(name))
+    mitglieder = ",\n".join(zeilen)
     return (
         '<script type="application/ld+json">\n'
         '{\n'
         '  "@context": "https://schema.org",\n'
         '  "@type": "MusicGroup",\n'
         '  "name": %s,\n'
+        '  "description": %s,\n'
         '  "foundingDate": "2020",\n'
         '  "genre": ["Klassik", "Filmmusik", "Rock", "Pop"],\n'
         '  "url": %s,\n'
+        '  "image": %s,\n'
+        # Ort ohne Strasse: Die ladungsfaehige Anschrift ist noch offen, die
+        # Stadt aber unstrittig -- und sie ist das Feld, auf das eine Suche
+        # nach "Streichquartett Frankfurt" trifft.
+        '  "address": {"@type": "PostalAddress", '
+        '"addressLocality": "Frankfurt am Main", "addressCountry": "DE"},\n'
+        '  "areaServed": {"@type": "Country", "name": "Deutschland"},\n'
         '  "sameAs": [\n'
         '    "https://www.instagram.com/divites.quartett/",\n'
         '    "https://www.facebook.com/966775389852634/"\n'
         '  ],\n'
         '  "member": [\n%s\n  ]\n'
         '}\n'
-        '</script>' % (json_text(ENSEMBLE), json_text(DOMAIN), mitglieder))
+        '</script>' % (
+            json_text(ENSEMBLE),
+            json_text("Streichquartett aus Frankfurt am Main, gegründet 2020 von "
+                      "Marta Danilkovich. Klassik, Filmmusik, Rock und Pop in "
+                      "eigenen Arrangements, gespielt ohne Verstärker."),
+            json_text(DOMAIN),
+            json_text("%s/bilder/%s" % (DOMAIN, OG_DATEI)),
+            mitglieder))
 
 
 def json_text(s):
@@ -546,8 +630,10 @@ def json_termine(termine, heute):
                         % (ENSEMBLE, t["programm"])),
             '    "organizer": {"@type": "Organization", "name": "Fever"}',
             '    "location": {"@type": "Place", "name": %s, "address": '
-            '{"@type": "PostalAddress", "streetAddress": %s}}'
-            % (json_text(t["ort"]), json_text(t["adresse"])),
+            '{"@type": "PostalAddress", %s}}'
+            % (json_text(t["ort"]),
+               ", ".join('%s: %s' % (json_text(k), json_text(v))
+                         for k, v in adresse_zerlegen(t["adresse"]).items())),
         ]
         if t["ticket"]:
             # Bei einem abgesagten Konzert waere "InStock" eine falsche
@@ -572,9 +658,57 @@ def sitemap(heute):
     return "\n".join(zeilen) + "\n"
 
 
+# Crawler, die ausschliesslich Trainingsmaterial sammeln. Sie bringen keine
+# Sichtbarkeit -- kein Nutzer sieht je eine Antwort, in der diese Seite wegen
+# ihnen auftaucht. Gesperrt werden sie wegen der Fotos: Nach dem Urteil des
+# OLG Hamburg vom 10.12.2025 ist ein Nutzungsvorbehalt in natuerlicher Sprache
+# nicht "maschinenlesbar" im Sinne des § 44b Abs. 3 UrhG. Ein Satz im
+# Impressum genuegt also nicht; die robots.txt ist der einzige derzeit
+# belastbare Ort dafuer.
+NUR_TRAINING = [
+    "GPTBot",            # OpenAI, Modelltraining
+    "ClaudeBot",         # Anthropic, Modelltraining
+    "anthropic-ai",      # aeltere Anthropic-Kennung
+    "Applebot-Extended",  # Apple Intelligence, reines Trainings-Opt-out
+    "CCBot",             # Common Crawl, speist zahlreiche Trainingskorpora
+    "Bytespider",        # ByteDance
+    "Meta-ExternalAgent",
+    "FacebookBot",
+    "cohere-ai",
+    "Diffbot",
+    "ImagesiftBot",
+    "omgilibot",
+    "PanguBot",
+    "Timpibot",
+]
+
+# Diese holen Seiten, um sie in Antworten zu zeigen und zu verlinken. Sie sind
+# der Grund, ueberhaupt auffindbar sein zu wollen, und bleiben deshalb offen.
+# Sie stehen hier nur als Kommentar -- "User-agent: *" erlaubt sie bereits,
+# und eine ueberfluessige Allow-Zeile ist eine Zeile, die irgendwann veraltet:
+#   Googlebot, bingbot, Applebot, DuckDuckBot   (klassische Suche)
+#   OAI-SearchBot, ChatGPT-User                 (OpenAI, Suche und Nutzeraufruf)
+#   PerplexityBot, Perplexity-User              (Perplexity)
+#   Claude-SearchBot, Claude-User               (Anthropic)
+#
+# Google-Extended steht bewusst NICHT in NUR_TRAINING. Es steuert laut Googles
+# Dokumentation das Training von Gemini *und* das Grounding -- wer es sperrt,
+# verschwindet aus Gemini-Antworten. Auf Google Search hat es keine Wirkung:
+# "Google-Extended does not impact a site's inclusion in Google Search nor is
+# it used as a ranking signal in Google Search." Hier gewinnt die Sichtbarkeit.
+# Soll das umgekehrt entschieden werden, gehoert der Name in die Liste oben.
+
+
 def robots():
     if VEROEFFENTLICHEN:
-        return ("User-agent: *\nAllow: /\n\nSitemap: %s/sitemap.xml\n" % DOMAIN)
+        zeilen = ["# Suchmaschinen und Antwortdienste sind willkommen.",
+                  "User-agent: *", "Allow: /", ""]
+        zeilen.append("# Reine Trainings-Crawler: siehe NUR_TRAINING in "
+                      "generate_webseite.py")
+        for bot in NUR_TRAINING:
+            zeilen += ["User-agent: %s" % bot, "Disallow: /", ""]
+        zeilen.append("Sitemap: %s/sitemap.xml" % DOMAIN)
+        return "\n".join(zeilen) + "\n"
     # Disallow UND noindex im Kopf jeder Seite. Disallow allein verhindert nur
     # das Crawlen; die URL kann trotzdem im Index auftauchen.
     return ("# Die Seite ist im Aufbau und soll nicht in Suchmaschinen erscheinen.\n"
@@ -880,6 +1014,7 @@ def main():
             inhalt = re.sub(r'src="(bilder/[^"?]+)"', _bild_v, inhalt)
             inhalt = inhalt.replace("<p>{{TERMINE}}</p>", liste_voll)
             inhalt = inhalt.replace("<p>{{TERMINE_KURZ}}</p>", liste_kurz)
+            inhalt = inhalt.replace("<p>{{PROGRAMME}}</p>", programme_html(termine))
             ziel = "index.html" if name == "start" else "%s.html" % name
             erwartet.add(ziel)
             if name == "start":

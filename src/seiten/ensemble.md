@@ -25,15 +25,14 @@
 <h2 class="besetzung__instrument">Viola</h2>
 <ul class="besetzung__personen">
 <li class="mitglied">
-<div class="platz platz--portraet">[PORTRÄT FOLGT]</div>
+<div class="platz platz--portraet" aria-hidden="true"></div>
 <h3>Eunseon Oh</h3>
-<p>Bratschistin, gehört zur Kernbesetzung des Quartetts.</p>
-<p>[PLATZHALTER] Der Text folgt. Anders als bei den übrigen liegt zu ihr im Netz nichts vor, das sich zweifelsfrei zuordnen ließe. Lieber kein Text als ein falscher.</p>
+<p>Bratschistin. Sie gehört zur Kernbesetzung des Quartetts und spielte unter anderem den Filmmusik-Abend in der Aula der Justus-Liebig-Universität Gießen.</p>
 </li>
 <li class="mitglied">
 <img class="portraet" src="bilder/portraet_carolina.jpg" width="380" height="507" alt="Carolina Rybka, Bratschistin des Divites Quartetts" loading="lazy">
 <h3>Carolina Rybka</h3>
-<p>[PLATZHALTER] Der Text folgt.</p>
+<p>Bratschistin. Seit 2026 im Quartett.</p>
 </li>
 </ul>
 </section>

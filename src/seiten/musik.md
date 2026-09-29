@@ -1,5 +1,13 @@
 # Musik
 
+## Programme
+
+Jedes Programm ist ein eigener Abend, gespielt von vier Streichinstrumenten in eigenen Arrangements.
+
+{{PROGRAMME}}
+
+## Mitschnitte
+
 <ul class="raster raster--video">
 <li class="video">
 <button type="button" class="video__flaeche video__flaeche--bild" data-video="sJXVwUaVAYg" style="--vorschau:url(bilder/video_thunderstruck.jpg)" data-titel="Thunderstruck, AC/DC">
