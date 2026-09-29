@@ -804,6 +804,26 @@ main > h1 + .besetzung { border-top: 0; margin-top: 0; padding-top: 0; }
 }
 
 .seite--musik{background:var(--papier);color:var(--tinte);padding-bottom:var(--s5)}
+
+/* Programmliste der Musikseite. Zweispaltig ab Tablet, damit vierzehn Titel
+   nicht als lange Kolonne den Weg zu den Videos verstellen. */
+.programme {
+  list-style: none;
+  /* margin-left/right auf auto und das Innenabstand-Paar muessen bleiben:
+     "main > ul" zentriert die Liste damit in der Textspalte. Wer hier nur
+     "margin: 0" schreibt, hebt das auf, und die Liste steht als einziges
+     Element der Seite linksbuendig am Rand. */
+  margin: var(--s3) auto 0; padding: 0 var(--s3);
+  columns: 2; column-gap: var(--s4);
+  max-width: var(--spalte-text);
+}
+.programme li {
+  break-inside: avoid;
+  padding: .35em 0 .35em var(--s2);
+  border-left: 2px solid var(--linie);
+  margin-bottom: .35em;
+}
+@media (max-width: 34rem) { .programme { columns: 1; } }
 .beispielseite .monat__titel{top:2.05rem}
 
 /* --- Videovorschau -------------------------------------------------------- */
