@@ -23,6 +23,8 @@ Porträt Victor aus Butzbach: eigenes Foto, Hintergrund digital erstellt
 
 Porträt Marta Danilkovich: Hans Lechner Photography
 
+Porträt Eunseon Oh: privat zur Verfügung gestellt
+
 Die Porträts von Attila Hündöl, Carolina Rybka und Namhyun Kim sind Ausschnitte aus der Konzertaufnahme im Kurhaus Wiesbaden.
 
 ## Haftung für Links
