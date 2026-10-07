@@ -535,7 +535,7 @@ def json_ensemble():
     JSON-LD fuer das Ensemble. Nur belegte Angaben.
 
     Die Mitgliederliste war bis zum 29.09.2026 bei fuenf Namen stehengeblieben,
-    waehrend die Ensembleseite sieben zeigte -- Carolina Rybka und Larissa
+    waehrend die Ensembleseite sieben zeigte -- Karolina Rybka und Larissa
     Nagel fehlten. Zwei Quellen fuer dieselbe Besetzung sind eine zu viel;
     deshalb steht sie jetzt an einer Stelle und wird von hier ausgegeben.
 
@@ -547,7 +547,7 @@ def json_ensemble():
         ("Marta Danilkovich", "https://marta.danilkovich.com/"),
         ("Namhyun Kim", None),
         ("Eunseon Oh", None),
-        ("Carolina Rybka", None),
+        ("Karolina Rybka", None),
         ("Victor aus Butzbach", None),
         ("Attila Hündöl", None),
         ("Larissa Nagel", "https://larissanagel.com/"),

@@ -30,8 +30,8 @@
 <p>Bratschistin aus Südkorea. Orchester- und Kammermusikerfahrung sammelte sie am Theater Baden-Baden, im Festspielhaus Baden-Baden und am Theater Osnabrück. In Frankfurt unterrichtet sie Violine und Viola. Seit 2023 im Divites Quartett.</p>
 </li>
 <li class="mitglied">
-<img class="portraet" src="bilder/portraet_carolina.jpg" width="380" height="507" alt="Carolina Rybka, Bratschistin des Divites Quartetts" loading="lazy">
-<h3>Carolina Rybka</h3>
+<img class="portraet" src="bilder/portraet_carolina.jpg" width="380" height="507" alt="Karolina Rybka, Bratschistin des Divites Quartetts" loading="lazy">
+<h3>Karolina Rybka</h3>
 <p>Bratschistin. Seit 2026 im Quartett.</p>
 </li>
 </ul>
