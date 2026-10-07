@@ -571,9 +571,9 @@ def json_ensemble():
         '  "genre": ["Klassik", "Filmmusik", "Rock", "Pop"],\n'
         '  "url": %s,\n'
         '  "image": %s,\n'
-        # Ort ohne Strasse: Die ladungsfaehige Anschrift ist noch offen, die
-        # Stadt aber unstrittig -- und sie ist das Feld, auf das eine Suche
-        # nach "Streichquartett Frankfurt" trifft.
+        # Ort ohne Strasse: Die volle Anschrift steht im Impressum, wo das
+        # Gesetz sie verlangt. Im Markup braucht es nur die Stadt -- auf sie
+        # trifft eine Suche nach "Streichquartett Frankfurt".
         '  "address": {"@type": "PostalAddress", '
         '"addressLocality": "Frankfurt am Main", "addressCountry": "DE"},\n'
         '  "areaServed": {"@type": "Country", "name": "Deutschland"},\n'
