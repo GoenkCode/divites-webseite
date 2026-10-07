@@ -53,7 +53,7 @@
 
 ## Über das Ensemble
 
-Divites kommt vom lateinischen *dives*: reich. Gemeint ist nicht das Konto. Gemeint ist das Repertoire.
+Divites kommt vom lateinischen *dives*: reich. In diesem Fall steht es für ein reichhaltiges Repertoire aus verschiedensten Genres, von Klassikern über Filmmusik und Disco-Hits bis hin zu modernen Rock- und Heavy-Metal-Songs.
 
 Vivaldi. Metallica. Hans Zimmer. Queen. Vier Streichinstrumente, eigene Arrangements, kein einziger Verstärker. Was im Original nach Stadion klingt, klingt hier nach Saal. Und funktioniert trotzdem.
 
