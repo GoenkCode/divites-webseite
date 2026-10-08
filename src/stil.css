@@ -173,14 +173,26 @@ a:focus-visible, button:focus-visible {
   background: linear-gradient(to right, #0d0c0b 0%, rgba(13,12,11,0) 38%);
   pointer-events: none;
 }
+/* Der Name im Auftakt steht seit dem 08.10.2026 in der Logoschrift, EB
+   Garamond Medium. Selbst ausgeliefert, nicht von Google Fonts: Ein Abruf
+   bei fremden Servern uebertraegt die IP-Adresse und machte das
+   Cookie-Banner faellig, das die Seite bewusst nicht hat. Nur der
+   lateinische Schnitt (25 KB), mehr braucht "Divites Quartett" nicht.
+   Lizenz: SIL OFL, Text in eb_garamond_ofl.txt neben der Schriftdatei. */
+@font-face {
+  font-family: "EB Garamond";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(eb_garamond_500_latin.woff2) format("woff2");
+}
 .auftakt h1 {
-  font-family: var(--grotesk);
-  font-weight: 800;
-  font-size: clamp(2.75rem, 11vw, 7rem);
-  line-height: .92;
-  letter-spacing: -.035em;
+  font-family: "EB Garamond", var(--serif);
+  font-weight: 500;
+  font-size: clamp(3rem, 12vw, 7.5rem);
+  line-height: .95;
+  letter-spacing: -.01em;
   margin: 0;
-  text-transform: uppercase;
 }
 .auftakt__unter {
   font-size: clamp(1.0625rem, 2.4vw, 1.375rem);
@@ -485,7 +497,6 @@ a.termin__ort:hover { color: var(--akzent); }
   .nav a { white-space: nowrap; letter-spacing: .05em; }
 
   .auftakt__innen { padding-top: var(--s4); padding-bottom: var(--s4); }
-  .auftakt h1 { letter-spacing: -.025em; }
 
   .stimmen { padding-top: var(--s4); padding-bottom: var(--s4); gap: var(--s4); }
   /* In der Spalte erbt die Linkliste das baseline-Ausrichten und schrumpft

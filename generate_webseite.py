@@ -30,8 +30,8 @@ import sys
 
 # Solange False: jede Seite bekommt noindex, robots.txt bekommt Disallow.
 # Die Seite ist dann ueber die Domain erreichbar, aber fuer Suchmaschinen
-# unsichtbar. Erst auf True stellen, wenn die Inhalte wirklich stehen.
-VEROEFFENTLICHEN = False
+# unsichtbar. Am 08.10.2026 auf Victors Wort umgelegt.
+VEROEFFENTLICHEN = True
 
 DOMAIN = "https://divites-quartett.com"
 ENSEMBLE = "Divites Quartett"
