@@ -23,12 +23,6 @@ Porträt Victor aus Butzbach: eigenes Foto, Hintergrund digital erstellt
 
 Porträt Marta Danilkovich: Hans Lechner Photography
 
-Porträt Eunseon Oh: privat zur Verfügung gestellt
-
-Porträt Attila Hündöl: privat zur Verfügung gestellt
-
-Porträt Karolina Rybka: privat zur Verfügung gestellt
-
 Das Porträt von Namhyun Kim ist ein Ausschnitt aus der Konzertaufnahme im Kurhaus Wiesbaden.
 
 ## Haftung für Links
