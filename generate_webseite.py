@@ -73,10 +73,13 @@ SEITEN = [
      "Rock in eigenen Arrangements, ohne Verstärker.",
      "%s – Streichquartett Frankfurt" % ENSEMBLE),
     ("termine",     "Termine",    "Termine",
-     "Alle kommenden Konzerte des Divites Quartetts, nach Ort filterbar.",
+     "Kommende Candlelight-Konzerte des Divites Quartetts in "
+     "Frankfurt, Wiesbaden und weiteren Städten. Mit Datum, Programm und "
+     "Ticketlink, nach Ort filterbar.",
      "Konzerttermine"),
     ("ensemble",    "Ensemble",   "Das Ensemble",
-     "Die Musikerinnen und Musiker des Divites Quartetts.",
+     "Die Musikerinnen und Musiker des Divites Quartetts aus Frankfurt: "
+     "Violine, Viola und Violoncello, mit Porträts und Biografien.",
      "Das Ensemble"),
     ("musik",       "Musik",      "Musik",
      "Videomitschnitte des Divites Quartetts: Vivaldi, Queen, AC/DC und "
