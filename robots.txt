@@ -1,4 +1,48 @@
-# Die Seite ist im Aufbau und soll nicht in Suchmaschinen erscheinen.
-# Zusaetzlich traegt jede Seite ein noindex im Kopf.
+# Suchmaschinen und Antwortdienste sind willkommen.
 User-agent: *
+Allow: /
+
+# Reine Trainings-Crawler: siehe NUR_TRAINING in generate_webseite.py
+User-agent: GPTBot
 Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /
+
+User-agent: omgilibot
+Disallow: /
+
+User-agent: PanguBot
+Disallow: /
+
+User-agent: Timpibot
+Disallow: /
+
+Sitemap: https://divites-quartett.com/sitemap.xml
