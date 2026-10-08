@@ -27,7 +27,9 @@ Porträt Eunseon Oh: privat zur Verfügung gestellt
 
 Porträt Attila Hündöl: privat zur Verfügung gestellt
 
-Die Porträts von Karolina Rybka und Namhyun Kim sind Ausschnitte aus der Konzertaufnahme im Kurhaus Wiesbaden.
+Porträt Karolina Rybka: privat zur Verfügung gestellt
+
+Das Porträt von Namhyun Kim ist ein Ausschnitt aus der Konzertaufnahme im Kurhaus Wiesbaden.
 
 ## Haftung für Links
 
