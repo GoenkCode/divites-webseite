@@ -87,7 +87,7 @@ a:focus-visible, button:focus-visible {
   display: flex;
   flex-wrap: wrap;
   gap: var(--s2) var(--s4);
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
 }
 .marke {
@@ -99,6 +99,9 @@ a:focus-visible, button:focus-visible {
   text-decoration: none;
 }
 .marke__zweite { font-weight: 400; margin-left: .5em; color: var(--tinte-matt); }
+/* Logo seit dem 08.10.2026. Die Hoehe bestimmt alles, die Breite folgt
+   dem Seitenverhaeltnis 4,3 : 1. Unter 2 rem wird "Quartett" zu klein. */
+.marke__logo { display: block; height: 2.75rem; width: auto; }
 
 .nav ul {
   list-style: none; margin: 0; padding: 0;
@@ -462,6 +465,7 @@ a.termin__ort:hover { color: var(--akzent); }
 
   .kopf__innen { flex-direction: column; align-items: flex-start; gap: var(--s1); }
   .marke { font-size: .9375rem; }
+  .marke__logo { height: 2.25rem; }
 
   /* Navigation eng genug, dass sie in eine Zeile passt.
      Gemessen am 27.09.2026: die fuenf Eintraege brauchten 371 px, zur
