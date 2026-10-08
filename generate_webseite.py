@@ -575,6 +575,7 @@ def json_ensemble():
         '  "genre": ["Klassik", "Filmmusik", "Rock", "Pop"],\n'
         '  "url": %s,\n'
         '  "image": %s,\n'
+        '  "logo": "https://divites-quartett.com/logo-512.png",\n'
         # Ort ohne Strasse: Die volle Anschrift steht im Impressum, wo das
         # Gesetz sie verlangt. Im Markup braucht es nur die Stadt -- auf sie
         # trifft eine Suche nach "Streichquartett Frankfurt".

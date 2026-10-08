@@ -1,36 +1,45 @@
-"""Erzeugt die Favicons in static/. Einmalig auszufuehren, nicht Teil des Builds.
+"""Rechnet die Raster-Icons aus static/favicon.svg. Einmalig nach jeder
+Aenderung am Logo auszufuehren, nicht Teil des Builds.
 
-Schrift: Lato Bold (SIL Open Font License), aus /Library/Fonts. Farben aus
-stil.css: Grund --papier, D in --tinte, Q in --tinte-matt -- wie die Marke
-im Seitenkopf, die "Divites" fett und "Quartett" gedaempft setzt.
-Gerechnet wird vierfach und dann verkleinert, sonst franst die Schrift bei
-16 Bildpunkten aus. Die Buchstaben bleiben innerhalb des Kreises, auf den
-Google das Icon in den Suchergebnissen zuschneidet.
+Das Logo stammt aus Claude Design (08.10.2026): F-Loch, gekreuzt von vier
+Saiten unterschiedlicher Laenge, fuer vier Spieler. Die SVG-Dateien aller
+Varianten liegen im Vault unter 03_projekte/divites/logo/.
+
+Gerendert wird mit Chrome headless, weil weder Pillow noch die Systemwerkzeuge
+SVG zuverlaessig rastern -- Quick Look schneidet Dateien mit verschobenem
+viewBox-Ursprung ab. Chrome rechnet auf 768 Bildpunkte, Pillow verkleinert.
 """
-from PIL import Image, ImageDraw, ImageFont
+import os
+import subprocess
+import tempfile
 
-SCHRIFT = "/Library/Fonts/Lato-Bold.ttf"
-PAPIER, TINTE, MATT = (16, 15, 13), (238, 235, 229), (168, 162, 153)
+from PIL import Image
+
+HIER = os.path.dirname(os.path.abspath(__file__))
+CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+GROESSE = 768
 
 
-def icon(s):
-    n = s * 4
-    bild = Image.new("RGB", (n, n), PAPIER)
-    d = ImageDraw.Draw(bild)
-    f = ImageFont.truetype(SCHRIFT, int(n * 0.50))
-    luecke = int(n * 0.02)
-    bd = d.textbbox((0, 0), "D", font=f)
-    bq = d.textbbox((0, 0), "Q", font=f)
-    breite = (bd[2] - bd[0]) + luecke + (bq[2] - bq[0])
-    x = (n - breite) // 2
-    y = (n - (bd[3] - bd[1])) // 2 - bd[1]
-    d.text((x - bd[0], y), "D", font=f, fill=TINTE)
-    d.text((x + (bd[2] - bd[0]) + luecke - bq[0], y), "Q", font=f, fill=MATT)
-    return bild.resize((s, s), Image.LANCZOS)
+def rastern(svg):
+    with tempfile.TemporaryDirectory() as tmp:
+        seite = os.path.join(tmp, "s.html")
+        bild = os.path.join(tmp, "s.png")
+        with open(seite, "w") as f:
+            f.write('<html><body style="margin:0"><img src="file://%s" '
+                    'style="width:%dpx;height:%dpx;display:block"></body></html>'
+                    % (svg, GROESSE, GROESSE))
+        subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars",
+                        "--screenshot=" + bild, "--window-size=%d,%d" % (GROESSE, GROESSE),
+                        "file://" + seite], check=True, capture_output=True)
+        return Image.open(bild).convert("RGB")
 
 
 if __name__ == "__main__":
-    icon(192).save("static/icon-192.png", optimize=True)
-    icon(96).save("static/icon-96.png", optimize=True)
-    icon(180).save("static/apple-touch-icon.png", optimize=True)
-    icon(256).save("static/favicon.ico", sizes=[(16, 16), (32, 32), (48, 48)])
+    s = os.path.join(HIER, "static")
+    gross = rastern(os.path.join(s, "favicon.svg"))
+    klein = lambda n: gross.resize((n, n), Image.LANCZOS)
+    klein(512).save(os.path.join(s, "logo-512.png"), optimize=True)
+    klein(192).save(os.path.join(s, "icon-192.png"), optimize=True)
+    klein(96).save(os.path.join(s, "icon-96.png"), optimize=True)
+    klein(180).save(os.path.join(s, "apple-touch-icon.png"), optimize=True)
+    klein(256).save(os.path.join(s, "favicon.ico"), sizes=[(16, 16), (32, 32), (48, 48)])
