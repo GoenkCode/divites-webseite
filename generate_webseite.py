@@ -20,6 +20,7 @@ import datetime
 import html
 import io
 import os
+import shutil
 import re
 import sys
 
@@ -1042,8 +1043,9 @@ def main():
                     # .nojekyll verhindert, dass GitHub das fertige HTML noch
                     # durch Jekyll schickt. Ohne die Datei schlaegt der Build
                     # fehl oder verschluckt Dateien mit Unterstrich.
-                    io.open(os.path.join(args.ausgabe, f), "w", encoding="utf-8").write(
-                        io.open(q, encoding="utf-8").read())
+                    # Binaer kopieren: seit dem 08.10.2026 liegen hier auch
+                    # die Icons. Die alte Textkopie haette sie zerstoert.
+                    shutil.copyfile(q, os.path.join(args.ausgabe, f))
                     erwartet.add(f)
                     kopiert += 1
 
