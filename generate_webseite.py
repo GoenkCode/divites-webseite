@@ -550,6 +550,7 @@ def json_ensemble():
     besetzung = [
         ("Marta Danilkovich", "https://marta.danilkovich.com/"),
         ("Namhyun Kim", None),
+        ("Anna Rothe", None),
         ("Eunseon Oh", None),
         ("Karolina Rybka", None),
         ("Victor aus Butzbach", None),

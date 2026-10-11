@@ -19,6 +19,11 @@
 <h3>Namhyun Kim</h3>
 <p>Violinistin, Jahrgang 1995, aus Südkorea. 2019 fünfter Preis beim Lipizer-Wettbewerb im italienischen Gorizia. 2022 Konzertexamen bei Sophia Jaffé in Frankfurt, das Examenskonzert war Mendelssohns e-Moll-Konzert mit dem Philharmonischen Orchester Gießen. Seit Herbst 2021 im Quartett. Filmmusik ist ihre eigentliche Liebe, das sagt sie selbst.</p>
 </li>
+<li class="mitglied">
+<img class="portraet" src="bilder/portraet_anna.jpg" width="760" height="1013" alt="Anna Rothe, Violinistin des Divites Quartetts" loading="lazy">
+<h3>Anna Rothe</h3>
+<p>Mit zehn Jahren erhielt sie ihren ersten Violinunterricht, und bereits ein Jahr später fasste sie den Entschluss, ihre Heimat zu verlassen, um ihr Leben ganz der Musik zu widmen. Ihr Weg führte sie zunächst nach Weimar und später nach Frankfurt. Heute spielt sie die Violine nicht nur beruflich, sondern vor allem mit großer Leidenschaft, sei es im Orchester, in Kammermusikensembles oder in Jazzbands. Auch abseits der Violine ist ihre Neugier auf Musik ungebrochen. In ihrer Freizeit greift sie mit Begeisterung zu jedem Instrument, das ihr in die Hände fällt. So entdeckt sie immer wieder neue Klangwelten und lebt ihre Vielseitigkeit sowie ihre Liebe zu den unterschiedlichsten Musikgenres aus.</p>
+</li>
 </ul>
 </section>
 <section class="besetzung">
