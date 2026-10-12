@@ -23,8 +23,6 @@ Porträt Victor aus Butzbach: eigenes Foto, Hintergrund digital erstellt
 
 Porträt Marta Danilkovich: Hans Lechner Photography
 
-Das Porträt von Namhyun Kim ist ein Ausschnitt aus der Konzertaufnahme im Kurhaus Wiesbaden.
-
 ## Haftung für Links
 
 Diese Seite verweist auf Ticketseiten des Veranstalters. Für deren Inhalte sind ausschließlich deren Betreiber verantwortlich. Zum Zeitpunkt der Verlinkung waren keine Rechtsverstöße erkennbar.
