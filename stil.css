@@ -1026,3 +1026,96 @@ button {
   *, *::before, *::after { transition: none !important; }
 }
 
+
+/* --- Wendekarten auf der Ensembleseite (seit 22.10.2026) -------------------
+   Auf Victors Wunsch die eine Ausnahme von "keine Animationen": Das Portraet
+   dreht sich wie eine Karte, hinten steht die Kurzbiografie.
+
+   Drei Wege fuehren auf die Rueckseite, und alle drei sind noetig:
+   - Maus: :hover, aber nur auf Geraeten, die wirklich hovern koennen.
+     Auf Touchgeraeten bleibt :hover nach dem Antippen kleben; dann liesse
+     sich die Karte nicht mehr zurueckdrehen.
+   - Tastatur: :focus-visible, auch auf dem Link der Rueckseite (Marta).
+     Bewusst nicht :focus-within: Das greift auch beim Mausklick, und die
+     Karte bliebe nach dem Wegfahren gedreht stehen.
+   - Antippen: karte.js setzt .karte--gedreht.
+
+   Ohne JavaScript bleibt Hover und Tastatur. Der Text steht in jedem Fall
+   im HTML, fuer Suchmaschinen und Screenreader aendert sich nichts.
+
+   Die Rueckseite muss in die Kachel passen. Deshalb Kurzfassungen mit
+   hoechstens rund 450 Zeichen; die Originale liegen im Vault unter
+   divites/ensemble_biografien.md. */
+.karte {
+  container: karte / inline-size;
+  perspective: 1200px;
+  aspect-ratio: 3 / 4;
+  cursor: pointer;
+  outline: none;
+}
+.karte:focus-visible .karte__innen { outline: 2px solid var(--akzent); outline-offset: 3px; }
+.karte__innen {
+  position: relative;
+  width: 100%; height: 100%;
+  transform-style: preserve-3d;
+  transition: transform .6s cubic-bezier(.4, .2, .2, 1);
+}
+.karte__vorn, .karte__hinten {
+  position: absolute; inset: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.karte__vorn { height: 100%; }
+.karte__hinten {
+  transform: rotateY(180deg);
+  background: var(--papier-tief);
+  border: 1px solid var(--linie);
+  padding: var(--s2);
+  display: flex; flex-direction: column; justify-content: center;
+  overflow: hidden;
+}
+.besetzung .mitglied .karte__hinten p {
+  font-size: .875rem; line-height: 1.5; margin: 0;
+  -webkit-hyphens: auto; hyphens: auto;
+  hyphenate-limit-chars: 8 4 4;   /* "Deco-net" trennt sonst mitten im Namen */
+}
+.besetzung .mitglied .karte__hinten .mitglied__mehr { margin-top: .75rem; font-size: .8125rem; }
+
+/* Knapp ueber der Tablet-Grenze (64rem) werden die drei Spalten am
+   schmalsten. Bei 1030 px Fensterbreite stand Irinas Text 16 px ueber den
+   Rand; auf schmalen Karten deshalb eine Stufe kleiner. */
+@container karte (max-width: 16rem) {
+  .besetzung .mitglied .karte__hinten p { font-size: .8125rem; line-height: 1.45; }
+  .karte__hinten { padding: .875rem; }
+}
+
+@media (hover: hover) {
+  .karte:hover .karte__innen { transform: rotateY(180deg); }
+}
+.karte:focus-visible .karte__innen,
+.karte:has(:focus-visible) .karte__innen,
+.karte--gedreht .karte__innen { transform: rotateY(180deg); }
+
+/* Weniger Bewegung gewuenscht: ueberblenden statt drehen. */
+@media (prefers-reduced-motion: reduce) {
+  .karte__innen { transition: none; transform: none !important; }
+  .karte__hinten { transform: none; opacity: 0; transition: opacity .2s linear; }
+  .karte__vorn { transition: opacity .2s linear; }
+  .karte:focus-visible .karte__hinten,
+  .karte:has(:focus-visible) .karte__hinten,
+  .karte--gedreht .karte__hinten { opacity: 1; }
+  .karte:focus-visible .karte__vorn,
+  .karte:has(:focus-visible) .karte__vorn,
+  .karte--gedreht .karte__vorn { opacity: 0; }
+}
+@media (hover: hover) and (prefers-reduced-motion: reduce) {
+  .karte:hover .karte__hinten { opacity: 1; }
+  .karte:hover .karte__vorn { opacity: 0; }
+}
+
+/* Auf dem Handy war die Kachel auf 14rem begrenzt. Fuer die Rueckseite ist
+   das zu schmal: 340 Zeichen brauchen etwas mehr Flaeche. */
+@media (max-width: 34rem) {
+  .besetzung .karte { max-width: 18rem; }
+  .besetzung .karte .portraet { max-width: none; }
+}
