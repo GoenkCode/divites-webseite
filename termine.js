@@ -20,6 +20,14 @@
 (function () {
   "use strict";
 
+  /* Die Seite gibt es seit dem 11.11.2026 auch auf Englisch. Die Sprache
+     steht im lang-Attribut; fehlt sie oder ist sie unbekannt, Deutsch. */
+  var KEINE = {
+    de: "Zurzeit sind keine Termine angekündigt.",
+    en: "No concerts announced at the moment."
+  };
+  var keineTermine = KEINE[document.documentElement.lang] || KEINE.de;
+
   /* Verglichen wird mit der Anfangszeit, nicht nur mit dem Tag. Drei
      Konzerte an einem Abend sind um 22 Uhr alle drei vorbei; tagesgenau
      gerechnet stuenden sie bis Mitternacht unter "die naechsten Konzerte".
@@ -62,7 +70,7 @@
     if (!gezeigt) {
       var satz = document.createElement("p");
       satz.className = "leer";
-      satz.textContent = "Zurzeit sind keine Termine angekündigt.";
+      satz.textContent = keineTermine;
       kurz.parentNode.replaceChild(satz, kurz);
     }
     return;   // auf der Startseite gibt es sonst nichts zu tun
@@ -110,7 +118,7 @@
   if (!nochKommend && !document.querySelector(".leer")) {
     var hinweis = document.createElement("p");
     hinweis.className = "leer";
-    hinweis.textContent = "Zurzeit sind keine Termine angekündigt.";
+    hinweis.textContent = keineTermine;
     block.parentNode.insertBefore(hinweis, block);
   }
 

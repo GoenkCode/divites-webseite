@@ -53,9 +53,11 @@
       knopf.setAttribute("aria-pressed",
         knopf.getAttribute("data-ort") === ort ? "true" : "false");
     });
+    // Englisch seit dem 11.11.2026, Sprache aus dem lang-Attribut.
+    var en = document.documentElement.lang === "en";
     meldung.textContent = sichtbar === 1
-      ? "1 Termin angezeigt"
-      : sichtbar + " Termine angezeigt";
+      ? (en ? "1 concert shown" : "1 Termin angezeigt")
+      : sichtbar + (en ? " concerts shown" : " Termine angezeigt");
   }
 
   knoepfe.forEach(function (knopf) {
