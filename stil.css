@@ -491,10 +491,15 @@ a.termin__ort:hover { color: var(--akzent); }
      Fehler: zum Wischen fehlt die Strecke, und das angeschnittene Zeichen
      bleibt stehen. Auf sehr schmalen Geraeten bricht die Zeile jetzt
      lieber um. Zwei Zeilen sind haesslicher als eine, ein halbes Wort
-     ist schlimmer als beides. */
+     ist schlimmer als beides.
+
+     Mit dem sechsten Eintrag "Album" (11.11.2026) brauchte die Zeile 375 px
+     und brach auf einem 390-px-Geraet um; "Kontakt" stand allein in der
+     zweiten Zeile. Seitdem ohne Sperrung, mit 6 px Abstand und 12 px
+     Schrift statt 13 -- damit passt sie wieder bis etwa 350 px. */
   .nav { width: 100%; }
-  .nav ul { gap: var(--s2) var(--s1); flex-wrap: wrap; }
-  .nav a { white-space: nowrap; letter-spacing: .05em; }
+  .nav ul { gap: var(--s2) .375rem; flex-wrap: wrap; }
+  .nav a { white-space: nowrap; letter-spacing: 0; font-size: .75rem; }
 
   .auftakt__innen { padding-top: var(--s4); padding-bottom: var(--s4); }
 
@@ -1118,4 +1123,94 @@ button {
 @media (max-width: 34rem) {
   .besetzung .karte { max-width: 18rem; }
   .besetzung .karte .portraet { max-width: none; }
+}
+
+/* --- Albumseite ----------------------------------------------------------- */
+/* Das Cover ist das einzige farbige Bild ausserhalb von Auftakt, Bildband und
+   Textbild, und es ist golden. Erlaubt als Produktabbildung (11.11.2026): ein
+   graues Cover zeigte ein anderes Produkt, als man kauft. Damit es dem
+   Auftaktfoto die Wirkung nicht nimmt, steht es nur hier und klein -- 480 px,
+   Datei 960 px fuer doppelte Punktdichte. */
+.album {
+  max-width: var(--spalte);
+  margin: 0 auto var(--s4);
+  padding: 0 var(--s3);
+  display: grid;
+  grid-template-columns: minmax(0, 30rem) minmax(0, 1fr);
+  gap: var(--s4);
+  align-items: center;
+}
+.album__cover {
+  display: block;
+  width: 100%;
+  max-width: 30rem;
+  height: auto;
+  aspect-ratio: 1 / 1;
+}
+.album__text > p { margin: 0 0 var(--s2); }
+.album__unter {
+  font-size: clamp(1.0625rem, 2.4vw, 1.375rem);
+}
+.album__daten {
+  font-family: var(--grotesk);
+  font-size: .875rem;
+  letter-spacing: .04em;
+  color: var(--tinte-matt);
+}
+.album__kauf { margin-top: var(--s3) !important; }
+.album__knopf {
+  display: inline-block;
+  font-family: var(--grotesk);
+  font-weight: 700;
+  font-size: .875rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--tinte);
+  border: 1px solid var(--akzent);
+  padding: .8em 1.2em;
+}
+.album__knopf:hover,
+.album__knopf:focus-visible { background: var(--akzent); color: var(--papier); }
+.album__hinweis {
+  display: block;
+  font-size: .9375rem;
+  color: var(--tinte-matt);
+  margin-top: var(--s1);
+}
+@media (max-width: 45rem) {
+  .album { grid-template-columns: 1fr; gap: var(--s3); }
+}
+
+/* Titelliste: nummeriert, Dauer rechtsbuendig in Ziffern gleicher Breite,
+   damit die Spalte nicht flattert. */
+.titelliste {
+  max-width: var(--spalte-text);
+  margin: 0 auto var(--s2);
+  padding: 0 var(--s3) 0 calc(var(--s3) + 1.75em);
+}
+.titelliste li {
+  padding: .3em 0;
+  border-bottom: 1px solid var(--linie);
+}
+.titelliste li::marker {
+  font-family: var(--grotesk);
+  font-size: .8125rem;
+  color: var(--tinte-matt);
+}
+.titelliste__titel { display: inline; }
+.titelliste__dauer {
+  float: right;
+  font-family: var(--grotesk);
+  font-size: .875rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--tinte-matt);
+}
+.titelliste__summe {
+  max-width: var(--spalte-text);
+  margin: 0 auto;
+  padding: 0 var(--s3);
+  font-family: var(--grotesk);
+  font-size: .875rem;
+  color: var(--tinte-matt);
 }
